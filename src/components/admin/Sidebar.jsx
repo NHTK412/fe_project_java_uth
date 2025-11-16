@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -15,126 +15,173 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeMenu, setActiveMenu] = useState("dashboard");
 
-  const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { id: "users", label: "Quản lý người dùng", icon: Users },
-    { id: "inventory report", label: "Báo cáo tồn kho", icon: ShoppingCart },
-    { id: "revenue report", label: "Báo cáo doanh thu", icon: BarChart3 },
-  ];
+  const menuItems = useMemo(
+    () => [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: LayoutDashboard,
+        isHot: true,
+      },
+      { id: "users", label: "Quản lý người dùng", icon: Users },
+      { id: "inventory-report", label: "Báo cáo tồn kho", icon: ShoppingCart },
+      { id: "revenue-report", label: "Báo cáo doanh thu", icon: BarChart3 },
+    ],
+    []
+  );
+
+  const toggleSidebar = useCallback(() => setIsOpen((prev) => !prev), []);
+  const handleMenuClick = useCallback((id) => setActiveMenu(id), []);
+  const handleLogout = useCallback(() => {
+    // console.log("Logging out...");
+  }, []);
 
   return (
-    <div
+    <aside
       className={`flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ${
         isOpen ? "w-64" : "w-20"
       }`}
       style={{ height: "100vh" }}
+      role="navigation"
+      aria-label="Sidebar navigation"
     >
-      <div className="h-16 flex items-center border-b border-gray-200 flex-shrink-0 relative">
-        <div
-          className={`flex items-center mx-auto ${
-            !isOpen ? "justify-center w-full" : ""
-          }`}
-        >
+      {/* Header Logo */}
+      <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 flex-shrink-0">
+        <div className={`flex items-center gap-3 ${!isOpen ? "mx-auto" : ""}`}>
           <img
             src={LOGO}
             alt="EVM Logo"
             className="w-10 h-10 rounded-lg object-cover"
           />
+          {isOpen && (
+            <span className="font-semibold text-gray-900 text-lg">
+              EVM System
+            </span>
+          )}
         </div>
 
         {isOpen && (
-          <div className="absolute right-0 mr-4">
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-1 rounded-md hover:bg-gray-100 transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-          </div>
+          <button
+            onClick={toggleSidebar}
+            className="p-1.5 rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Thu gọn sidebar"
+            title="Thu gọn"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-600" />
+          </button>
         )}
       </div>
 
+      {/* Toggle button */}
       {!isOpen && (
-        <div className="px-4 py-4">
+        <div className="px-4 py-3 border-b border-gray-200">
           <button
-            onClick={() => setIsOpen(true)}
-            className="w-full p-1 rounded-md hover:bg-gray-100 transition-colors"
+            onClick={toggleSidebar}
+            className="w-full p-1.5 rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Mở rộng sidebar"
+            title="Mở rộng"
           >
-            <ChevronRight className="w-5 h-5 ml-auto mr-3" />
+            <ChevronRight className="w-5 h-5 text-gray-600 mx-auto" />
           </button>
         </div>
       )}
 
-      {/* Menu */}
-      <nav className="flex-1 p-4 overflow-y-auto">
-        {menuItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = activeMenu === item.id;
+      {/* Main Navigation Menu */}
+      <nav className="flex-1 p-3 overflow-y-auto" aria-label="Main menu">
+        <ul className="space-y-1">
+          {menuItems.map((item, index) => {
+            const Icon = item.icon;
+            const isActive = activeMenu === item.id;
+            const showAppsLabel = index === 1;
 
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveMenu(item.id)}
-              className={`w-full flex items-center gap-4 px-4 py-3 mb-1 rounded-lg transition-all ${
-                isActive ? "font-semibold" : "text-gray-700 hover:bg-gray-50"
-              }`}
-              style={
-                isActive
-                  ? {
-                      backgroundColor: "#eff6ff",
-                      color: "#2563eb",
-                    }
-                  : {}
-              }
-            >
-              <Icon className="w-6 h-6 flex-shrink-0" />
-              {isOpen && (
-                <span className="flex-1 text-left whitespace-nowrap overflow-hidden text-ellipsis">
-                  {item.label}
-                </span>
-              )}
-            </button>
-          );
-        })}
+            return (
+              <li key={item.id}>
+                {showAppsLabel && (
+                  <div className="px-4 pt-4 pb-2">
+                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                      Apps
+                    </span>
+                  </div>
+                )}
+                <button
+                  onClick={() => handleMenuClick(item.id)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${
+                    isActive ? "font-semibold" : ""
+                  }`}
+                  aria-current={isActive ? "page" : undefined}
+                  title={!isOpen ? item.label : undefined}
+                >
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  {isOpen && (
+                    <span className="flex-1 text-left text-sm truncate">
+                      {item.label}
+                    </span>
+                  )}
+
+                  {/* HOT === Appster */}
+                  {item.isHot && isOpen && (
+                    <span
+                      className="px-2 py-0.5 rounded-full text-xs font-semibold text-white"
+                      style={{ backgroundColor: "#e91e63", fontSize: "10px" }}
+                    >
+                      Hot
+                    </span>
+                  )}
+
+                  {/* if closed */}
+                  {!isOpen && (
+                    <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 pointer-events-none">
+                      {item.label}
+                      <div className="absolute top-1/2 right-full -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                    </div>
+                  )}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
 
       {/* Setting + Logout */}
-      <div className="p-4 border-t border-gray-200 flex-shrink-0">
+      <div className="p-3 border-t border-gray-200 flex-shrink-0 space-y-1">
         <button
-          onClick={() => setActiveMenu("settings")}
-          className={`w-full flex items-center gap-4 px-4 py-3 mb-1 rounded-lg transition-all ${
-            activeMenu === "settings"
-              ? "font-semibold"
-              : "text-gray-700 hover:bg-gray-50"
+          onClick={() => handleMenuClick("settings")}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${
+            activeMenu === "settings" ? "font-semibold" : ""
           }`}
-          style={
-            activeMenu === "settings"
-              ? {
-                  backgroundColor: "#eff6ff",
-                  color: "#2563eb",
-                }
-              : {}
-          }
+          aria-current={activeMenu === "settings" ? "page" : undefined}
+          title={!isOpen ? "Cài đặt" : undefined}
         >
-          <Settings className="w-6 h-6 flex-shrink-0" />
-          {isOpen && <span className="flex-1 text-left">Cài đặt</span>}
+          <Settings className="w-5 h-5 flex-shrink-0" />
+          {isOpen && <span className="flex-1 text-left text-sm">Cài đặt</span>}
+
+          {!isOpen && (
+            <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 pointer-events-none">
+              Cài đặt
+              <div className="absolute top-1/2 right-full -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+            </div>
+          )}
         </button>
 
         <button
-          className="w-full flex items-center gap-4 px-4 py-3 rounded-lg transition-all"
-          style={{ color: "#dc2626" }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "#fee2e2")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = "transparent")
-          }
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-700 hover:bg-red-50 hover:text-red-600 group relative focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
+          title={!isOpen ? "Đăng xuất" : undefined}
         >
-          <LogOut className="w-6 h-6 flex-shrink-0" />
-          {isOpen && <span className="flex-1 text-left">Đăng xuất</span>}
+          <LogOut className="w-5 h-5 flex-shrink-0" />
+          {isOpen && (
+            <span className="flex-1 text-left text-sm">Đăng xuất</span>
+          )}
+
+          {!isOpen && (
+            <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 pointer-events-none">
+              Đăng xuất
+              <div className="absolute top-1/2 right-full -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+            </div>
+          )}
         </button>
       </div>
-    </div>
+    </aside>
   );
 };
 
