@@ -1,13 +1,13 @@
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AdminLayout from "./layouts/AdminLayout";
+import AppRouter from "./routes";
 
 function App() {
   return (
     <>
       <ToastContainer />
-      <AdminLayout />
+      <AppRouter />
     </>
   );
 }
