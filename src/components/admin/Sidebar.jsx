@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -8,13 +9,16 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Truck,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   const [activeMenu, setActiveMenu] = useState("dashboard");
 
+  // NOTE: Map menu items với các đường dẫn tương ứng
   const menuItems = useMemo(
     () => [
       {
@@ -22,25 +26,32 @@ const Sidebar = () => {
         label: "Dashboard",
         icon: LayoutDashboard,
         isHot: true,
+        path: "/",
       },
-      { id: "users", label: "Quản lý người dùng", icon: Users },
-      { id: "inventory-report", label: "Báo cáo tồn kho", icon: ShoppingCart },
-      { id: "revenue-report", label: "Báo cáo doanh thu", icon: BarChart3 },
+      { id: "users", label: "Quản lý người dùng", icon: Users, path: "/admin/users" },
+      { id: "import-request", label: "Đặt xe từ hãng", icon: Truck, path: "/admin/import-request" },
+      { id: "inventory-report", label: "Báo cáo tồn kho", icon: ShoppingCart, path: "/admin/inventory-report" },
+      { id: "revenue-report", label: "Báo cáo doanh thu", icon: BarChart3, path: "/admin/revenue-report" },
     ],
     []
   );
 
   const toggleSidebar = useCallback(() => setIsOpen((prev) => !prev), []);
-  const handleMenuClick = useCallback((id) => setActiveMenu(id), []);
+
+  // NOTE: Cập nhật xử lý click menu để điều hướng đến trang tương ứng
+  const handleMenuClick = useCallback((id, path) => {
+    setActiveMenu(id);
+    navigate(path);
+  }, [navigate]);
+
   const handleLogout = useCallback(() => {
     // console.log("Logging out...");
   }, []);
 
   return (
     <aside
-      className={`flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ${
-        isOpen ? "w-64" : "w-20"
-      }`}
+      className={`flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ${isOpen ? "w-64" : "w-20"
+        }`}
       style={{ height: "100vh" }}
       role="navigation"
       aria-label="Sidebar navigation"
@@ -104,10 +115,9 @@ const Sidebar = () => {
                   </div>
                 )}
                 <button
-                  onClick={() => handleMenuClick(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${
-                    isActive ? "font-semibold" : ""
-                  }`}
+                  onClick={() => handleMenuClick(item.id, item.path)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${isActive ? "font-semibold" : ""
+                    }`}
                   aria-current={isActive ? "page" : undefined}
                   title={!isOpen ? item.label : undefined}
                 >
@@ -146,9 +156,8 @@ const Sidebar = () => {
       <div className="p-3 border-t border-gray-200 flex-shrink-0 space-y-1">
         <button
           onClick={() => handleMenuClick("settings")}
-          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${
-            activeMenu === "settings" ? "font-semibold" : ""
-          }`}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${activeMenu === "settings" ? "font-semibold" : ""
+            }`}
           aria-current={activeMenu === "settings" ? "page" : undefined}
           title={!isOpen ? "Cài đặt" : undefined}
         >
