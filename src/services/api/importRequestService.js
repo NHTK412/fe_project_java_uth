@@ -4,7 +4,7 @@ import axios from "axios";
 const API_BASE_URL = "http://localhost:8080/api";
 
 // Token cố định (tạm thời cho đến khi có hệ thống login)
-const TEMP_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbl91c2VyIiwicm9sZSI6IlF14bqjbiBUcuG7iyBWacOqbiIsImlhdCI6MTc2MzM3ODE3NiwiZXhwIjoxNzYzMzgxNzc2fQ.eRHNwoVn7AINo35Yfv-vc4vRyMpaFPe48IP_kgQYSDE";
+const TEMP_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbl91c2VyIiwicm9sZSI6IlF14bqjbiBUcuG7iyBWacOqbiIsImlhdCI6MTc2MzM4ODI5OSwiZXhwIjoxNzYzMzkxODk5fQ.8XR1vuPkzupr_-eG7Cm-ekn2Bx6MaxTbT5EqwW8BVvE";
 
 // Tạo instance axios với cấu hình mặc định
 const axiosInstance = axios.create({
@@ -33,7 +33,8 @@ export const getImportRequests = async (page = 1, size = 10) => {
                 size,
             },
         });
-        return response.data;
+        return response.data.data;
+
     } catch (error) {
         console.error("Lỗi khi gọi API lấy danh sách đơn đặt xe:", error);
         throw error;
@@ -48,7 +49,7 @@ export const getImportRequests = async (page = 1, size = 10) => {
 export const getImportRequestDetail = async (importRequestId) => {
     try {
         const response = await axiosInstance.get(`/import-request/${importRequestId}`);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         console.error("Lỗi khi gọi API lấy chi tiết đơn đặt xe:", error);
         throw error;
@@ -63,7 +64,7 @@ export const getImportRequestDetail = async (importRequestId) => {
 export const createImportRequest = async (data) => {
     try {
         const response = await axiosInstance.post("/import-request", data);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         console.error("Lỗi khi gọi API tạo đơn đặt xe:", error);
         throw error;
