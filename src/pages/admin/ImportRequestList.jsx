@@ -115,85 +115,85 @@ const ImportRequestList = () => {
                 </div>
             )}
 
-      {/* NOTE: Bảng danh sách các đơn đặt xe - Sử dụng scroll ngang nếu cần */}
-      {!loading && !error && (
-        <div className="overflow-x-auto border border-gray-200 rounded-lg">
-          <table className="w-full min-w-max">
-            <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
-                  ID
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
-                  Tên hãng
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
-                  Nhân viên
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
-                  Chức vụ
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
-                  Trạng thái
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
-                  Ghi chú
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
-                  Thao tác
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredRequests.length > 0 ? (
-                filteredRequests.map((request) => (
-                  <tr
-                    key={request.importRequestId}
-                    className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-4 py-3 text-xs text-gray-900 whitespace-nowrap font-medium">
-                      #{request.importRequestId}
-                    </td>
-                    <td className="px-4 py-3 text-xs text-gray-900 whitespace-nowrap">
-                      {request.agencyName || "-"}
-                    </td>
-                    <td className="px-4 py-3 text-xs text-gray-900 whitespace-nowrap">
-                      {request.employeeName || "-"}
-                    </td>
-                    <td className="px-4 py-3 text-xs text-gray-600 whitespace-nowrap">
-                      {request.employeePosition || "-"}
-                    </td>
-                    <td className="px-4 py-3">
-                      {getStatusBadge(request.status)}
-                    </td>
-                    <td className="px-4 py-3 text-xs text-gray-600 max-w-xs">
-                      <span className="line-clamp-2">{request.note || "-"}</span>
-                    </td>
-                    <td className="px-4 py-3 text-xs whitespace-nowrap">
-                      <button
-                        onClick={() =>
-                          navigate(`/admin/import-request/${request.importRequestId}`)
-                        }
-                        className="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors text-xs font-medium"
-                      >
-                        Chi tiết
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
-                    {searchTerm
-                      ? "Không tìm thấy kết quả phù hợp"
-                      : "Không có đơn đặt xe nào"}
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}            {/* NOTE: Phân trang (tùy chọn nâng cao) */}
+            {/* NOTE: Bảng danh sách các đơn đặt xe - Sử dụng scroll ngang nếu cần */}
+            {!loading && !error && (
+                <div className="overflow-x-auto border border-gray-200 rounded-lg">
+                    <table className="w-full min-w-max">
+                        <thead>
+                            <tr className="bg-gray-50 border-b border-gray-200">
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
+                                    ID
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
+                                    Tên hãng
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
+                                    Nhân viên
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
+                                    Chức vụ
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
+                                    Trạng thái
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
+                                    Ghi chú
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-900 whitespace-nowrap">
+                                    Thao tác
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredRequests.length > 0 ? (
+                                filteredRequests.map((request) => (
+                                    <tr
+                                        key={request.importRequestId}
+                                        className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
+                                    >
+                                        <td className="px-4 py-3 text-xs text-gray-900 whitespace-nowrap font-medium">
+                                            #{request.importRequestId}
+                                        </td>
+                                        <td className="px-4 py-3 text-xs text-gray-900 whitespace-nowrap">
+                                            {request.agencyName || "-"}
+                                        </td>
+                                        <td className="px-4 py-3 text-xs text-gray-900 whitespace-nowrap">
+                                            {request.employeeName || "-"}
+                                        </td>
+                                        <td className="px-4 py-3 text-xs text-gray-600 whitespace-nowrap">
+                                            {request.employeePosition || "-"}
+                                        </td>
+                                        <td className="px-4 py-3">
+                                            {getStatusBadge(request.status)}
+                                        </td>
+                                        <td className="px-4 py-3 text-xs text-gray-600 max-w-xs">
+                                            <span className="line-clamp-2">{request.note || "-"}</span>
+                                        </td>
+                                        <td className="px-4 py-3 text-xs whitespace-nowrap">
+                                            <button
+                                                onClick={() =>
+                                                    navigate(`/admin/import-request/${request.importRequestId}`)
+                                                }
+                                                className="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors text-xs font-medium"
+                                            >
+                                                Chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
+                                        {searchTerm
+                                            ? "Không tìm thấy kết quả phù hợp"
+                                            : "Không có đơn đặt xe nào"}
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            )}            {/* NOTE: Phân trang (tùy chọn nâng cao) */}
             {!loading && filteredRequests.length > 0 && (
                 <div className="flex justify-between items-center mt-4">
                     <button

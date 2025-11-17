@@ -151,11 +151,11 @@ const VehicleTypeSelectorModal = ({ onSelect, onClose }) => {
                                             onClick={() => handleSelectDetail(detail)}
                                             className="p-4 border-2 border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-left"
                                         >
-                                            {/* NOTE: Hình ảnh xe nếu có */}
+                                            {/* NOTE: Hình ảnh xe nếu có - Sử dụng đường dẫn API: http://localhost:8080/api/images/{imageName} */}
                                             {detail.vehicleImage && (
                                                 <div className="mb-3 bg-gray-100 rounded h-32 flex items-center justify-center overflow-hidden">
                                                     <img
-                                                        src={detail.vehicleImage}
+                                                        src={`http://localhost:8080/api/images/${detail.vehicleImage}`}
                                                         alt={detail.version}
                                                         className="w-full h-full object-cover"
                                                         onError={(e) => {
