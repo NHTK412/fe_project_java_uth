@@ -1,0 +1,295 @@
+/* Nền background cố định full màn hình */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/backg.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Navbar và modal login để hiển thị trên nền */
+.navbar,
+.login-modal {
+  position: relative;
+  z-index: 1;
+}
+
+/* Thanh navbar chính */
+.navbar {
+  top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 80px;
+  background: rgba(10, 30, 50, 0.8);
+  color: #fff;
+  width: 70vw;
+  box-sizing: border-box;
+  border-radius: 16px;
+  margin: 0 auto;
+}
+
+/* Logo navbar */
+.navbar-logo {
+  height: 70px;
+  width: 80px;
+  border-radius: 14px;
+  object-fit: cover;
+  padding: 0;
+  display: block;
+}
+
+/* Hiệu ứng hover cho logo */
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* Animation xoay logo */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation khi không yêu cầu giảm chuyển động */
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Nút đăng nhập */
+.login-btn {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  z-index: 1;
+  transition: color 0.2s;
+}
+
+/* Hiệu ứng nền trắng trượt khi hover nút đăng nhập */
+.login-btn::before {
+  content: "";
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 8px;
+  z-index: -1;
+  transition: left 1s;
+}
+
+.login-btn:hover::before {
+  left: 0;
+}
+
+.login-btn:hover {
+  color: #0a1e32;
+}
+
+/* Hộp đăng nhập modal */
+.login-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(16px);
+  border-radius: 32px;
+  padding: 48px 40px 32px 40px;
+  min-width: 380px;
+  color: #0a1e32;
+  text-align: center;
+  z-index: 10;
+  border: none;
+}
+
+/* Avatar trong modal đăng nhập */
+.login-avatar {
+  width: 110px;
+  height: 110px;
+  background: #0a1e32;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -80px auto 24px auto;
+  box-shadow: 0 4px 24px rgba(31, 38, 135, 0.18);
+}
+.login-avatar svg {
+  width: 60px;
+  height: 60px;
+  color: #fff;
+}
+
+/* Tiêu đề modal đăng nhập */
+.login-modal h2 {
+  margin-bottom: 32px;
+  background: none;
+  border: none;
+  color: #0a1e32;
+  font-weight: bold;
+  font-size: 2.4rem;
+  text-align: center;
+  padding: 0;
+}
+
+/* Nhóm input (icon + input) */
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #18344d;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  padding: 0 0 0 16px;
+}
+.input-group .input-icon {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-right: 12px;
+}
+.input-group input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 12px 8px;
+  font-size: 1.1rem;
+  width: 100%;
+  outline: none;
+}
+.input-group input::placeholder {
+  color: #b8c6d1;
+}
+
+/* Các tùy chọn checkbox và link */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 1rem;
+  color: #18344d;
+}
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.options a {
+  color: #18344d;
+  text-decoration: underline;
+  font-size: 0.98rem;
+}
+
+/* Nút submit trong modal */
+.submit-btn {
+  width: 100%;
+  padding: 12px 0;
+  background: rgba(255, 255, 255, 0.35);
+  color: #18344d;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.15rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 16px;
+  box-shadow: 0 4px 24px rgba(31, 38, 135, 0.1);
+  transition: background 0.2s, color 0.2s;
+}
+.submit-btn:hover {
+  background: #18344d;
+  color: #fff;
+}
+
+/* Danh sách nav trong navbar */
+.navbar ul {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Spinner loading */
+.spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #fff;
+  border-top: 3px solid #0a1e32;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+}
+
+/* Content bên phải (chỗ chưa rõ margin-top bị thiếu đơn vị) */
+.content-right {
+  margin-top: 10;
+}
+
+/* Nút chuyển ngôn ngữ */
+.lang-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 16px;
+  display: flex;
+  align-items: center;
+  outline: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.lang-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.lang-btn img {
+  width: 28px;
+  height: 18px;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+  display: block;
+}
+
+.lang-btn:hover img {
+  transform: scale(1.1);
+}
+
+/* Mã ngôn ngữ bên cạnh cờ */
+.lang-code {
+  margin-left: 6px;
+  text-transform: uppercase;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.05em;
+}
+
+/* Animation quay spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
