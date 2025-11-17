@@ -4,7 +4,7 @@ import axios from "axios";
 const API_BASE_URL = "http://localhost:8080/api";
 
 // Token cố định (tạm thời cho đến khi có hệ thống login)
-const TEMP_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJRdeG6o24gVHLhu4sgVmnDqm4iLCJpYXQiOjE3NjMzMTkyNjgsImV4cCI6MTc2MzMyMjg2OH0.IOa3zr8ovmGLk8sb-T6xbj5E2n8e2m_QJYUe7mPdxkA";
+const TEMP_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbl91c2VyIiwicm9sZSI6IlF14bqjbiBUcuG7iyBWacOqbiIsImlhdCI6MTc2MzM3ODE3NiwiZXhwIjoxNzYzMzgxNzc2fQ.eRHNwoVn7AINo35Yfv-vc4vRyMpaFPe48IP_kgQYSDE";
 
 // Tạo instance axios với cấu hình mặc định
 const axiosInstance = axios.create({
@@ -24,13 +24,14 @@ const axiosInstance = axios.create({
  * @param {number} employeeId - ID của nhân viên
  * @returns {Promise<Array>} - Danh sách các đơn đặt xe
  */
-export const getImportRequests = async (page = 1, size = 10, employeeId = 1) => {
+// export const getImportRequests = async (page = 1, size = 10, employeeId = 1) => {
+export const getImportRequests = async (page = 1, size = 10) => {
     try {
-        const response = await axiosInstance.get("/import-request", {
+        const response = await axiosInstance.get("/import-request/me", {
             params: {
                 page,
                 size,
-                employeeId,
+                // employeeId,
             },
         });
         return response.data;
@@ -66,6 +67,55 @@ export const createImportRequest = async (data) => {
         return response.data;
     } catch (error) {
         console.error("Lỗi khi gọi API tạo đơn đặt xe:", error);
+        throw error;
+    }
+};
+
+/**
+ * NOTE: Gọi API để lấy danh sách loại xe (vehicle type)
+ * @param {number} page - Trang (bắt đầu từ 1)
+ * @param {number} size - Số item trên mỗi trang
+ * @returns {Promise<Object>} - Dữ liệu danh sách loại xe
+ */
+export const getVehicleTypes = async (page = 1, size = 10) => {
+    try {
+        const response = await axiosInstance.get("/vehicle/type", {
+            params: {
+                page,
+                size,
+            },
+        });
+        // NOTE: API trả về trong wrapper { success, data }, lấy data.content
+        return response.data.data?.content || [];
+    } catch (error) {
+        console.error("Lỗi khi gọi API lấy danh sách loại xe:", error);
+        throw error;
+    }
+};
+
+/**
+ * NOTE: Gọi API để lấy danh sách chi tiết loại xe (vehicle type detail)
+ * @param {number} page - Trang (bắt đầu từ 1)
+ * @param {number} size - Số item trên mỗi trang
+ * @param {number} vehicleTypeId - ID loại xe (tùy chọn) để lọc chi tiết của loại xe cụ thể
+ * @returns {Promise<Object>} - Dữ liệu danh sách chi tiết loại xe
+ */
+export const getVehicleTypeDetails = async (page = 1, size = 10, vehicleTypeId = null) => {
+    try {
+        const params = {
+            page,
+            size,
+        };
+        // NOTE: Nếu có vehicleTypeId, thêm vào params để lọc chi tiết của loại xe đó
+        if (vehicleTypeId) {
+            params.vehicleTypeId = vehicleTypeId;
+        }
+
+        const response = await axiosInstance.get("/vehicle/type/detail", { params });
+        // NOTE: API trả về trong wrapper { success, data }, lấy data.content
+        return response.data.data?.content || [];
+    } catch (error) {
+        console.error("Lỗi khi gọi API lấy danh sách chi tiết loại xe:", error);
         throw error;
     }
 };

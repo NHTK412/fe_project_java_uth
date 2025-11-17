@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Loader } from "lucide-react";
 import { createImportRequest } from "../../services/api/importRequestService";
+import VehicleTypeSelectorModal from "../../components/admin/VehicleTypeSelectorModal";
 
 const CreateImportRequest = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState("");
+    const [showVehicleSelector, setShowVehicleSelector] = useState(false); // NOTE: Show/hide modal chọn xe
 
     // NOTE: State cho form tạo đơn đặt xe
     const [formData, setFormData] = useState({
@@ -20,6 +22,8 @@ const CreateImportRequest = () => {
     // NOTE: State cho form thêm chi tiết sản phẩm
     const [detailForm, setDetailForm] = useState({
         vehicleTypeDetailId: "",
+        vehicleTypeName: "",
+        version: "",
         quantity: "",
     });
 
@@ -41,6 +45,18 @@ const CreateImportRequest = () => {
         }));
     };
 
+    // NOTE: Xử lý chọn loại xe từ modal 2 bước
+    const handleSelectVehicle = (selectedVehicle) => {
+        setDetailForm((prev) => ({
+            ...prev,
+            vehicleTypeDetailId: selectedVehicle.vehicleTypeDetailId,
+            vehicleTypeName: selectedVehicle.vehicleTypeName,
+            version: selectedVehicle.version,
+            vehicleImage: selectedVehicle.vehicleImage,
+        }));
+        setShowVehicleSelector(false);
+    };
+
     // NOTE: Thêm chi tiết sản phẩm vào danh sách
     const handleAddDetail = () => {
         if (!detailForm.vehicleTypeDetailId || !detailForm.quantity) {
@@ -58,7 +74,7 @@ const CreateImportRequest = () => {
             importRequestDetails: [...prev.importRequestDetails, newDetail],
         }));
 
-        setDetailForm({ vehicleTypeDetailId: "", quantity: "" });
+        setDetailForm({ vehicleTypeDetailId: "", vehicleTypeName: "", version: "", quantity: "" });
         setError(null);
     };
 
@@ -179,10 +195,9 @@ const CreateImportRequest = () => {
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required
                         >
-                            <option value="REQUESTED">Đã yêu cầu</option>
-                            <option value="APPROVED">Đã phê duyệt</option>
-                            <option value="REJECTED">Bị từ chối</option>
-                            <option value="CANCELLED">Đã hủy</option>
+                            <option value="REQUESTED">Đã Yêu Cầu</option>
+                            <option value="APPROVED">Đã Duyệt</option>
+                            <option value="REJECTED">Đã Từ Chối</option>
                         </select>
                     </div>
                 </div>
@@ -192,19 +207,29 @@ const CreateImportRequest = () => {
                     <h2 className="text-xl font-semibold text-gray-900">Chi tiết sản phẩm</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* NOTE: ID Loại xe chi tiết */}
+                        {/* NOTE: Chọn loại xe thông qua modal 2 bước */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                ID Loại xe chi tiết <span className="text-red-500">*</span>
+                                Loại xe <span className="text-red-500">*</span>
                             </label>
-                            <input
-                                type="number"
-                                name="vehicleTypeDetailId"
-                                value={detailForm.vehicleTypeDetailId}
-                                onChange={handleDetailInputChange}
-                                placeholder="VD: 1"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowVehicleSelector(true)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-left bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                {detailForm.vehicleTypeDetailId ? (
+                                    <div>
+                                        <p className="font-medium text-gray-900">{detailForm.vehicleTypeName}</p>
+                                        <p className="text-sm text-gray-600">Phiên bản: {detailForm.version}</p>
+                                        <p className="text-sm text-gray-600">ID: {detailForm.vehicleTypeDetailId}</p>
+                                    </div>
+                                ) : (
+                                    <p className="text-gray-500">-- Nhấn để chọn loại xe --</p>
+                                )}
+                            </button>
+                            <p className="text-xs text-gray-500 mt-1">
+                                Chọn loại xe chính rồi chọn phiên bản cụ thể
+                            </p>
                         </div>
 
                         {/* NOTE: Số lượng */}
@@ -298,6 +323,14 @@ const CreateImportRequest = () => {
                     </button>
                 </div>
             </form>
+
+            {/* NOTE: Modal chọn loại xe 2 bước */}
+            {showVehicleSelector && (
+                <VehicleTypeSelectorModal
+                    onSelect={handleSelectVehicle}
+                    onClose={() => setShowVehicleSelector(false)}
+                />
+            )}
         </div>
     );
 };
