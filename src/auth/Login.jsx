@@ -1,7 +1,9 @@
+// src/auth/Login.jsx
 import { useState } from "react";
-import { MdPerson, MdLock } from "react-icons/md";
+import { MdPerson, MdLock, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useLanguageContext } from "../contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { useLoginPopup } from "../contexts/LoginPopupContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 function Login() {
@@ -12,6 +14,7 @@ function Login() {
   const [error, setError] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const { openPopup } = useLoginPopup();
 
   const navigate = useNavigate();
 
@@ -36,25 +39,17 @@ function Login() {
 
       const response = await res.json();
       const token = response.data.accessToken;
+      const role = response.data.role;
+
       localStorage.setItem("token", token);
-
-    
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const subRole = payload.sub.toLowerCase(); 
-      const displayRole = payload.role;
-
-    
-      sessionStorage.setItem("usernameRole", subRole);
-      sessionStorage.setItem("displayRole", displayRole);
-
-      
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000);
-
-      if (subRole === "admin") navigate("/admin");
-      else if (subRole === "staff") navigate("/staff");
+      localStorage.setItem("role", role);
+      openPopup();
+      // Navigate theo role
+      if (role === "ROLE_ADMIN") navigate("/admin");
+      else if (role === "ROLE_EVM_STAFF") navigate("/staff");
+      else if (role === "ROLE_DEALER_STAFF") navigate("/dealer");
+      else if (role === "ROLE_DEALER_MANAGER") navigate("/dealerManager");
       else navigate("/");
-
     } catch (err) {
       setError(err.message || t("login.error.failed"));
     } finally {
@@ -137,24 +132,21 @@ function Login() {
               onClick={() => setShowPass(!showPass)}
               className="absolute right-3 p-1 text-gray-700 hover:text-black transition"
             >
-              {showPass ? "🙈" : "👁️"}
+              {showPass ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
             </button>
           </div>
 
           {/* ERROR */}
           {error && <div className="text-red-500 mb-3 text-center">{error}</div>}
 
-          {/* SUBMIT BUTTON WITH SLIDING GRADIENT */}
+          {/* SUBMIT BUTTON */}
           <button
             type="submit"
             disabled={loading}
             className="relative overflow-hidden px-6 py-2 rounded-[16px] border-2 border-black group
               transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_6px_20px_rgba(0,0,0,0.4)]"
           >
-            {/* Sliding gradient background */}
             <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-500 ease-out group-hover:w-full"></span>
-
-            {/* Text */}
             <div className="relative z-10 flex justify-center items-center w-full
                 text-white transition-colors duration-300 group-hover:text-black">
               {loading && (
@@ -165,40 +157,6 @@ function Login() {
           </button>
         </form>
       </div>
-
-      {/* SUCCESS POPUP (Framer Motion) */}
-      <AnimatePresence>
-        {showSuccess && (
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 40 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-5 right-5 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg 
-                       w-[260px] flex flex-col z-50"
-          >
-            <div className="flex justify-between items-center">
-              <span className="font-semibold">Đăng nhập thành công!</span>
-              <button
-                onClick={() => setShowSuccess(false)}
-                className="font-bold text-white hover:text-gray-200"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* PROGRESS BAR */}
-            <div className="w-full h-[4px] bg-white/30 rounded mt-3 overflow-hidden">
-              <motion.div
-                initial={{ width: "100%" }}
-                animate={{ width: 0 }}
-                transition={{ duration: 3, ease: "linear" }}
-                className="h-full bg-white"
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

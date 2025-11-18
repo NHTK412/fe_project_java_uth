@@ -1,24 +1,25 @@
+import { LanguageProvider } from "./contexts/LanguageContext";
+import { LoginPopupProvider } from "./contexts/LoginPopupContext";
+import LoginPopup from "./components/shared/LoginPopup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import routes from "./routes/routes";
-import ProtectedRoute from "./routes/ProtectedRoute";
 import Login from "./auth/Login";
+import routes from "./routes/routes";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        {routes.map(({ path, element, allowedUsers }) => (
-          <Route
-            key={path}
-            path={path}
-            element={
-              <ProtectedRoute element={element} allowedUsers={allowedUsers} />
-            }
-          />
-        ))}
-      </Routes>
-    </Router>
+    <LanguageProvider>
+      <LoginPopupProvider>
+        <Router>
+          <LoginPopup />
+          <Routes>
+            <Route path="/" element={<Login />} />
+            {routes.map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+          </Routes>
+        </Router>
+      </LoginPopupProvider>
+    </LanguageProvider>
   );
 }
 

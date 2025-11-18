@@ -1,21 +1,19 @@
-// EvmLayout.jsx
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
-// Lấy role từ sessionStorage
-const getUserRole = () => sessionStorage.getItem("usernameRole") || null;
+// Lấy role từ localStorage
+const getUserRole = () => localStorage.getItem("role") || null;
 
 const EvmLayout = () => {
   const role = getUserRole();
 
-  // Nếu không phải user EVM, redirect về trang khác
-  if (role !== "EVM_USER") {
+  // Nếu không phải staff EVM, redirect về home
+  if (role !== "ROLE_EVM_STAFF") {
     return <Navigate to="/" replace />;
   }
 
   return (
     <div className="evm-layout flex h-screen">
-      {/* Sidebar */}
       <aside className="w-64 bg-blue-800 text-white flex-shrink-0">
         <div className="p-4 font-bold text-xl border-b border-blue-700">
           EVM Panel
@@ -29,12 +27,10 @@ const EvmLayout = () => {
         </nav>
       </aside>
 
-      {/* Main content */}
       <main className="flex-1 bg-gray-100 p-6 overflow-auto">
         <header className="mb-6">
           <h1 className="text-2xl font-bold">EVM Dashboard</h1>
         </header>
-        {/* Outlet sẽ render component con dựa vào route */}
         <Outlet />
       </main>
     </div>

@@ -25,6 +25,7 @@ export const LanguageProvider = ({ children }) => {
         "login.username": "Tên đăng nhập",
         "login.password": "Mật khẩu",
         "login.submit": "Đăng nhập",
+        "login.success": "Đăng nhập thành công",
       },
       en: {
         "login.error.enterCredentials": "Please enter username and password!",
@@ -35,6 +36,7 @@ export const LanguageProvider = ({ children }) => {
         "login.username": "Username",
         "login.password": "Password",
         "login.submit": "Login",
+        "login.success": "Login successful", 
       },
     };
     return translations[currentLanguage][key] || key;
