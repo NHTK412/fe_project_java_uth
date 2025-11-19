@@ -1,13 +1,14 @@
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AdminLayout from "./layouts/AdminLayout";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
 
 function App() {
   return (
     <>
       <ToastContainer />
-      <AdminLayout />
+      <RouterProvider router={router} />
     </>
   );
 }

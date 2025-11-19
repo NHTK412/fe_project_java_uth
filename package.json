@@ -10,11 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.14.4",
+    "@amcharts/amcharts5-geodata": "^5.1.5",
     "@tailwindcss/vite": "^4.1.14",
     "lucide-react": "^0.553.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.6",
     "react-toastify": "^11.0.5",
+    "recharts": "^3.4.1",
     "tailwindcss": "^4.1.14"
   },
   "devDependencies": {
