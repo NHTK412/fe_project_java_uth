@@ -17,6 +17,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   const [activeMenu, setActiveMenu] = useState("dashboard");
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   // NOTE: Map menu items với các đường dẫn tương ứng
   const menuItems = useMemo(
@@ -45,7 +46,25 @@ const Sidebar = () => {
   }, [navigate]);
 
   const handleLogout = useCallback(() => {
-    // console.log("Logging out...");
+    setShowLogoutConfirm(true);
+  }, []);
+
+  // const navigate = useNavigate();
+
+  const confirmLogout = useCallback(() => {
+    setShowLogoutConfirm(false);
+    // clear auth and redirect to login
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+    } catch (err) {
+      // ignore
+    }
+    navigate("/");
+  }, [navigate]);
+
+  const cancelLogout = useCallback(() => {
+    setShowLogoutConfirm(false);
   }, []);
 
   return (
@@ -190,6 +209,38 @@ const Sidebar = () => {
           )}
         </button>
       </div>
+
+      {/* Popup xác nhận đăng xuất */}
+      {showLogoutConfirm && (
+        <div
+          className="fixed inset-0 flex items-center justify-center z-50 bg-black/20 backdrop-blur-sm"
+          onClick={cancelLogout}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="bg-white rounded-lg shadow-lg p-6 w-80"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-lg font-semibold mb-4">Xác nhận đăng xuất</h2>
+            <p className="mb-6">Bạn có chắc chắn muốn đăng xuất không?</p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={cancelLogout}
+                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+              >
+                Hủy
+              </button>
+              <button
+                onClick={confirmLogout}
+                className="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600"
+              >
+                Đăng xuất
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </aside>
   );
 };
