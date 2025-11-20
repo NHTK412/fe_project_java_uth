@@ -1,14 +1,24 @@
-import "./App.css";
+import { LanguageProvider } from "./contexts/LanguageContext";
+// Removed LoginPopupProvider and LoginPopup
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./services/auth/Login";
+import routes from "./routes/routes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AdminLayout from "./layouts/AdminLayout";
 
 function App() {
   return (
-    <>
-      <ToastContainer />
-      <AdminLayout />
-    </>
+    <LanguageProvider>
+      <Router>
+        <ToastContainer />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          {routes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Routes>
+      </Router>
+    </LanguageProvider>
   );
 }
 
