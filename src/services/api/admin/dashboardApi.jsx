@@ -108,7 +108,7 @@ export const fetchTotalDealers = async () => {
 // Tổng khách hàng
 export const fetchTotalEmployees = async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/employees/total-count`, {
+    const res = await fetch(`${API_BASE_URL}/customers/total-count`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ export const fetchTotalEmployees = async () => {
 // Tổng doanh thu
 export const fetchTotalRevenue = async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/revenue/total`, {
+    const res = await fetch(`${API_BASE_URL}/reports/revenue/summary/all`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
