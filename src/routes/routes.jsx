@@ -1,4 +1,3 @@
-
 import { Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminLayout from "../layouts/AdminLayout";
@@ -6,15 +5,46 @@ import EvmLayout from "../layouts/EvmLayout";
 import DealerLayout from "../layouts/DealerLayout";
 import DealerManagerLayout from "../layouts/DealerManagerLayout";
 
+// Import các pages admin
+import Dashboard from "../pages/admin/Dashboard";
+import Users from "../pages/admin/UserManagement";
+import Inventory from "../pages/admin/InventoryReport";
+import Revenue from "../pages/admin/RevenueReport";
+import Settings from "../pages/admin/Setting";
+import FeedbackManagement from "../pages/admin/FeedbackManagement";
+
 const routes = [
   {
     path: "/admin",
     element: (
-      <ProtectedRoute
-        element={<AdminLayout />}
-        allowedUsers={["ROLE_ADMIN"]}
-      />
+      <ProtectedRoute element={<AdminLayout />} allowedUsers={["ROLE_ADMIN"]} />
     ),
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "inventory",
+        element: <Inventory />,
+      },
+      {
+        path: "revenue",
+        element: <Revenue />,
+      },
+      {
+        path: "feedback",
+        element: <FeedbackManagement />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
+      },
+    ],
   },
   {
     path: "/staff",

@@ -4,10 +4,10 @@ import { Search, Bell, MessageSquareDot } from "lucide-react";
 const AVATAR_GRADIENT = "linear-gradient(135deg, #8b5cf6, #2563eb)";
 
 const ROLE_MAP = {
-  ADMIN: "Quản trị viên",
-  MANAGER: "Quản lý",
-  SALES_STAFF: "Nhân viên kinh doanh",
-  DELIVERY_STAFF: "Nhân viên giao hàng",
+  ROLE_ADMIN: "Quản trị viên",
+  ROLE_DEALER_MANAGER: "Quản lý đại lý",
+  ROLE_DEALER_STAFF: "Nhân viên đại lý",
+  ROLE_EVM_STAFF: "Nhân viên hãng",
 };
 
 const IconButton = ({ icon: Icon, tooltip, badge, ariaLabel }) => (
@@ -63,7 +63,6 @@ const UserAvatar = ({ fullName, position, avatarInitials }) => (
   </div>
 );
 
-// Main Header
 const Header = () => {
   const [userData] = useState({
     fullName: "ADMIN",
@@ -111,14 +110,12 @@ const Header = () => {
       </div>
 
       <div className="flex items-center gap-4 mr-8">
-        {/* Feedbacks */}
         <IconButton
           icon={MessageSquareDot}
           tooltip="Feedbacks"
           ariaLabel="Xem feedback"
         />
 
-        {/* Notifications */}
         <div className="flex items-center gap-4 pl-4 border-l border-gray-200">
           <IconButton
             icon={Bell}
@@ -128,7 +125,6 @@ const Header = () => {
           />
         </div>
 
-        {/* User Info */}
         <div className="pl-4 border-l border-gray-200">
           <UserAvatar
             fullName={userData.fullName}
