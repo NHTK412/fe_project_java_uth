@@ -74,7 +74,6 @@ const VietnamMap = ({ dealers = [] }) => {
           }
         );
 
-        // tạo điểm đại lý
         const pointSeries = chart.series.push(
           am5map.MapPointSeries.new(root, {})
         );
@@ -118,7 +117,6 @@ const VietnamMap = ({ dealers = [] }) => {
           });
         });
 
-        // vị trí các thành phố và đảo Việt Nam
         const vietnamCities = [
           {
             title: "TP. Hồ Chí Minh",
@@ -200,7 +198,6 @@ const VietnamMap = ({ dealers = [] }) => {
           );
         });
 
-        // Animate on load
         chart.appear(1000, 100);
       } catch (error) {
         console.error("Error loading map:", error);

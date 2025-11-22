@@ -227,7 +227,6 @@ const RevenueReport = () => {
       console.log(" Summary response:", summaryRes);
       console.log(" Status breakdown:", statusBreakdown);
 
-      // Xử lý report data
       let reportList = [];
       let total = 0;
       if (Array.isArray(reportRes)) {
@@ -245,17 +244,14 @@ const RevenueReport = () => {
       setTotalElements(total);
       setTotalPages(Math.ceil(total / pageSize) || 1);
 
-      // Xử lý summary data - kết hợp tổng + breakdown theo status
       const summaryTotal = summaryRes?.data || summaryRes;
 
       const mappedSummary = {
-        // Tổng từ API /summary/all
         totalRevenue: summaryTotal?.totalRevenue || 0,
         totalOrders: summaryTotal?.totalOrders || 0,
         totalDiscount: summaryTotal?.totalDiscount || 0,
         netRevenue: summaryTotal?.netRevenue || 0,
 
-        // Theo status - từ API /summary/status/{status}
         deliveredOrders: statusBreakdown?.DELIVERED?.totalOrders || 0,
         deliveredRevenue: statusBreakdown?.DELIVERED?.totalRevenue || 0,
 
@@ -273,7 +269,6 @@ const RevenueReport = () => {
         pendingDeliveryRevenue:
           statusBreakdown?.PENDING_DELIVERY?.totalRevenue || 0,
 
-        // Cho pie chart
         revenueByStatus: {
           PENDING: statusBreakdown?.PENDING?.totalRevenue || 0,
           PAID: statusBreakdown?.PAID?.totalRevenue || 0,
@@ -286,7 +281,7 @@ const RevenueReport = () => {
 
       setSummaryData(mappedSummary);
     } catch (err) {
-      showError("Không thể tải dữ liệu báo cáo");
+      showError("Not able to load report data");
       console.error("Load error:", err);
     } finally {
       setLoading(false);
@@ -314,9 +309,9 @@ const RevenueReport = () => {
       window.URL.revokeObjectURL(url);
       a.remove();
 
-      showSuccess("Xuất báo cáo thành công!");
+      showSuccess("Export report successfully");
     } catch (err) {
-      showError("Không thể xuất báo cáo");
+      showError("Not able to export report");
       console.error(err);
     } finally {
       setExporting(false);
@@ -343,7 +338,6 @@ const RevenueReport = () => {
     setCurrentPage(1);
   };
 
-  // Prepare chart data
   const chartData = reportData.map((item) => ({
     name: item.period || item.agencyName || "N/A",
     revenue: item.totalRevenue || 0,
@@ -409,7 +403,6 @@ const RevenueReport = () => {
         </div>
       </div>
 
-      {/* Filters Panel */}
       {showFilters && (
         <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
@@ -504,7 +497,6 @@ const RevenueReport = () => {
         </div>
       )}
 
-      {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           icon={DollarSign}
@@ -540,9 +532,7 @@ const RevenueReport = () => {
         />
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Revenue Bar Chart */}
         <div className="lg:col-span-2 bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-800 mb-6">
             Biểu đồ doanh thu
@@ -587,7 +577,6 @@ const RevenueReport = () => {
           )}
         </div>
 
-        {/* Status Pie Chart */}
         <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">
             Phân bổ theo trạng thái
@@ -646,7 +635,6 @@ const RevenueReport = () => {
         </div>
       </div>
 
-      {/* Data Table */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-800">
@@ -727,7 +715,6 @@ const RevenueReport = () => {
           </table>
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50">
             <p className="text-sm text-gray-500">

@@ -21,8 +21,6 @@ import {
 } from "../../components/shared/toast";
 import feedbackApi from "../../services/api/admin/feedbackApi";
 
-// ========== ENUM MAPPING THEO BACKEND ==========
-// FeedbackStatusEnum: NOT_YET_PROCESSED, IN_PROCESSED, PROCESSED
 const FEEDBACK_STATUS = {
   "Not yet processed": {
     label: "Chưa xử lý",
@@ -47,13 +45,11 @@ const FEEDBACK_STATUS = {
   },
 };
 
-// FeedbackHandlingMethodEnum: PHONE_NUMBER, EMAIL
 const HANDLING_METHODS = {
   "Phone Number": "Điện thoại",
   Email: "Email",
 };
 
-// FeedbackHandlingStatusEnum: COMPLETE
 const HANDLING_STATUS = {
   Complete: "Hoàn thành",
 };
@@ -75,10 +71,9 @@ const FeedbackManagement = () => {
     status: "",
   });
 
-  // Form xử lý - theo enum backend (không có handlingStatus vì backend tự transition)
   const [handleForm, setHandleForm] = useState({
     feedbackHandlingContent: "",
-    feedbackHandlingMethod: "Email", // Email hoặc Phone Number
+    feedbackHandlingMethod: "Email",
   });
 
   const [statistics, setStatistics] = useState({
@@ -105,19 +100,19 @@ const FeedbackManagement = () => {
         size: pageSize,
       });
 
-      console.log("📋 Feedback List Response:", response);
+      console.log("Feedback List Response:", response);
 
       if (response.success && response.data) {
         setData(response.data.content || []);
         setTotalPages(response.data.totalPages || 1);
         setTotalElements(response.data.totalElements || 0);
       } else {
-        showError("Không thể tải danh sách phản hồi");
+        showError("Don't fetch feedback list");
         setData([]);
       }
     } catch (error) {
-      console.error("❌ Fetch list error:", error);
-      showError("Lỗi kết nối server");
+      console.error("Fetch list error:", error);
+      showError("Don't connect to server");
       setData([]);
     } finally {
       setLoading(false);
@@ -126,7 +121,6 @@ const FeedbackManagement = () => {
 
   const fetchStatistics = async () => {
     try {
-      // Gọi API count theo displayName của enum
       const [notYetRes, inProcessRes, processedRes, totalRes] =
         await Promise.all([
           feedbackApi
@@ -146,27 +140,27 @@ const FeedbackManagement = () => {
         total: totalRes?.data?.totalElements || 0,
       });
 
-      console.log("📊 Statistics fetched:", {
+      console.log("Statistics fetched:", {
         notYetProcessed: notYetRes?.data,
         inProcessed: inProcessRes?.data,
         processed: processedRes?.data,
         total: totalRes?.data?.totalElements,
       });
     } catch (error) {
-      console.error("❌ Fetch statistics error:", error);
+      console.error("Fetch statistics error:", error);
     }
   };
 
   const handleViewDetail = async (feedbackId) => {
     try {
       const response = await feedbackApi.getFeedbackDetail(feedbackId);
-      console.log("🔍 Detail Response:", response);
+      console.log("Detail Response:", response);
       if (response.success && response.data) {
         setSelectedFeedback(response.data);
         setShowDetailModal(true);
       }
     } catch (error) {
-      showError("Không thể tải chi tiết phản hồi");
+      showError("Don't load feedback detail");
     }
   };
 
@@ -181,7 +175,7 @@ const FeedbackManagement = () => {
 
   const handleSubmitResolution = async () => {
     if (!handleForm.feedbackHandlingContent.trim()) {
-      showInfo("Vui lòng nhập nội dung xử lý");
+      showInfo("Please enter handling content");
       return;
     }
 
@@ -191,18 +185,18 @@ const FeedbackManagement = () => {
         handleForm
       );
 
-      console.log("✅ Handle Response:", response);
+      console.log("Handle Response:", response);
 
       if (response.success) {
-        showSuccess("Xử lý phản hồi thành công");
+        showSuccess("Handle feedback successfully");
         setShowHandleModal(false);
         setShowDetailModal(false);
         fetchFeedbackList();
         fetchStatistics();
       }
     } catch (error) {
-      console.error("❌ Handle error:", error);
-      showError("Không thể xử lý phản hồi");
+      console.error("Handle error:", error);
+      showError("Don't handle feedback");
     }
   };
 
@@ -211,18 +205,13 @@ const FeedbackManagement = () => {
     return new Date(dateString).toLocaleString("vi-VN");
   };
 
-  // Kiểm tra xem feedback có thể xử lý được không
-  // Backend sẽ tự động chuyển: NOT_YET_PROCESSED → IN_PROCESSED → PROCESSED trong 1 lần gọi
-  // Chỉ xử lý được khi:
-  // 1. Status là "Not yet processed"
-  // 2. HOẶC chưa có feedbackHandlingId (chưa được xử lý)
+  // NOT_YET_PROCESSED =>  IN_PROCESSED =>  PROCESSED
   const canHandle = (feedback) => {
     const hasNoHandling = !feedback.feedbackHandlingId;
     const isNotProcessed = feedback.status !== "Processed";
     return hasNoHandling && isNotProcessed;
   };
 
-  // Lấy thông tin status
   const getStatusInfo = (status) => {
     return (
       FEEDBACK_STATUS[status] || {
@@ -274,7 +263,6 @@ const FeedbackManagement = () => {
         </div>
       </div>
 
-      {/* Statistics Cards - Thiết kế khác biệt rõ ràng */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Tổng phản hồi */}
         <div className="bg-white rounded-xl p-5 border border-gray-200 hover:shadow-lg transition-all duration-200">
@@ -291,7 +279,6 @@ const FeedbackManagement = () => {
           </div>
         </div>
 
-        {/* Chưa xử lý - Màu đỏ nổi bật */}
         <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-5 border-2 border-red-200 hover:shadow-lg transition-all duration-200 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-20 h-20 bg-red-200/30 rounded-full -mr-10 -mt-10"></div>
           <div className="flex items-center gap-3 relative">
@@ -307,12 +294,11 @@ const FeedbackManagement = () => {
           </div>
           {statistics.notYetProcessed > 0 && (
             <div className="mt-2 text-xs text-red-500 font-medium">
-              ⚠️ Cần xử lý ngay
+              Cần xử lý ngay !!!
             </div>
           )}
         </div>
 
-        {/* Đang xử lý - Màu vàng */}
         <div className="bg-gradient-to-br from-yellow-50 to-amber-100 rounded-xl p-5 border-2 border-yellow-200 hover:shadow-lg transition-all duration-200 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-20 h-20 bg-yellow-200/30 rounded-full -mr-10 -mt-10"></div>
           <div className="flex items-center gap-3 relative">
@@ -330,7 +316,6 @@ const FeedbackManagement = () => {
           </div>
         </div>
 
-        {/* Đã xử lý - Màu xanh */}
         <div className="bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-5 border-2 border-green-200 hover:shadow-lg transition-all duration-200 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-20 h-20 bg-green-200/30 rounded-full -mr-10 -mt-10"></div>
           <div className="flex items-center gap-3 relative">
@@ -347,7 +332,6 @@ const FeedbackManagement = () => {
         </div>
       </div>
 
-      {/* Filters Panel */}
       {showFilters && (
         <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
@@ -387,7 +371,6 @@ const FeedbackManagement = () => {
         </div>
       )}
 
-      {/* Data Table */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-800">
@@ -526,7 +509,6 @@ const FeedbackManagement = () => {
           )}
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50">
             <p className="text-sm text-gray-500">
@@ -554,7 +536,6 @@ const FeedbackManagement = () => {
         )}
       </div>
 
-      {/* Detail Modal */}
       {showDetailModal && selectedFeedback && (
         <div className="fixed inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200">
@@ -572,7 +553,6 @@ const FeedbackManagement = () => {
               </div>
             </div>
             <div className="p-6 space-y-6">
-              {/* Thông tin phản hồi */}
               <div className="bg-blue-50 rounded-xl p-5 border border-blue-100">
                 <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
                   <MessageCircle className="w-5 h-5 text-blue-600" />
@@ -618,7 +598,6 @@ const FeedbackManagement = () => {
                 </div>
               </div>
 
-              {/* Thông tin khách hàng */}
               <div className="bg-purple-50 rounded-xl p-5 border border-purple-100">
                 <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
                   <User className="w-5 h-5 text-purple-600" />
@@ -652,7 +631,6 @@ const FeedbackManagement = () => {
                 </div>
               </div>
 
-              {/* Thông tin xử lý (nếu đã xử lý) */}
               {selectedFeedback.feedbackHandlingId && (
                 <div className="bg-green-50 rounded-xl p-5 border border-green-100">
                   <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
@@ -716,7 +694,6 @@ const FeedbackManagement = () => {
                 </div>
               )}
 
-              {/* Nút xử lý nếu chưa hoàn tất */}
               {canHandle(selectedFeedback) && (
                 <div className="flex gap-3 pt-4 border-t">
                   <button
@@ -736,7 +713,6 @@ const FeedbackManagement = () => {
         </div>
       )}
 
-      {/* Handle Modal */}
       {showHandleModal && selectedFeedback && (
         <div className="fixed inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl max-w-xl w-full shadow-2xl border border-gray-200">
@@ -759,7 +735,6 @@ const FeedbackManagement = () => {
               </div>
             </div>
             <div className="p-6 space-y-5">
-              {/* Thông tin feedback đang xử lý */}
               <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
                 <div className="flex items-center gap-2 mb-3">
                   <User className="w-4 h-4 text-gray-500" />
@@ -780,7 +755,6 @@ const FeedbackManagement = () => {
                 </p>
               </div>
 
-              {/* Form xử lý */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Phương thức xử lý <span className="text-red-500">*</span>
@@ -800,7 +774,6 @@ const FeedbackManagement = () => {
                 </select>
               </div>
 
-              {/* Hiển thị trạng thái chuyển đổi */}
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
                 <p className="text-sm text-blue-700 font-medium flex items-center gap-2">
                   <MessageCircle className="w-4 h-4" />

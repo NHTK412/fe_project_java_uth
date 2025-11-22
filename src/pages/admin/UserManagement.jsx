@@ -65,7 +65,7 @@ const UserManagement = () => {
       }
     } catch (error) {
       console.error("Fetch error:", error);
-      showError("Không thể tải dữ liệu");
+      showError("Not able to fetch data");
     } finally {
       setLoading(false);
     }
@@ -121,14 +121,14 @@ const UserManagement = () => {
       const response = await api.delete(id);
 
       if (response.success) {
-        showSuccess("Xóa thành công!");
+        showSuccess("Delete successfully!");
         fetchData();
       } else {
-        showError(response.message || "Xóa không thành công");
+        showError(response.message || "Delete not successful");
       }
     } catch (error) {
       console.error("Delete error:", error);
-      showError("Có lỗi xảy ra. Vui lòng thử lại sau");
+      showError("An error occurred. Please try again later");
     } finally {
       setLoading(false);
       setDeleteConfirm({ open: false, item: null });
@@ -142,9 +142,32 @@ const UserManagement = () => {
       let response;
 
       if (modalMode === "create") {
-        response = await api.create(formData);
+        const createData =
+          activeTab === "employee"
+            ? {
+                username: formData.employeeName
+                  ?.toLowerCase()
+                  .replace(/\s+/g, ""),
+                employeeName: formData.employeeName,
+                gender: formData.gender || null,
+                birthDate: formData.birthDate || null,
+                phoneNumber: formData.phoneNumber,
+                email: formData.email,
+                address: formData.address || null,
+                role: formData.role,
+                agencyId: formData.agencyId || null,
+              }
+            : {
+                customerName: formData.customerName,
+                gender: formData.gender || null,
+                birthDate: formData.birthDate || null,
+                phoneNumber: formData.phoneNumber,
+                email: formData.email,
+                address: formData.address || null,
+                membershipLevel: formData.membershipLevel || "BRONZE",
+              };
+        response = await api.create(createData);
       } else {
-        //update cần giữ lại một số trường không có trong form
         const id = selectedItem.employeeId || selectedItem.customerId;
         const updateData =
           activeTab === "employee"
@@ -153,21 +176,21 @@ const UserManagement = () => {
                   selectedItem.username ||
                   formData.employeeName?.toLowerCase().replace(/\s+/g, ""),
                 employeeName: formData.employeeName,
-                gender: selectedItem.gender || "MALE",
-                birthDate: selectedItem.birthDate || "2000-01-01",
+                gender: formData.gender || selectedItem.gender || null,
+                birthDate: formData.birthDate || selectedItem.birthDate || null,
                 phoneNumber: formData.phoneNumber,
                 email: formData.email,
-                address: formData.address,
+                address: formData.address || selectedItem.address || null,
                 role: formData.role,
                 agencyId: formData.agencyId || null,
               }
             : {
                 customerName: formData.customerName,
-                gender: selectedItem.gender || "MALE",
-                birthDate: selectedItem.birthDate || "2000-01-01",
+                gender: formData.gender || selectedItem.gender || null,
+                birthDate: formData.birthDate || selectedItem.birthDate || null,
                 phoneNumber: formData.phoneNumber,
                 email: formData.email,
-                address: formData.address,
+                address: formData.address || selectedItem.address || null,
                 membershipLevel: formData.membershipLevel,
               };
         response = await api.update(id, updateData);
@@ -176,8 +199,8 @@ const UserManagement = () => {
       if (response.success) {
         showSuccess(
           modalMode === "create"
-            ? "Thêm mới thành công!"
-            : "Cập nhật thành công!"
+            ? "Add new successfully!"
+            : "Update successfully!"
         );
         setModalOpen(false);
         fetchData();
@@ -186,11 +209,11 @@ const UserManagement = () => {
           typeof response.data === "object"
             ? Object.values(response.data).join(", ")
             : response.message;
-        showError(errorMsg || "Thao tác thất bại");
+        showError(errorMsg || "Operation failed");
       }
     } catch (error) {
       console.error("Submit error:", error);
-      showError("Có lỗi xảy ra");
+      showError("An error occurred");
     } finally {
       setSubmitLoading(false);
     }
@@ -203,7 +226,7 @@ const UserManagement = () => {
 
   const handleExport = () => {
     if (!data || data.length === 0) {
-      showInfo("Không có dữ liệu để xuất");
+      showInfo("No data to export");
       return;
     }
 
@@ -274,7 +297,7 @@ const UserManagement = () => {
     link.click();
     document.body.removeChild(link);
 
-    showSuccess("Xuất CSV thành công");
+    showSuccess("Export CSV successfully");
   };
 
   const filteredData = data.filter((item) => {
@@ -290,7 +313,6 @@ const UserManagement = () => {
 
   return (
     <div className="space-y-6 p-1">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
@@ -331,7 +353,6 @@ const UserManagement = () => {
         })}
       </div>
 
-      {/* Lọc*/}
       <UserFilters
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
@@ -342,7 +363,6 @@ const UserManagement = () => {
         type={activeTab}
       />
 
-      {/* Bảng */}
       <UserTable
         data={filteredData}
         type={activeTab}
@@ -354,7 +374,6 @@ const UserManagement = () => {
         onDelete={handleDelete}
       />
 
-      {/* Modal */}
       <UserModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -365,7 +384,6 @@ const UserManagement = () => {
         loading={submitLoading}
       />
 
-      {/* Xác nhận xóa */}
       {deleteConfirm.open && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm"

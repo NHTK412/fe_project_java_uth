@@ -33,7 +33,6 @@ const InventoryReport = () => {
 
   const [showFilters, setShowFilters] = useState(false);
 
-  // VehicleStatusEnums
   const statusOptions = [
     { value: "", label: "Tất cả" },
     { value: "IN_STOCK", label: "Tồn Kho" },
@@ -42,12 +41,10 @@ const InventoryReport = () => {
     { value: "TEST_DRIVE", label: "Xe Lái Thử" },
   ];
 
-  // Fetch báo cáo tồn kho
   const fetchReport = async (params = {}) => {
     setLoading(true);
     try {
       const result = await inventoryApi.getInventoryReport(params);
-      // console.log("API Response:", result);
 
       if (result.success && result.data) {
         setData(result.data);
@@ -55,25 +52,23 @@ const InventoryReport = () => {
         const hasFilters = Object.keys(params).length > 0;
         if (hasFilters) {
           if (result.data.length === 0) {
-            showInfo("Không tìm thấy kết quả phù hợp");
+            showInfo("Not found any matching results");
           } else {
-            showSuccess(`Tìm thấy ${result.data.length} kết quả`);
+            showSuccess(`Found ${result.data.length} results`);
           }
         }
       } else {
-        showError("Lấy dữ liệu thất bại");
+        showError("Failed to fetch data");
         setData([]);
       }
     } catch (err) {
-      showError("Lỗi khi kết nối server");
-      // console.error("Fetch error:", err);
+      showError("Failed to connect to server");
       setData([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Kiểm tra filter có lọc gì không
   const hasActiveFilters = () => {
     return (
       filters.agencyId ||
@@ -84,12 +79,11 @@ const InventoryReport = () => {
     );
   };
 
-  // Xử lý tìm kiếm/lọc
   const handleSearch = (e) => {
     e.preventDefault();
 
     if (!hasActiveFilters()) {
-      showInfo("Vui lòng nhập ít nhất một điều kiện lọc");
+      showInfo("Please enter at least one filter condition");
       return;
     }
 
@@ -100,12 +94,10 @@ const InventoryReport = () => {
     if (filters.fromDate) params.fromDate = filters.fromDate;
     if (filters.toDate) params.toDate = filters.toDate;
 
-    // console.log("Params gửi lên API:", params);
     setIsFiltered(true);
     fetchReport(params);
   };
 
-  // Reset bộ lọc
   const handleReset = () => {
     setFilters({
       agencyId: "",
@@ -116,10 +108,9 @@ const InventoryReport = () => {
     });
     setData([]);
     setIsFiltered(false);
-    showInfo("Đã xóa bộ lọc");
+    showInfo("Filters cleared");
   };
 
-  // Load toàn bộ data
   const handleLoadAll = () => {
     setIsFiltered(false);
     fetchReport();
@@ -128,7 +119,7 @@ const InventoryReport = () => {
   // Export Excel
   const handleExport = async () => {
     try {
-      showInfo("Đang xuất báo cáo...");
+      showInfo("Exporting report...");
 
       const params = {};
       if (filters.agencyId) params.agencyId = filters.agencyId;
@@ -148,14 +139,12 @@ const InventoryReport = () => {
       link.remove();
       window.URL.revokeObjectURL(url);
 
-      showSuccess("Xuất báo cáo thành công");
+      showSuccess("Export report successfully");
     } catch (err) {
-      showError("Xuất báo cáo thất bại");
-      // console.error("Export error:", err);
+      showError("Export report failed");
     }
   };
 
-  // Format số tiền
   const formatCurrency = (num) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -163,12 +152,10 @@ const InventoryReport = () => {
     }).format(num || 0);
   };
 
-  // Format số lượng
   const formatQuantity = (num) => {
     return new Intl.NumberFormat("vi-VN").format(num || 0);
   };
 
-  // Tính tổng
   const totalValue = data.reduce(
     (sum, item) => sum + (item.totalValue || 0),
     0
@@ -222,7 +209,6 @@ const InventoryReport = () => {
         </div>
       </div>
 
-      {/* Filters Panel - Đồng bộ style với RevenueReport */}
       {showFilters && (
         <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
@@ -236,7 +222,6 @@ const InventoryReport = () => {
           </div>
           <form onSubmit={handleSearch}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              {/* Agency ID */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1.5">
                   Đại lý (ID)
@@ -253,7 +238,6 @@ const InventoryReport = () => {
                 />
               </div>
 
-              {/* Vehicle Type ID */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1.5">
                   Loại xe (ID)
@@ -270,7 +254,6 @@ const InventoryReport = () => {
                 />
               </div>
 
-              {/* Status */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1.5">
                   Trạng thái
@@ -290,7 +273,6 @@ const InventoryReport = () => {
                 </select>
               </div>
 
-              {/* From Date */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1.5">
                   Từ ngày
@@ -305,7 +287,6 @@ const InventoryReport = () => {
                 />
               </div>
 
-              {/* To Date */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1.5">
                   Đến ngày
@@ -346,7 +327,6 @@ const InventoryReport = () => {
         </div>
       )}
 
-      {/* Summary Cards - Đồng bộ style với RevenueReport */}
       {data.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="bg-white rounded-xl p-5 border border-blue-100 hover:shadow-md transition-all duration-200">
@@ -419,7 +399,6 @@ const InventoryReport = () => {
         </div>
       )}
 
-      {/* Data Table - Đồng bộ style với RevenueReport */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-800">

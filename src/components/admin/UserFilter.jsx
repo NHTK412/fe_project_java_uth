@@ -70,7 +70,6 @@ const UserFilters = ({
         Xuất CSV
       </button>
 
-      {/* Làm mới */}
       <button
         onClick={onRefresh}
         className="p-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-gray-600"

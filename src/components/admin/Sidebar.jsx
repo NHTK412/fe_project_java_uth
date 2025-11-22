@@ -50,7 +50,7 @@ const Sidebar = () => {
       {
         path: "/admin/feedback",
         icon: MessageSquare,
-        label: "Phản hồi khách hàng",
+        label: "Phản hồi",
       },
     ],
     []
