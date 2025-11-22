@@ -15,8 +15,6 @@ export const inventoryApi = {
         ? `${API_BASE_URL}/reports/inventory?${query}`
         : `${API_BASE_URL}/reports/inventory`;
 
-      // console.log("Test call API:", url);
-
       const res = await fetch(url, {
         method: "GET",
         headers: {
@@ -27,12 +25,11 @@ export const inventoryApi = {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Lấy báo cáo thất bại");
+        throw new Error(errorData.message || "Get inventory report failed");
       }
 
       return await res.json();
     } catch (error) {
-      // console.error("Lấy báo cáo thất bại: ", error);
       throw error;
     }
   },
@@ -59,7 +56,7 @@ export const inventoryApi = {
       });
 
       if (!res.ok) {
-        throw new Error("Xuất báo cáo thất bại");
+        throw new Error("Export inventory report failed");
       }
 
       const blob = await res.blob();
@@ -67,12 +64,11 @@ export const inventoryApi = {
       if (blob.type === "application/json") {
         const text = await blob.text();
         const error = JSON.parse(text);
-        throw new Error(error.message || "Xuất báo cáo thất bại");
+        throw new Error(error.message || "Export inventory report failed");
       }
 
       return blob;
     } catch (error) {
-      // console.error("Xuất báo cáo thất bại:", error);
       throw error;
     }
   },
@@ -90,12 +86,11 @@ export const inventoryApi = {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Lấy báo cáo thất bại");
+        throw new Error(errorData.message || "Get inventory report failed");
       }
 
       return await res.json();
     } catch (error) {
-      // console.error("Lấy báo cáo thất bại (POST):", error);
       throw error;
     }
   },
@@ -112,7 +107,7 @@ export const inventoryApi = {
       });
 
       if (!res.ok) {
-        throw new Error("Xuất báo cáo thất bại");
+        throw new Error("Export inventory report failed");
       }
 
       const blob = await res.blob();
@@ -120,12 +115,11 @@ export const inventoryApi = {
       if (blob.type === "application/json") {
         const text = await blob.text();
         const error = JSON.parse(text);
-        throw new Error(error.message || "Xuất báo cáo thất bại");
+        throw new Error(error.message || "Export inventory report failed");
       }
 
       return blob;
     } catch (error) {
-      // console.error("Xuất báo cáo thất bại (POST):", error);
       throw error;
     }
   },

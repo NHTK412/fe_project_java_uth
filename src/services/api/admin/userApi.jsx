@@ -1,9 +1,9 @@
-const API_BASE = "http://localhost:8080/api";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
 
 const getHeaders = () => {
   const token =
     localStorage.getItem("token") || localStorage.getItem("accessToken");
-  // console.log("Test lấy token:", token);
   return {
     "Content-Type": "application/json",
     ...(token && { Authorization: `Bearer ${token}` }),
@@ -19,21 +19,21 @@ export const employeeApi = {
     sortDir = "asc"
   ) => {
     const res = await fetch(
-      `${API_BASE}/employees?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
+      `${API_BASE_URL}/employees?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
       { headers: getHeaders() }
     );
     return res.json();
   },
 
   getById: async (id) => {
-    const res = await fetch(`${API_BASE}/employees/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/employees/${id}`, {
       headers: getHeaders(),
     });
     return res.json();
   },
 
   create: async (data) => {
-    const res = await fetch(`${API_BASE}/employees`, {
+    const res = await fetch(`${API_BASE_URL}/employees`, {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify(data),
@@ -42,7 +42,7 @@ export const employeeApi = {
   },
 
   update: async (id, data) => {
-    const res = await fetch(`${API_BASE}/employees/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/employees/${id}`, {
       method: "PUT",
       headers: getHeaders(),
       body: JSON.stringify(data),
@@ -51,7 +51,7 @@ export const employeeApi = {
   },
 
   delete: async (id) => {
-    const res = await fetch(`${API_BASE}/employees/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/employees/${id}`, {
       method: "DELETE",
       headers: getHeaders(),
     });
@@ -60,7 +60,7 @@ export const employeeApi = {
 
   getByRole: async (role, page = 0, size = 10) => {
     const res = await fetch(
-      `${API_BASE}/employees/by-position?role=${role}&page=${page}&size=${size}`,
+      `${API_BASE_URL}/employees/by-position?role=${role}&page=${page}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();
@@ -68,7 +68,7 @@ export const employeeApi = {
 
   getByAgency: async (agencyId, page = 0, size = 10) => {
     const res = await fetch(
-      `${API_BASE}/employees/agencies/${agencyId}?page=${page}&size=${size}`,
+      `${API_BASE_URL}/employees/agencies/${agencyId}?page=${page}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();
@@ -84,21 +84,21 @@ export const customerApi = {
     sortDir = "asc"
   ) => {
     const res = await fetch(
-      `${API_BASE}/customers?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
+      `${API_BASE_URL}/customers?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
       { headers: getHeaders() }
     );
     return res.json();
   },
 
   getById: async (id) => {
-    const res = await fetch(`${API_BASE}/customers/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/customers/${id}`, {
       headers: getHeaders(),
     });
     return res.json();
   },
 
   create: async (data) => {
-    const res = await fetch(`${API_BASE}/customers`, {
+    const res = await fetch(`${API_BASE_URL}/customers`, {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify(data),
@@ -107,7 +107,7 @@ export const customerApi = {
   },
 
   update: async (id, data) => {
-    const res = await fetch(`${API_BASE}/customers/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/customers/${id}`, {
       method: "PUT",
       headers: getHeaders(),
       body: JSON.stringify(data),
@@ -116,7 +116,7 @@ export const customerApi = {
   },
 
   delete: async (id) => {
-    const res = await fetch(`${API_BASE}/customers/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/customers/${id}`, {
       method: "DELETE",
       headers: getHeaders(),
     });
@@ -125,14 +125,14 @@ export const customerApi = {
 
   getByMembership: async (level, page = 0, size = 10) => {
     const res = await fetch(
-      `${API_BASE}/customers/by-membership?level=${level}&page=${page}&size=${size}`,
+      `${API_BASE_URL}/customers/by-membership?level=${level}&page=${page}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();
   },
 
   getTotalCount: async () => {
-    const res = await fetch(`${API_BASE}/customers/total-count`, {
+    const res = await fetch(`${API_BASE_URL}/customers/total-count`, {
       headers: getHeaders(),
     });
     return res.json();

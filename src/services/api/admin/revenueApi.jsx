@@ -1,8 +1,9 @@
-const API_BASE = "http://localhost:8080/api";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
 
 // Lấy báo cáo doanh thu theo filter
 export const fetchRevenueReport = async (request) => {
-  const response = await fetch(`${API_BASE}/reports/revenue`, {
+  const response = await fetch(`${API_BASE_URL}/reports/revenue`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +17,7 @@ export const fetchRevenueReport = async (request) => {
 
 // Xuất báo cáo Excel
 export const exportRevenueExcel = async (request) => {
-  const response = await fetch(`${API_BASE}/reports/revenue/export`, {
+  const response = await fetch(`${API_BASE_URL}/reports/revenue/export`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +31,7 @@ export const exportRevenueExcel = async (request) => {
 
 // Lấy tổng doanh thu toàn bộ
 export const fetchTotalRevenueAll = async (request) => {
-  const response = await fetch(`${API_BASE}/reports/revenue/summary/all`, {
+  const response = await fetch(`${API_BASE_URL}/reports/revenue/summary/all`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export const fetchTotalRevenueAll = async (request) => {
 // Lấy tổng doanh thu theo đại lý
 export const fetchTotalRevenueByAgency = async (agencyId) => {
   const response = await fetch(
-    `${API_BASE}/reports/revenue/summary/agency/${agencyId}`,
+    `${API_BASE_URL}/reports/revenue/summary/agency/${agencyId}`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -59,7 +60,7 @@ export const fetchTotalRevenueByAgency = async (agencyId) => {
 // Lấy tổng doanh thu theo trạng thái
 export const fetchTotalRevenueByStatus = async (status) => {
   const response = await fetch(
-    `${API_BASE}/reports/revenue/summary/status/${status}`,
+    `${API_BASE_URL}/reports/revenue/summary/status/${status}`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -70,7 +71,7 @@ export const fetchTotalRevenueByStatus = async (status) => {
   return response.json();
 };
 
-// Lấy tổng doanh thu theo tất cả trạng thái (gọi nhiều API song song)
+// Lấy tổng doanh thu theo tất cả trạng thái
 export const fetchRevenueByAllStatuses = async () => {
   const statuses = [
     "PENDING",
@@ -84,7 +85,7 @@ export const fetchRevenueByAllStatuses = async () => {
     statuses.map(async (status) => {
       try {
         const response = await fetch(
-          `${API_BASE}/reports/revenue/summary/status/${status}`,
+          `${API_BASE_URL}/reports/revenue/summary/status/${status}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -112,9 +113,9 @@ export const fetchRevenueByAllStatuses = async () => {
   }, {});
 };
 
-// Lấy danh sách đại lý (để filter)
+// Lấy danh sách đại lý
 export const fetchAgencies = async () => {
-  const response = await fetch(`${API_BASE}/agencies`, {
+  const response = await fetch(`${API_BASE_URL}/agencies`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },

@@ -25,12 +25,12 @@ const feedbackApi = {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Lấy danh sách phản hồi thất bại");
+        throw new Error(errorData.message || "Get feedback list failed");
       }
 
       return await res.json();
     } catch (error) {
-      console.error("Lấy danh sách phản hồi thất bại:", error);
+      console.error("Get feedback list failed:", error);
       throw error;
     }
   },
@@ -48,12 +48,12 @@ const feedbackApi = {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Lấy chi tiết phản hồi thất bại");
+        throw new Error(errorData.message || "Get feedback detail failed");
       }
 
       return await res.json();
     } catch (error) {
-      console.error("Lấy chi tiết phản hồi thất bại:", error);
+      console.error("Get feedback detail failed:", error);
       throw error;
     }
   },
@@ -72,12 +72,12 @@ const feedbackApi = {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Xử lý phản hồi thất bại");
+        throw new Error(errorData.message || "Handle feedback failed");
       }
 
       return await res.json();
     } catch (error) {
-      console.error("Xử lý phản hồi thất bại:", error);
+      console.error("Handle feedback failed:", error);
       throw error;
     }
   },
@@ -106,12 +106,12 @@ const feedbackApi = {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Đếm phản hồi thất bại");
+        throw new Error(errorData.message || "Count feedback failed");
       }
 
       return await res.json();
     } catch (error) {
-      console.error("Đếm phản hồi thất bại:", error);
+      console.error("Count feedback failed:", error);
       throw error;
     }
   },
@@ -138,7 +138,7 @@ const feedbackApi = {
       });
 
       if (!res.ok) {
-        throw new Error("Xuất báo cáo phản hồi thất bại");
+        throw new Error("Export feedback report failed");
       }
 
       const blob = await res.blob();
@@ -146,16 +146,15 @@ const feedbackApi = {
       if (blob.type === "application/json") {
         const text = await blob.text();
         const error = JSON.parse(text);
-        throw new Error(error.message || "Xuất báo cáo phản hồi thất bại");
+        throw new Error(error.message || "Export feedback report failed");
       }
 
       return blob;
     } catch (error) {
-      console.error("Xuất báo cáo phản hồi thất bại:", error);
+      console.error("Export feedback report failed:", error);
       throw error;
     }
   },
 };
 
-// Export default để tương thích với inventoryApi pattern
 export default feedbackApi;
