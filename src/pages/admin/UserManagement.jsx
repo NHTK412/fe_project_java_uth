@@ -289,11 +289,12 @@ const UserManagement = () => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-1">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            <Users className="w-7 h-7 text-blue-500" />
             Quản lý người dùng
           </h1>
           <p className="text-gray-500 mt-1">
@@ -302,10 +303,10 @@ const UserManagement = () => {
         </div>
         <button
           onClick={handleOpenCreate}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+          className="flex items-center gap-2 px-4 py-2.5 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 shadow-sm"
         >
-          <UserPlus className="w-5 h-5" />
-          Thêm mới
+          <UserPlus className="w-4 h-4" />
+          <span className="font-medium">Thêm mới</span>
         </button>
       </div>
 

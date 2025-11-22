@@ -1,4 +1,5 @@
 import React from "react";
+import COMINGSOON from "../../assets/comingsoon.gif";
 
 const Settings = () => {
   return (
@@ -13,8 +14,14 @@ const Settings = () => {
       {/*Settings */}
       <div className="bg-white rounded-lg p-6 border border-gray-200">
         <p className="text-gray-600">
-          Tính năng đang được phát triển. Vui lòng thử lại trong thòi gian tới
+          Tính năng đang được phát triển. Vui lòng thử lại trong thòi gian tới.
         </p>
+        <br></br>
+        <img
+          className="mx-auto mt-4"
+          src={COMINGSOON}
+          alt="Feature in development"
+        />
       </div>
     </div>
   );

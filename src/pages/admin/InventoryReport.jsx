@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
 import {
+  Package,
+  Download,
+  Filter,
+  RefreshCw,
+  Search,
+  RotateCcw,
+  Eye,
+} from "lucide-react";
+import {
   showSuccess,
   showError,
   showInfo,
@@ -22,6 +31,8 @@ const InventoryReport = () => {
     toDate: "",
   });
 
+  const [showFilters, setShowFilters] = useState(false);
+
   // VehicleStatusEnums
   const statusOptions = [
     { value: "", label: "Tất cả" },
@@ -31,18 +42,12 @@ const InventoryReport = () => {
     { value: "TEST_DRIVE", label: "Xe Lái Thử" },
   ];
 
-  // Fetch danh sách agency và vehicleTypes
-  useEffect(() => {
-    // fetchAgencies();
-    // fetchVehicleTypes();
-  }, []);
-
   // Fetch báo cáo tồn kho
   const fetchReport = async (params = {}) => {
     setLoading(true);
     try {
       const result = await inventoryApi.getInventoryReport(params);
-      console.log("API Response:", result);
+      // console.log("API Response:", result);
 
       if (result.success && result.data) {
         setData(result.data);
@@ -61,14 +66,14 @@ const InventoryReport = () => {
       }
     } catch (err) {
       showError("Lỗi khi kết nối server");
-      console.error("Fetch error:", err);
+      // console.error("Fetch error:", err);
       setData([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Kiểm tra  filter có lọc gì không
+  // Kiểm tra filter có lọc gì không
   const hasActiveFilters = () => {
     return (
       filters.agencyId ||
@@ -95,7 +100,7 @@ const InventoryReport = () => {
     if (filters.fromDate) params.fromDate = filters.fromDate;
     if (filters.toDate) params.toDate = filters.toDate;
 
-    console.log("Params gửi lên API:", params);
+    // console.log("Params gửi lên API:", params);
     setIsFiltered(true);
     fetchReport(params);
   };
@@ -146,7 +151,7 @@ const InventoryReport = () => {
       showSuccess("Xuất báo cáo thành công");
     } catch (err) {
       showError("Xuất báo cáo thất bại");
-      console.error("Export error:", err);
+      // console.error("Export error:", err);
     }
   };
 
@@ -154,7 +159,7 @@ const InventoryReport = () => {
   const formatCurrency = (num) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
-      currency: "USD",
+      currency: "VND",
     }).format(num || 0);
   };
 
@@ -174,203 +179,265 @@ const InventoryReport = () => {
   );
 
   return (
-    <div className="space-y-6 w-full p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 p-1">
+      {/* Header - Đồng bộ với RevenueReport */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Báo cáo tồn kho</h1>
+          <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            <Package className="w-7 h-7 text-blue-500" />
+            Báo cáo tồn kho
+          </h1>
           <p className="text-gray-500 mt-1">
             Theo dõi tình trạng xe điện trong kho
           </p>
         </div>
-        <button
-          onClick={handleExport}
-          disabled={loading || data.length === 0}
-          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`flex items-center gap-2 px-4 py-2.5 border rounded-xl transition-all duration-200 ${
+              showFilters
+                ? "bg-blue-50 border-blue-200 text-blue-600"
+                : "border-gray-200 hover:bg-gray-50 text-gray-700"
+            }`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-            />
-          </svg>
-          Xuất Excel
-        </button>
+            <Filter className="w-4 h-4" />
+            <span className="font-medium">Bộ lọc</span>
+          </button>
+          <button
+            onClick={handleLoadAll}
+            disabled={loading}
+            className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all duration-200 text-gray-700"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+            <span className="font-medium">Làm mới</span>
+          </button>
+          <button
+            onClick={handleExport}
+            disabled={loading || data.length === 0}
+            className="flex items-center gap-2 px-4 py-2.5 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all duration-200 disabled:opacity-50 shadow-sm"
+          >
+            <Download className="w-4 h-4" />
+            <span className="font-medium">Xuất Excel</span>
+          </button>
+        </div>
       </div>
 
-      {/* Bộ lọc */}
-      <div className="bg-white rounded-lg p-6 border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-700 mb-4">Bộ lọc</h3>
-        <form onSubmit={handleSearch} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {/* Agency ID */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Đại lý (ID)
-              </label>
-              <input
-                type="number"
-                min="1"
-                value={filters.agencyId}
-                onChange={(e) =>
-                  setFilters({ ...filters, agencyId: e.target.value })
-                }
-                placeholder="Nhập ID đại lý"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Vehicle Type ID */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Loại xe (ID)
-              </label>
-              <input
-                type="number"
-                min="1"
-                value={filters.vehicleTypeId}
-                onChange={(e) =>
-                  setFilters({ ...filters, vehicleTypeId: e.target.value })
-                }
-                placeholder="Nhập ID loại xe"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Status */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Trạng thái
-              </label>
-              <select
-                value={filters.status}
-                onChange={(e) =>
-                  setFilters({ ...filters, status: e.target.value })
-                }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {statusOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* From Date */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Từ ngày
-              </label>
-              <input
-                type="datetime-local"
-                value={filters.fromDate}
-                onChange={(e) =>
-                  setFilters({ ...filters, fromDate: e.target.value })
-                }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* To Date */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Đến ngày
-              </label>
-              <input
-                type="datetime-local"
-                value={filters.toDate}
-                onChange={(e) =>
-                  setFilters({ ...filters, toDate: e.target.value })
-                }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-
-          <div className="flex gap-3">
+      {/* Filters Panel - Đồng bộ style với RevenueReport */}
+      {showFilters && (
+        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-gray-800">Bộ lọc tìm kiếm</h3>
             <button
-              type="submit"
-              disabled={loading}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              {loading ? "Đang tìm..." : "Tìm kiếm"}
-            </button>
-            <button
-              type="button"
               onClick={handleReset}
-              disabled={loading}
-              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className="text-sm text-blue-500 hover:text-blue-600 font-medium"
             >
               Đặt lại
             </button>
-            <button
-              type="button"
-              onClick={handleLoadAll}
-              disabled={loading}
-              className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              Xem tất cả
-            </button>
           </div>
-        </form>
-      </div>
+          <form onSubmit={handleSearch}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              {/* Agency ID */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1.5">
+                  Đại lý (ID)
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  value={filters.agencyId}
+                  onChange={(e) =>
+                    setFilters({ ...filters, agencyId: e.target.value })
+                  }
+                  placeholder="Nhập ID đại lý"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
 
-      {/* Thống kê nhanh */}
+              {/* Vehicle Type ID */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1.5">
+                  Loại xe (ID)
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  value={filters.vehicleTypeId}
+                  onChange={(e) =>
+                    setFilters({ ...filters, vehicleTypeId: e.target.value })
+                  }
+                  placeholder="Nhập ID loại xe"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              {/* Status */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1.5">
+                  Trạng thái
+                </label>
+                <select
+                  value={filters.status}
+                  onChange={(e) =>
+                    setFilters({ ...filters, status: e.target.value })
+                  }
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                >
+                  {statusOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* From Date */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1.5">
+                  Từ ngày
+                </label>
+                <input
+                  type="datetime-local"
+                  value={filters.fromDate}
+                  onChange={(e) =>
+                    setFilters({ ...filters, fromDate: e.target.value })
+                  }
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              {/* To Date */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1.5">
+                  Đến ngày
+                </label>
+                <input
+                  type="datetime-local"
+                  value={filters.toDate}
+                  onChange={(e) =>
+                    setFilters({ ...filters, toDate: e.target.value })
+                  }
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex items-center gap-2 px-4 py-2.5 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all duration-200 disabled:opacity-50"
+              >
+                <Search className="w-4 h-4" />
+                <span className="font-medium">
+                  {loading ? "Đang tìm..." : "Tìm kiếm"}
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={handleLoadAll}
+                disabled={loading}
+                className="flex items-center gap-2 px-4 py-2.5 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-all duration-200 disabled:opacity-50"
+              >
+                <Eye className="w-4 h-4" />
+                <span className="font-medium">Xem tất cả</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Summary Cards - Đồng bộ style với RevenueReport */}
       {data.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-sm text-gray-600">Tổng xe trong kho</p>
-            <p className="text-2xl font-bold text-gray-800 mt-1">
-              {formatQuantity(totalQuantity)}
-            </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="bg-white rounded-xl p-5 border border-blue-100 hover:shadow-md transition-all duration-200">
+            <div className="flex items-start justify-between">
+              <div className="p-3 rounded-xl bg-blue-50">
+                <Package className="w-5 h-5 text-blue-500" />
+              </div>
+            </div>
+            <div className="mt-4">
+              <p className="text-sm text-gray-500 font-medium">
+                Tổng xe trong kho
+              </p>
+              <p className="text-2xl font-bold text-gray-800 mt-1">
+                {formatQuantity(totalQuantity)}
+              </p>
+            </div>
           </div>
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-sm text-gray-600">Tổng giá trị</p>
-            <p className="text-2xl font-bold text-blue-600 mt-1">
-              {formatCurrency(totalValue)}
-            </p>
+
+          <div className="bg-white rounded-xl p-5 border border-green-100 hover:shadow-md transition-all duration-200">
+            <div className="flex items-start justify-between">
+              <div className="p-3 rounded-xl bg-green-50">
+                <svg
+                  className="w-5 h-5 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <p className="text-sm text-gray-500 font-medium">Tổng giá trị</p>
+              <p className="text-2xl font-bold text-gray-800 mt-1">
+                {formatCurrency(totalValue)}
+              </p>
+            </div>
           </div>
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-sm text-gray-600">Số loại xe</p>
-            <p className="text-2xl font-bold text-green-600 mt-1">
-              {data.length}
-            </p>
+
+          <div className="bg-white rounded-xl p-5 border border-purple-100 hover:shadow-md transition-all duration-200">
+            <div className="flex items-start justify-between">
+              <div className="p-3 rounded-xl bg-purple-50">
+                <svg
+                  className="w-5 h-5 text-purple-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-4">
+              <p className="text-sm text-gray-500 font-medium">Số loại xe</p>
+              <p className="text-2xl font-bold text-gray-800 mt-1">
+                {data.length}
+              </p>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Bảng dữ liệu */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      {/* Data Table - Đồng bộ style với RevenueReport */}
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-800">
+            Chi tiết tồn kho
+          </h3>
+          <span className="text-sm text-gray-500">
+            Tổng: {data.length} bản ghi
+          </span>
+        </div>
         <div className="overflow-x-auto">
           {loading ? (
-            <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
-              <p className="text-gray-600 mt-4">Đang tải dữ liệu...</p>
+            <div className="flex items-center justify-center py-16">
+              <RefreshCw className="w-8 h-8 animate-spin text-blue-500" />
             </div>
           ) : data.length === 0 ? (
-            <div className="text-center py-12">
-              <svg
-                className="mx-auto h-12 w-12 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                />
-              </svg>
-              <p className="text-gray-600 mt-4 font-medium">
+            <div className="text-center py-16">
+              <Package className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500 font-medium">
                 {isFiltered
                   ? "Không tìm thấy kết quả phù hợp"
                   : "Chưa có dữ liệu"}
@@ -382,48 +449,48 @@ const InventoryReport = () => {
               </p>
             </div>
           ) : (
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">
                     Tên xe
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">
                     Phiên bản
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">
                     Màu sắc
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase">
                     Năm SX
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase">
                     Giá
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase">
                     SL tồn
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase">
                     Tổng giá trị
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">
                     Đại lý
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-100">
                 {data.map((item, idx) => (
                   <tr
                     key={item.vehicleTypeDetailId || idx}
                     className="hover:bg-gray-50"
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 text-sm font-medium text-gray-800">
                       {item.vehicleTypeName || "-"}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                    <td className="px-6 py-4 text-sm text-gray-600">
                       {item.version || "-"}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <td className="px-6 py-4 text-sm text-gray-600">
                       <span className="inline-flex items-center gap-2">
                         <span
                           className="w-3 h-3 rounded-full border border-gray-300"
@@ -439,29 +506,29 @@ const InventoryReport = () => {
                         {item.color || "-"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-600">
+                    <td className="px-6 py-4 text-sm text-center text-gray-600">
                       {item.manufactureYear || "-"}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 font-medium">
+                    <td className="px-6 py-4 text-sm text-right font-medium text-gray-800">
                       {formatCurrency(item.price)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <td className="px-6 py-4 text-center">
                       <span
-                        className={`px-3 py-1 text-sm font-semibold rounded-full ${
+                        className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${
                           item.totalQuantity === 0
-                            ? "bg-red-100 text-red-800"
+                            ? "bg-red-50 text-red-700"
                             : item.totalQuantity < 5
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-green-100 text-green-800"
+                              ? "bg-yellow-50 text-yellow-700"
+                              : "bg-green-50 text-green-700"
                         }`}
                       >
                         {formatQuantity(item.totalQuantity)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold text-blue-600">
+                    <td className="px-6 py-4 text-sm text-right font-semibold text-green-600">
                       {formatCurrency(item.totalValue)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <td className="px-6 py-4 text-sm text-gray-600">
                       {item.agencyName || "-"}
                     </td>
                   </tr>
