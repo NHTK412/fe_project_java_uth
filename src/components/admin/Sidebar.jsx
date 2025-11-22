@@ -9,6 +9,7 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  MessageSquare,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
@@ -45,6 +46,11 @@ const Sidebar = () => {
         label: "Báo cáo doanh thu",
         icon: BarChart3,
         path: "/admin/revenue",
+      },
+      {
+        path: "/admin/feedback",
+        icon: MessageSquare,
+        label: "Phản hồi khách hàng",
       },
     ],
     []

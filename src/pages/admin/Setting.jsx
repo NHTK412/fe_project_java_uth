@@ -1,5 +1,5 @@
 import React from "react";
-import COMINGSOON from "../../assets/comingsoon.gif";
+import NOT_FOUND_PAGE from "../../assets/notfound.gif";
 
 const Settings = () => {
   return (
@@ -19,7 +19,7 @@ const Settings = () => {
         <br></br>
         <img
           className="mx-auto mt-4"
-          src={COMINGSOON}
+          src={NOT_FOUND_PAGE}
           alt="Feature in development"
         />
       </div>

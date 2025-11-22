@@ -11,6 +11,7 @@ import Users from "../pages/admin/UserManagement";
 import Inventory from "../pages/admin/InventoryReport";
 import Revenue from "../pages/admin/RevenueReport";
 import Settings from "../pages/admin/Setting";
+import FeedbackManagement from "../pages/admin/FeedbackManagement";
 
 const routes = [
   {
@@ -34,6 +35,10 @@ const routes = [
       {
         path: "revenue",
         element: <Revenue />,
+      },
+      {
+        path: "feedback",
+        element: <FeedbackManagement />,
       },
       {
         path: "settings",
