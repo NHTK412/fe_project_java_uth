@@ -12,6 +12,18 @@ const Sidebar = () => {
   const menuItems = useMemo(
     () => [
       {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: ShoppingCart,
+        isHot: true,
+      },
+      {
+        id: "agency-management",
+        label: "Quản lý đại lý",
+        icon: ShoppingCart,
+        path: "/staff/agencies",
+      },
+      {
         id: "warehouse-receipt",
         label: "Quản lý phiếu nhập kho",
         icon: ShoppingCart,

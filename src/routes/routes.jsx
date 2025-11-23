@@ -21,6 +21,10 @@ import WarehouseReleaseManagement from "../pages/evm-staff/WarehouseReleaseManag
 import WarehouseReleaseDetailPage from "../pages/evm-staff/WarehouseReleaseDetailPage";
 import DashboardEVM from "../pages/evm-staff/DashboardEVM";
 import Login from "../services/auth/Login";
+
+// Import Agency page
+import AgencyManagement from "../pages/AgencyManagement";
+
 const routes = [
   { path: "/login", element: <Login /> }, 
   {
@@ -32,17 +36,10 @@ const routes = [
       { index: true, element: <Dashboard /> },
       { path: "users", element: <Users /> },
       { path: "vehicles", element: <VehicleManagement /> },
-
-      // Vehicle detail 
       { path: "vehicle/:vehicleId", element: <VehicleDetailPage /> },
-
-      // Vehicle Type detail 
       { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
-      // Vehicle Type Detail detail / edit
-      {
-        path: "vehicle/type/detail/:vehicleTypeDetailId",
-        element: <VehicleTypeDetailPage />,
-      },
+      { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
+      { path: "agencies", element: <AgencyManagement /> }, // <-- Thêm agencies cho ADMIN
       { path: "settings", element: <Settings /> },
     ],
   },
@@ -56,11 +53,12 @@ const routes = [
     ),
     children: [
       { index: true, element: <DashboardEVM /> },
-      {path: "warehouse-receipts", element: <WarehouseReceiptManagement />},
-      {path: "warehouse-receipt/:warehouseReceiptId", element: <WarehouseReceiptDetailPage />},
-      {path: "warehouse-release-notes", element: <WarehouseReleaseManagement />},
-      {path: "warehouse-release-notes/:warehouseReleaseNoteId", element: <WarehouseReleaseDetailPage />},
-      {path: "settings", element: <Settings /> },
+      { path: "warehouse-receipts", element: <WarehouseReceiptManagement /> },
+      { path: "warehouse-receipt/:warehouseReceiptId", element: <WarehouseReceiptDetailPage /> },
+      { path: "warehouse-release-notes", element: <WarehouseReleaseManagement /> },
+      { path: "warehouse-release-notes/:warehouseReleaseNoteId", element: <WarehouseReleaseDetailPage /> },
+      { path: "agencies", element: <AgencyManagement /> }, // <-- Thêm agencies cho EVM_STAFF
+      { path: "settings", element: <Settings /> },
     ],
   },
   {

@@ -52,7 +52,19 @@ const Sidebar = () => {
         label: "Quản lý phương tiện",
         icon: Car,
         path: "/admin/vehicles",
-      }
+      },
+      {
+        id: "agency-management",
+        label: "Quản lý đại lý",
+        icon: Users,
+        path: "/admin/agencies",
+      },
+      {
+        id: "settings",
+        label: "Cài đặt",
+        icon: Settings,
+        path: "/admin/settings",
+      },
     ],
     []
   );
