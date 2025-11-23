@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Truck, Layers, Grid, UserPlus } from "lucide-react";
 import VehicleTable from "../../components/admin/vehicle/VehicleTable";
@@ -25,60 +25,98 @@ const TABS = [
 const VehicleManagement = () => {
   const navigate = useNavigate(); 
   const [activeTab, setActiveTab] = useState("vehicle");
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [pagination, setPagination] = useState({
-    page: 0,
-    size: 10,
-    totalElements: 0,
-    totalPages: 0,
-  });
+
+  // ===== STATE =====
+  const [vehicleData, setVehicleData] = useState([]);
+  const [vehicleLoading, setVehicleLoading] = useState(false);
+  const [vehiclePagination, setVehiclePagination] = useState({ page: 0, size: 10, totalElements: 0, totalPages: 0 });
+
+  const [vehicleTypeData, setVehicleTypeData] = useState([]);
+  const [vehicleTypeLoading, setVehicleTypeLoading] = useState(false);
+  const [vehicleTypePagination, setVehicleTypePagination] = useState({ page: 0, size: 10, totalElements: 0, totalPages: 0 });
+
+  const [vehicleTypeDetailData, setVehicleTypeDetailData] = useState([]);
+  const [vehicleTypeDetailLoading, setVehicleTypeDetailLoading] = useState(false);
+  const [vehicleTypeDetailPagination, setVehicleTypeDetailPagination] = useState({ page: 0, size: 10, totalElements: 0, totalPages: 0 });
+
+  const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("id");
   const [sortDir, setSortDir] = useState("asc");
-  const [searchTerm, setSearchTerm] = useState("");
-  
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState("create");
   const [selectedItem, setSelectedItem] = useState(null);
   const [submitLoading, setSubmitLoading] = useState(false);
 
+  // ================= FETCH DATA =================
   const fetchData = useCallback(async () => {
-    setLoading(true);
     try {
-      let response;
       if (activeTab === "vehicle") {
-        response = await vehicleApi.getAll(pagination.page, pagination.size, sortBy, sortDir);
+        setVehicleLoading(true);
+        const res = await vehicleApi.getAll(vehiclePagination.page, vehiclePagination.size, sortBy, sortDir);
+        if (res.success) {
+          setVehicleData(res.data.content || []);
+          setVehiclePagination(prev => ({
+            ...prev,
+            totalElements: res.data.totalElements || 0,
+            totalPages: res.data.totalPages || 0,
+          }));
+        }
       } else if (activeTab === "vehicleType") {
-        response = await vehicleTypeApi.getAll(pagination.page, pagination.size, sortBy, sortDir);
-      } else {
-        response = await vehicleTypeDetailApi.getAll(pagination.page, pagination.size, sortBy, sortDir);
+        setVehicleTypeLoading(true);
+        const res = await vehicleTypeApi.getAll(vehicleTypePagination.page, vehicleTypePagination.size, sortBy, sortDir);
+        if (res.success) {
+          setVehicleTypeData(res.data.content || []);
+          setVehicleTypePagination(prev => ({
+            ...prev,
+            totalElements: res.data.totalElements || 0,
+            totalPages: res.data.totalPages || 0,
+          }));
+        }
+      } else if (activeTab === "vehicleTypeDetail") {
+        setVehicleTypeDetailLoading(true);
+        const res = await vehicleTypeDetailApi.getAll(vehicleTypeDetailPagination.page, vehicleTypeDetailPagination.size, sortBy, sortDir);
+        if (res.success) {
+          setVehicleTypeDetailData(res.data.content || []);
+          setVehicleTypeDetailPagination(prev => ({
+            ...prev,
+            totalElements: res.data.totalElements || 0,
+            totalPages: res.data.totalPages || 0,
+          }));
+        }
       }
-
-      if (response.success) {
-        const pageData = response.data;
-        setData(pageData.content || []);
-        setPagination((prev) => ({
-          ...prev,
-          totalElements: pageData.totalElements || 0,
-          totalPages: pageData.totalPages || 0,
-        }));
-      }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       showError("Không thể tải dữ liệu");
     } finally {
-      setLoading(false);
+      setVehicleLoading(false);
+      setVehicleTypeLoading(false);
+      setVehicleTypeDetailLoading(false);
     }
-  }, [activeTab, pagination.page, pagination.size, sortBy, sortDir]);
+  }, [
+    activeTab,
+    vehiclePagination.page, vehiclePagination.size,
+    vehicleTypePagination.page, vehicleTypePagination.size,
+    vehicleTypeDetailPagination.page, vehicleTypeDetailPagination.size,
+    sortBy, sortDir
+  ]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  const handlePageChange = (newPage) => setPagination((prev) => ({ ...prev, page: newPage }));
+  // ================= HANDLE =================
+  const handlePageChange = (newPage) => {
+    if (activeTab === "vehicle") setVehiclePagination(prev => ({ ...prev, page: newPage }));
+    else if (activeTab === "vehicleType") setVehicleTypePagination(prev => ({ ...prev, page: newPage }));
+    else setVehicleTypeDetailPagination(prev => ({ ...prev, page: newPage }));
+  };
+
   const handleSortChange = (newSort) => {
     setSortBy(newSort);
-    setPagination((prev) => ({ ...prev, page: 0 }));
+    if (activeTab === "vehicle") setVehiclePagination(prev => ({ ...prev, page: 0 }));
+    else if (activeTab === "vehicleType") setVehicleTypePagination(prev => ({ ...prev, page: 0 }));
+    else setVehicleTypeDetailPagination(prev => ({ ...prev, page: 0 }));
   };
 
   const handleOpenCreate = () => {
@@ -86,67 +124,34 @@ const VehicleManagement = () => {
     setSelectedItem(null);
     setModalOpen(true);
   };
-  const handleView = (item) => {
-     console.log(item);        // check object
-  console.log(item.id); 
-    navigate(`/admin/vehicle/${item.id}`);
-  };
-  const handleEdit = (item) => {
-    setModalMode("edit");
-    setSelectedItem(item);
-    setModalOpen(true);
-  };
 
-  // filter dữ liệu
-  const filteredData = data.filter((item) => {
-    if (!searchTerm) return true;
-    const search = searchTerm.toLowerCase();
-    return Object.values(item).some(val => val && String(val).toLowerCase().includes(search));
-  });
+  const handleViewVehicle = (item) => navigate(`/admin/vehicle/${item.id}`);
+  const handleViewVehicleType = (item) => navigate(`/admin/vehicle-type/${item.vehicleTypeId}`);
+  const handleEdit = (item) => { setModalMode("edit"); setSelectedItem(item); setModalOpen(true); };
 
-  // sort dữ liệu
-  const sortedData = [...filteredData].sort((a, b) => {
-    const valA = a[sortBy];
-    const valB = b[sortBy];
-    if (valA == null) return 1;
-    if (valB == null) return -1;
-    if (typeof valA === "number") return sortDir === "asc" ? valA - valB : valB - valA;
-    return sortDir === "asc" ? String(valA).localeCompare(String(valB)) : String(valB).localeCompare(String(valA));
-  });
-
-  const handleExport = () => {
-    if (!sortedData || sortedData.length === 0) {
-      showInfo("Không có dữ liệu để xuất");
-      return;
-    }
-
-    const headers = Object.keys(sortedData[0]);
-    const rows = sortedData.map((item) => headers.map((key) => item[key]));
-
-    const csvContent =
-      "data:text/csv;charset=utf-8,\uFEFF" +
-      [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
-
-    const link = document.createElement("a");
-    link.setAttribute("href", encodeURI(csvContent));
-    link.setAttribute("download", `${activeTab}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    showSuccess("Xuất CSV thành công");
-  };
-
-  const handleDelete = async (vehicle) => {
-  if (!vehicle?.id) { // sửa từ vehicleId → id
-    showError("Không xác định được xe cần xoá");
+  // ================= HANDLE =================
+const handleDelete = async (item) => {
+  if (!item) {
+    showError("Không xác định được mục cần xoá");
     return;
   }
 
   try {
-    const res = await vehicleApi.delete(vehicle.id); // sửa vehicleId → id
+    let res;
+    if (activeTab === "vehicle") {
+      if (!item.id) { showError("Không xác định được mục cần xoá"); return; }
+      res = await vehicleApi.delete(item.id);
+    } else if (activeTab === "vehicleType") {
+      if (!item.vehicleTypeId) { showError("Không xác định được loại xe"); return; }
+      res = await vehicleTypeApi.delete(item.vehicleTypeId);
+    } else {
+      if (!item.id) { showError("Không xác định được mục cần xoá"); return; }
+      res = await vehicleTypeDetailApi.delete(item.id);
+    }
+
     if (res?.success) {
       showSuccess("Xoá thành công");
-      fetchData(); // tải lại dữ liệu sau khi xoá
+      fetchData();
     } else {
       showError(res?.message || "Xoá thất bại");
     }
@@ -155,6 +160,140 @@ const VehicleManagement = () => {
     showError(err.response?.data?.message || "Xoá thất bại do server");
   }
 };
+
+const handleView = (item) => {
+  if (activeTab === "vehicle") {
+    navigate(`/admin/vehicle/${item.id}`);
+  } else if (activeTab === "vehicleType") {
+    navigate(`/admin/vehicle-type/${item.vehicleTypeId}`);
+  } else {
+    // chi tiết loại xe
+    navigate(`/admin/vehicle-type-detail/${item.id}`);
+  }
+};
+
+
+  // ================= HANDLE SUBMIT MODAL =================
+  const handleSubmitVehicleType = async (data) => {
+    setSubmitLoading(true);
+    try {
+      let res;
+      if (modalMode === "create") res = await vehicleTypeApi.create(data);
+      else if (modalMode === "edit") res = await vehicleTypeApi.update(selectedItem.vehicleTypeId, data);
+
+      if (res?.success) {
+        showSuccess(modalMode === "create" ? "Tạo loại xe thành công" : "Cập nhật thành công");
+        fetchData();
+        setModalOpen(false);
+      } else showError(res?.message || "Thất bại");
+    } catch (err) {
+      console.error(err);
+      showError(err.response?.data?.message || "Thất bại do server");
+    } finally {
+      setSubmitLoading(false);
+    }
+  };
+
+  // ================= RENDER =================
+  const renderTableAndFilter = () => {
+    if (activeTab === "vehicle") {
+      return (
+        <>
+          <VehicleFilters
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            sortBy={sortBy}
+            onSortChange={handleSortChange}
+            onRefresh={fetchData}
+          />
+          <VehicleTable
+            data={vehicleData}
+            loading={vehicleLoading}
+            pagination={vehiclePagination}
+            onPageChange={handlePageChange}
+            onView={handleViewVehicle}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        </>
+      );
+    } else if (activeTab === "vehicleType") {
+      return (
+        <>
+          <VehicleTypeFilter
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            sortBy={sortBy}
+            onSortChange={handleSortChange}
+            onRefresh={fetchData}
+          />
+          <VehicleTypeTable
+            data={vehicleTypeData}
+            loading={vehicleTypeLoading}
+            pagination={vehicleTypePagination}
+            onPageChange={handlePageChange}
+            onView={handleViewVehicleType} // xem chi tiết
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <VehicleTypeDetailFilter
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            sortBy={sortBy}
+            onSortChange={handleSortChange}
+            onRefresh={fetchData}
+          />
+          <VehicleTypeDetailTable
+            data={vehicleTypeDetailData}
+            loading={vehicleTypeDetailLoading}
+            pagination={vehicleTypeDetailPagination}
+            onPageChange={handlePageChange}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        </>
+      );
+    }
+  };
+
+  const renderModal = () => {
+    if (!modalOpen) return null;
+    if (activeTab === "vehicle") return (
+      <VehicleModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={() => {}}
+        initialData={selectedItem}
+        mode={modalMode}
+        loading={submitLoading}
+      />
+    );
+    if (activeTab === "vehicleType") return (
+      <VehicleTypeModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={handleSubmitVehicleType} // đảm bảo submit hoạt động
+        initialData={selectedItem}
+        mode={modalMode}
+        loading={submitLoading}
+      />
+    );
+    if (activeTab === "vehicleTypeDetail") return (
+      <VehicleTypeDetailModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={() => {}}
+        initialData={selectedItem}
+        mode={modalMode}
+        loading={submitLoading}
+      />
+    );
+  };
 
   return (
     <div className="space-y-6 p-4">
@@ -171,8 +310,9 @@ const VehicleManagement = () => {
         </button>
       </div>
 
+      {/* Tabs */}
       <div className="flex gap-2 border-b border-gray-200 mb-4">
-        {TABS.map((tab) => {
+        {TABS.map(tab => {
           const Icon = tab.icon;
           return (
             <button
@@ -190,102 +330,11 @@ const VehicleManagement = () => {
         })}
       </div>
 
-      {/* Filters */}
-      {activeTab === "vehicle" && (
-        <VehicleFilters
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          sortBy={sortBy}
-          onSortChange={handleSortChange}
-          onRefresh={fetchData}
-          onExport={handleExport}
-        />
-      )}
-      {activeTab === "vehicleType" && (
-        <VehicleTypeFilter
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          sortBy={sortBy}
-          onSortChange={handleSortChange}
-          onRefresh={fetchData}
-          onExport={handleExport}
-        />
-      )}
-      {activeTab === "vehicleTypeDetail" && (
-        <VehicleTypeDetailFilter
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          sortBy={sortBy}
-          onSortChange={handleSortChange}
-          onRefresh={fetchData}
-          onExport={handleExport}
-        />
-      )}
-
-      {/* Table */}
-      {activeTab === "vehicle" && (
-        <VehicleTable
-          data={sortedData}
-          loading={loading}
-          pagination={pagination}
-          onPageChange={handlePageChange}
-          onView={handleView}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      )}
-      {activeTab === "vehicleType" && (
-        <VehicleTypeTable
-          data={sortedData}
-          loading={loading}
-          pagination={pagination}
-          onPageChange={handlePageChange}
-          onView={handleView}
-          onEdit={handleEdit}
-        />
-      )}
-      {activeTab === "vehicleTypeDetail" && (
-        <VehicleTypeDetailTable
-          data={sortedData}
-          loading={loading}
-          pagination={pagination}
-          onPageChange={handlePageChange}
-          onView={handleView}
-          onEdit={handleEdit}
-        />
-      )}
+      {/* Filter + Table */}
+      {renderTableAndFilter()}
 
       {/* Modal */}
-      {activeTab === "vehicle" && (
-        <VehicleModal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          onSubmit={() => {}}
-          mode={modalMode}
-          initialData={selectedItem}
-          loading={submitLoading}
-        />
-      )}
-      {activeTab === "vehicleType" && (
-        <VehicleTypeModal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          onSubmit={() => {}}
-          mode={modalMode}
-          initialData={selectedItem}
-          loading={submitLoading}
-        />
-      )}
-      {activeTab === "vehicleTypeDetail" && (
-        <VehicleTypeDetailModal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          onSubmit={() => {}}
-          mode={modalMode}
-          initialData={selectedItem}
-          loading={submitLoading}
-        />
-      )}
+      {renderModal()}
     </div>
   );
 };
