@@ -173,8 +173,8 @@ const Sidebar = () => {
                 <button
                   onClick={() => handleMenuClick(item.id, item.path)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${isActive
-                      ? "bg-blue-50 text-blue-600 font-semibold"
-                      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    ? "bg-blue-50 text-blue-600 font-semibold"
+                    : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     }`}
                   aria-current={isActive ? "page" : undefined}
                   title={!isOpen ? item.label : undefined}
@@ -215,8 +215,8 @@ const Sidebar = () => {
         <button
           onClick={() => handleMenuClick("settings", "/admin/settings")}
           className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${isActiveMenu("/admin/settings")
-              ? "bg-blue-50 text-blue-600 font-semibold"
-              : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+            ? "bg-blue-50 text-blue-600 font-semibold"
+            : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
             }`}
           aria-current={isActiveMenu("/admin/settings") ? "page" : undefined}
           title={!isOpen ? "Cài đặt" : undefined}

@@ -20,7 +20,7 @@ const UserManagement = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
-    page: 0,
+    page: 1,
     size: 10,
     totalElements: 0,
     totalPages: 0,
@@ -76,7 +76,7 @@ const UserManagement = () => {
   }, [fetchData]);
 
   useEffect(() => {
-    setPagination((prev) => ({ ...prev, page: 0 }));
+    setPagination((prev) => ({ ...prev, page: 1 }));
     setSortBy(activeTab === "employee" ? "employeeId" : "customerId");
   }, [activeTab]);
 
@@ -86,7 +86,7 @@ const UserManagement = () => {
 
   const handleSortChange = (newSort) => {
     setSortBy(newSort);
-    setPagination((prev) => ({ ...prev, page: 0 }));
+    setPagination((prev) => ({ ...prev, page: 1 }));
   };
 
   const handleOpenCreate = () => {
@@ -145,54 +145,54 @@ const UserManagement = () => {
         const createData =
           activeTab === "employee"
             ? {
-                username: formData.employeeName
-                  ?.toLowerCase()
-                  .replace(/\s+/g, ""),
-                employeeName: formData.employeeName,
-                gender: formData.gender || null,
-                birthDate: formData.birthDate || null,
-                phoneNumber: formData.phoneNumber,
-                email: formData.email,
-                address: formData.address || null,
-                role: formData.role,
-                agencyId: formData.agencyId || null,
-              }
+              username: formData.employeeName
+                ?.toLowerCase()
+                .replace(/\s+/g, ""),
+              employeeName: formData.employeeName,
+              gender: formData.gender || null,
+              birthDate: formData.birthDate || null,
+              phoneNumber: formData.phoneNumber,
+              email: formData.email,
+              address: formData.address || null,
+              role: formData.role,
+              agencyId: formData.agencyId || null,
+            }
             : {
-                customerName: formData.customerName,
-                gender: formData.gender || null,
-                birthDate: formData.birthDate || null,
-                phoneNumber: formData.phoneNumber,
-                email: formData.email,
-                address: formData.address || null,
-                membershipLevel: formData.membershipLevel || "BRONZE",
-              };
+              customerName: formData.customerName,
+              gender: formData.gender || null,
+              birthDate: formData.birthDate || null,
+              phoneNumber: formData.phoneNumber,
+              email: formData.email,
+              address: formData.address || null,
+              membershipLevel: formData.membershipLevel || "BRONZE",
+            };
         response = await api.create(createData);
       } else {
         const id = selectedItem.employeeId || selectedItem.customerId;
         const updateData =
           activeTab === "employee"
             ? {
-                username:
-                  selectedItem.username ||
-                  formData.employeeName?.toLowerCase().replace(/\s+/g, ""),
-                employeeName: formData.employeeName,
-                gender: formData.gender || selectedItem.gender || null,
-                birthDate: formData.birthDate || selectedItem.birthDate || null,
-                phoneNumber: formData.phoneNumber,
-                email: formData.email,
-                address: formData.address || selectedItem.address || null,
-                role: formData.role,
-                agencyId: formData.agencyId || null,
-              }
+              username:
+                selectedItem.username ||
+                formData.employeeName?.toLowerCase().replace(/\s+/g, ""),
+              employeeName: formData.employeeName,
+              gender: formData.gender || selectedItem.gender || null,
+              birthDate: formData.birthDate || selectedItem.birthDate || null,
+              phoneNumber: formData.phoneNumber,
+              email: formData.email,
+              address: formData.address || selectedItem.address || null,
+              role: formData.role,
+              agencyId: formData.agencyId || null,
+            }
             : {
-                customerName: formData.customerName,
-                gender: formData.gender || selectedItem.gender || null,
-                birthDate: formData.birthDate || selectedItem.birthDate || null,
-                phoneNumber: formData.phoneNumber,
-                email: formData.email,
-                address: formData.address || selectedItem.address || null,
-                membershipLevel: formData.membershipLevel,
-              };
+              customerName: formData.customerName,
+              gender: formData.gender || selectedItem.gender || null,
+              birthDate: formData.birthDate || selectedItem.birthDate || null,
+              phoneNumber: formData.phoneNumber,
+              email: formData.email,
+              address: formData.address || selectedItem.address || null,
+              membershipLevel: formData.membershipLevel,
+            };
         response = await api.update(id, updateData);
       }
 
@@ -233,26 +233,26 @@ const UserManagement = () => {
     const headers =
       activeTab === "employee"
         ? [
-            "ID",
-            "Tên nhân viên",
-            "Giới tính",
-            "Ngày sinh",
-            "Số điện thoại",
-            "Email",
-            "Địa chỉ",
-            "Vai trò",
-            "Agency ID",
-          ]
+          "ID",
+          "Tên nhân viên",
+          "Giới tính",
+          "Ngày sinh",
+          "Số điện thoại",
+          "Email",
+          "Địa chỉ",
+          "Vai trò",
+          "Agency ID",
+        ]
         : [
-            "ID",
-            "Tên khách hàng",
-            "Giới tính",
-            "Ngày sinh",
-            "Số điện thoại",
-            "Email",
-            "Địa chỉ",
-            "Hạng thành viên",
-          ];
+          "ID",
+          "Tên khách hàng",
+          "Giới tính",
+          "Ngày sinh",
+          "Số điện thoại",
+          "Email",
+          "Địa chỉ",
+          "Hạng thành viên",
+        ];
 
     const rows = filteredData.map((item) => {
       if (activeTab === "employee") {
@@ -340,11 +340,10 @@ const UserManagement = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${
-                activeTab === tab.id
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${activeTab === tab.id
                   ? "text-blue-600 border-blue-600"
                   : "text-gray-500 border-transparent hover:text-gray-700"
-              }`}
+                }`}
             >
               <Icon className="w-4 h-4" />
               {tab.label}

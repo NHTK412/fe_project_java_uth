@@ -1,9 +1,10 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+
+const API_BASE = "http://localhost:8080/api";
 
 const getHeaders = () => {
   const token =
     localStorage.getItem("token") || localStorage.getItem("accessToken");
+  // console.log("Test lấy token:", token);
   return {
     "Content-Type": "application/json",
     ...(token && { Authorization: `Bearer ${token}` }),
@@ -13,29 +14,27 @@ const getHeaders = () => {
 // Employee API
 export const employeeApi = {
   getAll: async (
-    page = 1,
+    page = 0,
     size = 10,
     sortBy = "employeeId",
     sortDir = "asc"
   ) => {
-    // Đảm bảo page > 0 theo quy định backend
-    const validPage = Math.max(1, Math.floor(page));
     const res = await fetch(
-      `${API_BASE_URL}/employees?page=${validPage}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
+      `${API_BASE}/employees?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
       { headers: getHeaders() }
     );
     return res.json();
   },
 
   getById: async (id) => {
-    const res = await fetch(`${API_BASE_URL}/employees/${id}`, {
+    const res = await fetch(`${API_BASE}/employees/${id}`, {
       headers: getHeaders(),
     });
     return res.json();
   },
 
   create: async (data) => {
-    const res = await fetch(`${API_BASE_URL}/employees`, {
+    const res = await fetch(`${API_BASE}/employees`, {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify(data),
@@ -44,7 +43,7 @@ export const employeeApi = {
   },
 
   update: async (id, data) => {
-    const res = await fetch(`${API_BASE_URL}/employees/${id}`, {
+    const res = await fetch(`${API_BASE}/employees/${id}`, {
       method: "PUT",
       headers: getHeaders(),
       body: JSON.stringify(data),
@@ -53,28 +52,24 @@ export const employeeApi = {
   },
 
   delete: async (id) => {
-    const res = await fetch(`${API_BASE_URL}/employees/${id}`, {
+    const res = await fetch(`${API_BASE}/employees/${id}`, {
       method: "DELETE",
       headers: getHeaders(),
     });
     return res.json();
   },
 
-  getByRole: async (role, page = 1, size = 10) => {
-    // Đảm bảo page > 0 theo quy định backend
-    const validPage = Math.max(1, Math.floor(page));
+  getByRole: async (role, page = 0, size = 10) => {
     const res = await fetch(
-      `${API_BASE_URL}/employees/by-position?role=${role}&page=${validPage}&size=${size}`,
+      `${API_BASE}/employees/by-position?role=${role}&page=${page}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();
   },
 
-  getByAgency: async (agencyId, page = 1, size = 10) => {
-    // Đảm bảo page > 0 theo quy định backend
-    const validPage = Math.max(1, Math.floor(page));
+  getByAgency: async (agencyId, page = 0, size = 10) => {
     const res = await fetch(
-      `${API_BASE_URL}/employees/agencies/${agencyId}?page=${validPage}&size=${size}`,
+      `${API_BASE}/employees/agencies/${agencyId}?page=${page}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();
@@ -84,29 +79,27 @@ export const employeeApi = {
 // Customer API
 export const customerApi = {
   getAll: async (
-    page = 1,
+    page = 0,
     size = 10,
     sortBy = "customerId",
     sortDir = "asc"
   ) => {
-    // Đảm bảo page > 0 theo quy định backend
-    const validPage = Math.max(1, Math.floor(page));
     const res = await fetch(
-      `${API_BASE_URL}/customers?page=${validPage}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
+      `${API_BASE}/customers?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
       { headers: getHeaders() }
     );
     return res.json();
   },
 
   getById: async (id) => {
-    const res = await fetch(`${API_BASE_URL}/customers/${id}`, {
+    const res = await fetch(`${API_BASE}/customers/${id}`, {
       headers: getHeaders(),
     });
     return res.json();
   },
 
   create: async (data) => {
-    const res = await fetch(`${API_BASE_URL}/customers`, {
+    const res = await fetch(`${API_BASE}/customers`, {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify(data),
@@ -115,7 +108,7 @@ export const customerApi = {
   },
 
   update: async (id, data) => {
-    const res = await fetch(`${API_BASE_URL}/customers/${id}`, {
+    const res = await fetch(`${API_BASE}/customers/${id}`, {
       method: "PUT",
       headers: getHeaders(),
       body: JSON.stringify(data),
@@ -124,27 +117,26 @@ export const customerApi = {
   },
 
   delete: async (id) => {
-    const res = await fetch(`${API_BASE_URL}/customers/${id}`, {
+    const res = await fetch(`${API_BASE}/customers/${id}`, {
       method: "DELETE",
       headers: getHeaders(),
     });
     return res.json();
   },
 
-  getByMembership: async (level, page = 1, size = 10) => {
-    // Đảm bảo page > 0 theo quy định backend
-    const validPage = Math.max(1, Math.floor(page));
+  getByMembership: async (level, page = 0, size = 10) => {
     const res = await fetch(
-      `${API_BASE_URL}/customers/by-membership?level=${level}&page=${validPage}&size=${size}`,
+      `${API_BASE}/customers/by-membership?level=${level}&page=${page}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();
   },
 
   getTotalCount: async () => {
-    const res = await fetch(`${API_BASE_URL}/customers/total-count`, {
+    const res = await fetch(`${API_BASE}/customers/total-count`, {
       headers: getHeaders(),
     });
     return res.json();
   },
 };
+// >>>>>>> 322a5eda845803e2fab96fae8900c6ad150c60ae

@@ -46,6 +46,10 @@ import VehicleOrderList from "../pages/dealer-manager/VehicleOrderList";
 import VehicleOrderDetail from "../pages/dealer-manager/VehicleOrderDetail";
 import CreateVehicleOrder from "../pages/dealer-manager/CreateVehicleOrder";
 import DealerAgencyOrderList from "../pages/dealer-manager/DealerAgencyOrderList";
+import VehicleManagement from "../pages/admin/VehicleManagement";
+import VehicleDetailPage from "../pages/admin/VehicleDetailPage";
+import VehicleTypePage from "../pages/admin/VehicleTypePage";
+import VehicleTypeDetailPage from "../pages/admin/VehicleTypeDetailPage";
 
 const routes = [
   // ========== ADMIN ROUTES ==========
@@ -78,6 +82,22 @@ const routes = [
       {
         path: "settings",
         element: <Settings />,
+      },
+      {
+        path: "vehicles",
+        element: <VehicleManagement />,
+      },
+      {
+        path: "vehicle/:vehicleId",
+        element: <VehicleDetailPage />,
+      },
+      {
+        path: "vehicle-type/:vehicleTypeId",
+        element: <VehicleTypePage />,
+      },
+      {
+        path: "vehicle/type/detail/:vehicleTypeDetailId",
+        element: <VehicleTypeDetailPage />,
       },
     ],
   },
