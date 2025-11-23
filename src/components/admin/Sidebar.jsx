@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -9,11 +9,14 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Car,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
   const [activeMenu, setActiveMenu] = useState("dashboard");
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
@@ -24,37 +27,72 @@ const Sidebar = () => {
         label: "Dashboard",
         icon: LayoutDashboard,
         isHot: true,
+        path: "/admin",
       },
-      { id: "users", label: "Quản lý người dùng", icon: Users },
-      { id: "inventory-report", label: "Báo cáo tồn kho", icon: ShoppingCart },
-      { id: "revenue-report", label: "Báo cáo doanh thu", icon: BarChart3 },
+      {
+        id: "users",
+        label: "Quản lý người dùng",
+        icon: Users,
+        path: "/admin/users",
+      },
+      {
+        id: "inventory-report",
+        label: "Báo cáo tồn kho",
+        icon: ShoppingCart,
+        path: "/admin/inventory",
+      },
+      {
+        id: "revenue-report",
+        label: "Báo cáo doanh thu",
+        icon: BarChart3,
+        path: "/admin/revenue",
+      },
+      {
+        id: "vehicles",
+        label: "Quản lý phương tiện",
+        icon: Car,
+        path: "/admin/vehicles",
+      }
     ],
     []
   );
 
   const toggleSidebar = useCallback(() => setIsOpen((prev) => !prev), []);
-  const handleMenuClick = useCallback((id) => setActiveMenu(id), []);
+
+  const handleMenuClick = useCallback(
+    (path) => {
+      navigate(path);
+    },
+    [navigate]
+  );
+
   const handleLogout = useCallback(() => {
+    // Xử lý logout
+    console.log("Logging out...");
+    // navigate("/login");
     setShowLogoutConfirm(true);
   }, []);
 
-  const navigate = useNavigate();
-
   const confirmLogout = useCallback(() => {
     setShowLogoutConfirm(false);
-    // clear auth and redirect to login
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
-    } catch (err) {
-      // ignore
-    }
+    } catch (err) {}
     navigate("/");
   }, [navigate]);
 
   const cancelLogout = useCallback(() => {
     setShowLogoutConfirm(false);
   }, []);
+
+  // Kiểm tra menu nào đang active dựa trên URL
+  const isActiveMenu = (path) => {
+    if (path === "/admin") {
+      return location.pathname === "/admin";
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <aside
@@ -111,7 +149,7 @@ const Sidebar = () => {
         <ul className="space-y-1">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
-            const isActive = activeMenu === item.id;
+            const isActive = isActiveMenu(item.path);
             const showAppsLabel = index === 1;
 
             return (
@@ -124,9 +162,11 @@ const Sidebar = () => {
                   </div>
                 )}
                 <button
-                  onClick={() => handleMenuClick(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${
-                    isActive ? "font-semibold" : ""
+                  onClick={() => handleMenuClick(item.path)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${
+                    isActive
+                      ? "bg-blue-50 text-blue-600 font-semibold"
+                      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   }`}
                   aria-current={isActive ? "page" : undefined}
                   title={!isOpen ? item.label : undefined}
@@ -138,7 +178,7 @@ const Sidebar = () => {
                     </span>
                   )}
 
-                  {/* HOT === Appster */}
+                  {/* HOT Badge */}
                   {item.isHot && isOpen && (
                     <span
                       className="px-2 py-0.5 rounded-full text-xs font-semibold text-white"
@@ -148,7 +188,7 @@ const Sidebar = () => {
                     </span>
                   )}
 
-                  {/* if closed */}
+                  {/* Tooltip when closed */}
                   {!isOpen && (
                     <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 pointer-events-none">
                       {item.label}
@@ -165,11 +205,13 @@ const Sidebar = () => {
       {/* Setting + Logout */}
       <div className="p-3 border-t border-gray-200 flex-shrink-0 space-y-1">
         <button
-          onClick={() => handleMenuClick("settings")}
-          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${
-            activeMenu === "settings" ? "font-semibold" : ""
+          onClick={() => handleMenuClick("/admin/settings")}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${
+            isActiveMenu("/admin/settings")
+              ? "bg-blue-50 text-blue-600 font-semibold"
+              : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
           }`}
-          aria-current={activeMenu === "settings" ? "page" : undefined}
+          aria-current={isActiveMenu("/admin/settings") ? "page" : undefined}
           title={!isOpen ? "Cài đặt" : undefined}
         >
           <Settings className="w-5 h-5 flex-shrink-0" />
