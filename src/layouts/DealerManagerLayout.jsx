@@ -1,7 +1,7 @@
 // src/layouts/DealerManagerLayout.jsx
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { LayoutDashboard, MessageSquare, BarChart3, ShoppingCart, TrendingUp } from "lucide-react";
+import { LayoutDashboard, MessageSquare, BarChart3, ShoppingCart, TrendingUp, Truck, Package } from "lucide-react";
 import SharedSidebar from "../components/shared/SharedSidebar";
 import SharedHeader from "../components/shared/SharedHeader";
 
@@ -40,10 +40,22 @@ const DealerManagerLayout = ({ children }) => {
       path: "/dealerManager/promotions",
     },
     {
+      id: "agency-order",
+      label: "Đơn hàng của đại lý",
+      icon: Package,
+      path: "/dealerManager/agency-order",
+    },
+    {
       id: "orders",
       label: "Quản lý đơn hàng bán được",
       icon: ShoppingCart,
       path: "/dealerManager/order",
+    },
+    {
+      id: "vehicle-order",
+      label: "Đặt xe từ hãng mới",
+      icon: Truck,
+      path: "/dealerManager/vehicle-order",
     },
   ];
 

@@ -78,12 +78,14 @@ const UserProfile = ({ employeeId = 1 }) => {
                 setError(null);
                 // Sử dụng getUserInfo thay vì getEmployeeInfo vì endpoint /users/me dùng chung cho tất cả roles
                 const data = await getUserInfo();
+                console.log("📊 API Response data:", data);
+                console.log("📊 Cấu trúc dữ liệu:", JSON.stringify(data, null, 2));
                 setEmployee(data);
             } catch (err) {
                 const errorMessage = "Không thể lấy thông tin nhân viên";
                 setError(errorMessage);
                 toast.error(errorMessage);
-                console.error("Chi tiết lỗi:", err);
+                console.error("❌ Chi tiết lỗi:", err);
             } finally {
                 setLoading(false);
             }

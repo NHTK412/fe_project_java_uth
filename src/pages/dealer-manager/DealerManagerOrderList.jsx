@@ -246,7 +246,7 @@ const DealerManagerOrderList = () => {
                 <div className="flex gap-2">
                     <button
                         onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                        disabled={currentPage === 0}
+                        disabled={currentPage === 1}
                         className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
                     >
                         Trước
@@ -255,8 +255,8 @@ const DealerManagerOrderList = () => {
                         {Array.from({ length: totalPages }).map((_, i) => (
                             <button
                                 key={i}
-                                onClick={() => setCurrentPage(i)}
-                                className={`px-3 py-2 rounded-lg font-medium ${currentPage === i
+                                onClick={() => setCurrentPage(i + 1)}
+                                className={`px-3 py-2 rounded-lg font-medium ${currentPage === i + 1
                                     ? 'bg-blue-600 text-white'
                                     : 'border border-gray-300 text-gray-700 hover:bg-gray-100'
                                     }`}
@@ -267,7 +267,7 @@ const DealerManagerOrderList = () => {
                     </div>
                     <button
                         onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                        disabled={currentPage === totalPages - 1}
+                        disabled={currentPage === totalPages}
                         className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
                     >
                         Sau

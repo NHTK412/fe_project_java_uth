@@ -5,8 +5,11 @@ import UserProfile from "../../components/admin/UserProfile";
  */
 const UserProfilePage = () => {
     return (
-        <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-6">Thông tin nhân viên</h1>
+        <div className="p-8">
+            <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900">Thông tin nhân viên</h1>
+                <p className="text-gray-600 mt-2">Xem và quản lý thông tin cá nhân của bạn</p>
+            </div>
             <UserProfile />
         </div>
     );

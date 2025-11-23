@@ -29,7 +29,10 @@ export const getUserInfo = async () => {
         if (response.status === 401) {
             localStorage.removeItem("token");
             localStorage.removeItem("role");
-            window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+            // NOTE: Delay redirect để component kịp handle error
+            setTimeout(() => {
+                window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+            }, 100);
             throw new Error("Token hết hạn. Vui lòng đăng nhập lại.");
         }
 
@@ -72,7 +75,10 @@ export const getEmployeeInfo = async () => {
         if (response.status === 401) {
             localStorage.removeItem("token");
             localStorage.removeItem("role");
-            window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+            // NOTE: Delay redirect để component kịp handle error
+            setTimeout(() => {
+                window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+            }, 100);
             throw new Error("Token hết hạn. Vui lòng đăng nhập lại.");
         }
 

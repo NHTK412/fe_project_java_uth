@@ -22,8 +22,14 @@ const DealerLayout = ({ children }) => {
       path: "/dealer/test-drive",
     },
     {
+      id: "employee-order",
+      label: "Đơn hàng của tôi",
+      icon: ShoppingCart,
+      path: "/dealer/employee-order",
+    },
+    {
       id: "orders",
-      label: "Quản lý đơn hàng của tôi",
+      label: "Quản lý đơn hàng của tôi (cũ)",
       icon: ShoppingCart,
       path: "/dealer/order",
     },

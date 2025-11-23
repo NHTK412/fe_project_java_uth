@@ -17,7 +17,9 @@ export const getOrderById = async (orderId) => {
 // Lấy danh sách đơn hàng của đại lý
 export const getOrdersByAgency = async (page = 1, size = 10) => {
     try {
-        const response = await apiClient.get(`${API_URL}/agency?page=${page}&size=${size}`);
+        // Đảm bảo page > 0 theo quy định backend
+        const validPage = Math.max(1, Math.floor(page));
+        const response = await apiClient.get(`${API_URL}/agency?page=${validPage}&size=${size}`);
         return response.data;
     } catch (error) {
         throw new Error(error.response?.data?.message || 'Lỗi lấy danh sách đơn hàng của đại lý');
@@ -25,9 +27,11 @@ export const getOrdersByAgency = async (page = 1, size = 10) => {
 };
 
 // Lấy danh sách đơn hàng của nhân viên
-export const getOrdersByEmployeeId = async (employeeId, page = 1, size = 10) => {
+export const getOrdersByEmployeeId = async (page = 1, size = 10) => {
     try {
-        const response = await apiClient.get(`${API_URL}/employee/${employeeId}?page=${page}&size=${size}`);
+        // Đảm bảo page > 0 theo quy định backend
+        const validPage = Math.max(1, Math.floor(page));
+        const response = await apiClient.get(`${API_URL}/employee?page=${validPage}&size=${size}`);
         return response.data;
     } catch (error) {
         throw new Error(error.response?.data?.message || 'Lỗi lấy danh sách đơn hàng của nhân viên');

@@ -44,7 +44,7 @@ export const fetchRevenueData = async (period = "7days") => {
       agencyId: null,
       status: null,
       groupBy: "AGENCY",
-      page: 0,
+      page: 1,
       size: 100,
     };
 

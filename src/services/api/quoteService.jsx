@@ -25,7 +25,10 @@ const apiFetch = async (endpoint, options = {}) => {
     if (response.status === 401) {
         localStorage.removeItem("token");
         localStorage.removeItem("role");
-        window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+        // NOTE: Delay redirect để component kịp handle error
+        setTimeout(() => {
+            window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+        }, 100);
         throw new Error("Token hết hạn. Vui lòng đăng nhập lại.");
     }
 
@@ -41,13 +44,15 @@ const apiFetch = async (endpoint, options = {}) => {
 /**
  * Gọi API để lấy danh sách báo giá
  * Endpoint: http://localhost:8080/api/quote?page=1&size=10
- * @param {number} page - Trang (bắt đầu từ 1)
+ * @param {number} page - Trang (bắt đầu từ 1, phải > 0)
  * @param {number} size - Số item trên mỗi trang
  * @returns {Promise<Array>} - Danh sách báo giá
  */
 export const getQuotes = async (page = 1, size = 10) => {
     try {
-        const params = new URLSearchParams({ page, size });
+        // Đảm bảo page > 0 theo quy định backend
+        const validPage = Math.max(1, Math.floor(page));
+        const params = new URLSearchParams({ page: validPage, size });
         const response = await apiFetch(`/quote?${params}`, {
             method: "GET",
         });
@@ -149,13 +154,15 @@ export const deleteQuote = async (quoteId) => {
 
 /**
  * Gọi API để lấy danh sách khách hàng
- * @param {number} page - Trang (bắt đầu từ 0)
+ * @param {number} page - Trang (bắt đầu từ 1, phải > 0)
  * @param {number} size - Số item trên mỗi trang
  * @returns {Promise<Array>} - Danh sách khách hàng
  */
-export const getCustomers = async (page = 0, size = 10) => {
+export const getCustomers = async (page = 1, size = 10) => {
     try {
-        const params = new URLSearchParams({ page, size });
+        // Đảm bảo page > 0 theo quy định backend
+        const validPage = Math.max(1, Math.floor(page));
+        const params = new URLSearchParams({ page: validPage, size });
         const response = await apiFetch(`/customers?${params}`, {
             method: "GET",
         });

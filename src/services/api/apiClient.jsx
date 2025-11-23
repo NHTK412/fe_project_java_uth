@@ -42,8 +42,11 @@ const customFetch = async (endpoint, options = {}) => {
             if (response.status === 401 && !isPublic) { // Chỉ redirect nếu đây là request cần xác thực
                 localStorage.removeItem("token");
                 localStorage.removeItem("role");
-                // Chuyển hướng về trang đăng nhập, lưu lại trang hiện tại để quay lại sau
-                window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+                // NOTE: Delay redirect để component kịp handle error
+                setTimeout(() => {
+                    // Chuyển hướng về trang đăng nhập, lưu lại trang hiện tại để quay lại sau
+                    window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+                }, 100);
             }
             // Ném lỗi để các hàm gọi có thể bắt và xử lý
             throw new Error(data.message || `Lỗi HTTP: ${response.status}`);

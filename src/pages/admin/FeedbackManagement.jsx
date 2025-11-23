@@ -62,7 +62,7 @@ const FeedbackManagement = () => {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showHandleModal, setShowHandleModal] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
   const pageSize = 10;
@@ -239,11 +239,10 @@ const FeedbackManagement = () => {
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2.5 border rounded-xl transition-all duration-200 ${
-              showFilters
+            className={`flex items-center gap-2 px-4 py-2.5 border rounded-xl transition-all duration-200 ${showFilters
                 ? "bg-blue-50 border-blue-200 text-blue-600"
                 : "border-gray-200 hover:bg-gray-50 text-gray-700"
-            }`}
+              }`}
           >
             <Filter className="w-4 h-4" />
             <span className="font-medium">Bộ lọc</span>
@@ -426,11 +425,10 @@ const FeedbackManagement = () => {
                   return (
                     <tr
                       key={item.feedbackId}
-                      className={`hover:bg-gray-50 ${
-                        item.status === "Not yet processed"
+                      className={`hover:bg-gray-50 ${item.status === "Not yet processed"
                           ? "bg-red-50/30"
                           : ""
-                      }`}
+                        }`}
                     >
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {currentPage * pageSize + idx + 1}
@@ -512,21 +510,21 @@ const FeedbackManagement = () => {
         {totalPages > 1 && (
           <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50">
             <p className="text-sm text-gray-500">
-              Trang {currentPage + 1} / {totalPages}
+              Trang {currentPage} / {totalPages}
             </p>
             <div className="flex items-center gap-1">
               <button
-                onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
-                disabled={currentPage === 0}
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
                 className="p-2 rounded-lg border border-gray-200 hover:bg-white disabled:opacity-50"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() =>
-                  setCurrentPage((p) => Math.min(totalPages - 1, p + 1))
+                  setCurrentPage((p) => Math.min(totalPages, p + 1))
                 }
-                disabled={currentPage === totalPages - 1}
+                disabled={currentPage === totalPages}
                 className="p-2 rounded-lg border border-gray-200 hover:bg-white disabled:opacity-50"
               >
                 <ChevronRight className="w-4 h-4" />

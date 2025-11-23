@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { LogOut, Settings, User, FileText } from "lucide-react";
-import { useUserData } from "../../hooks/useUserData";
 
 /**
  * Component Dropdown cho User Profile
@@ -9,8 +8,13 @@ import { useUserData } from "../../hooks/useUserData";
  */
 const UserProfileDropdown = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
-    const { user, role } = useUserData();
-    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+    const location = useLocation();
+    // eslint-disable-next-line no-undef
+    const role = localStorage.getItem("role") || "ROLE_USER";
+    // eslint-disable-next-line no-undef
+    const username = localStorage.getItem("username") || "User";
+    // eslint-disable-next-line no-undef
+    const email = localStorage.getItem("email") || "user@example.com";
 
     const handleProfileClick = () => {
         navigate("/profile");
@@ -59,8 +63,8 @@ const UserProfileDropdown = ({ isOpen, onClose }) => {
                             <User className="w-6 h-6 text-white" />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="font-semibold text-gray-900 truncate">{user.employeeName || user.username || "User"}</p>
-                            <p className="text-sm text-gray-600 truncate">{user.email || "user@example.com"}</p>
+                            <p className="font-semibold text-gray-900 truncate">{username}</p>
+                            <p className="text-sm text-gray-600 truncate">{email}</p>
                             <p className="text-xs text-gray-500 mt-1">
                                 {role?.replace("ROLE_", "") || "USER"}
                             </p>

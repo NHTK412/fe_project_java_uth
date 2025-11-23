@@ -64,6 +64,11 @@ const CreateImportRequest = () => {
             return;
         }
 
+        if (parseInt(detailForm.quantity) <= 0) {
+            setError("Số lượng phải lớn hơn 0");
+            return;
+        }
+
         const newDetail = {
             vehicleTypeDetailId: parseInt(detailForm.vehicleTypeDetailId),
             quantity: parseInt(detailForm.quantity),
@@ -91,6 +96,11 @@ const CreateImportRequest = () => {
         e.preventDefault();
 
         // Kiểm tra dữ liệu
+        if (!formData.note.trim()) {
+            setError("Vui lòng nhập ghi chú");
+            return;
+        }
+
         if (!formData.importRequestDetails.length) {
             setError("Vui lòng thêm ít nhất một sản phẩm");
             return;
@@ -105,7 +115,7 @@ const CreateImportRequest = () => {
 
             // Chuyển hướng về danh sách sau 2 giây
             setTimeout(() => {
-                navigate("/admin/import-request");
+                navigate("/dealerManager/import-request");
             }, 2000);
         } catch (err) {
             setError(err.message || "Có lỗi khi tạo đơn đặt xe");

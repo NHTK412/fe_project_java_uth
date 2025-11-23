@@ -25,7 +25,10 @@ const apiFetch = async (endpoint, options = {}) => {
     if (response.status === 401) {
         localStorage.removeItem("token");
         localStorage.removeItem("role");
-        window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+        // NOTE: Delay redirect để component kịp handle error
+        setTimeout(() => {
+            window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+        }, 100);
         throw new Error("Token hết hạn. Vui lòng đăng nhập lại.");
     }
 
@@ -40,13 +43,15 @@ const apiFetch = async (endpoint, options = {}) => {
 /**
  * Gọi API để lấy danh sách các đơn đặt xe từ hãng
  * Endpoint: http://localhost:8080/api/import-request/me?page=1&size=10
- * @param {number} page - Trang (bắt đầu từ 1)
+ * @param {number} page - Trang (bắt đầu từ 1, phải > 0)
  * @param {number} size - Số item trên mỗi trang
  * @returns {Promise<Array>} - Danh sách các đơn đặt xe
  */
 export const getImportRequests = async (page = 1, size = 10) => {
     try {
-        const params = new URLSearchParams({ page, size });
+        // Đảm bảo page > 0 theo quy định backend
+        const validPage = Math.max(1, Math.floor(page));
+        const params = new URLSearchParams({ page: validPage, size });
         const response = await apiFetch(`/import-request/me?${params}`, {
             method: "GET",
         });
@@ -94,13 +99,15 @@ export const createImportRequest = async (data) => {
 
 /**
  * NOTE: Gọi API để lấy danh sách loại xe (vehicle type)
- * @param {number} page - Trang (bắt đầu từ 1)
+ * @param {number} page - Trang (bắt đầu từ 1, phải > 0)
  * @param {number} size - Số item trên mỗi trang
  * @returns {Promise<Object>} - Dữ liệu danh sách loại xe
  */
 export const getVehicleTypes = async (page = 1, size = 10) => {
     try {
-        const params = new URLSearchParams({ page, size });
+        // Đảm bảo page > 0 theo quy định backend
+        const validPage = Math.max(1, Math.floor(page));
+        const params = new URLSearchParams({ page: validPage, size });
         const response = await apiFetch(`/vehicle/type?${params}`, {
             method: "GET",
         });
@@ -114,14 +121,16 @@ export const getVehicleTypes = async (page = 1, size = 10) => {
 
 /**
  * NOTE: Gọi API để lấy danh sách chi tiết loại xe (vehicle type detail)
- * @param {number} page - Trang (bắt đầu từ 1)
+ * @param {number} page - Trang (bắt đầu từ 1, phải > 0)
  * @param {number} size - Số item trên mỗi trang
  * @param {number} vehicleTypeId - ID loại xe (tùy chọn) để lọc chi tiết của loại xe cụ thể
  * @returns {Promise<Object>} - Dữ liệu danh sách chi tiết loại xe
  */
 export const getVehicleTypeDetails = async (page = 1, size = 10, vehicleTypeId = null) => {
     try {
-        const params = new URLSearchParams({ page, size });
+        // Đảm bảo page > 0 theo quy định backend
+        const validPage = Math.max(1, Math.floor(page));
+        const params = new URLSearchParams({ page: validPage, size });
         if (vehicleTypeId) {
             params.append("vehicleTypeId", vehicleTypeId);
         }

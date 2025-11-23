@@ -13,13 +13,15 @@ const getHeaders = () => {
 // Employee API
 export const employeeApi = {
   getAll: async (
-    page = 0,
+    page = 1,
     size = 10,
     sortBy = "employeeId",
     sortDir = "asc"
   ) => {
+    // Đảm bảo page > 0 theo quy định backend
+    const validPage = Math.max(1, Math.floor(page));
     const res = await fetch(
-      `${API_BASE_URL}/employees?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
+      `${API_BASE_URL}/employees?page=${validPage}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
       { headers: getHeaders() }
     );
     return res.json();
@@ -58,17 +60,21 @@ export const employeeApi = {
     return res.json();
   },
 
-  getByRole: async (role, page = 0, size = 10) => {
+  getByRole: async (role, page = 1, size = 10) => {
+    // Đảm bảo page > 0 theo quy định backend
+    const validPage = Math.max(1, Math.floor(page));
     const res = await fetch(
-      `${API_BASE_URL}/employees/by-position?role=${role}&page=${page}&size=${size}`,
+      `${API_BASE_URL}/employees/by-position?role=${role}&page=${validPage}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();
   },
 
-  getByAgency: async (agencyId, page = 0, size = 10) => {
+  getByAgency: async (agencyId, page = 1, size = 10) => {
+    // Đảm bảo page > 0 theo quy định backend
+    const validPage = Math.max(1, Math.floor(page));
     const res = await fetch(
-      `${API_BASE_URL}/employees/agencies/${agencyId}?page=${page}&size=${size}`,
+      `${API_BASE_URL}/employees/agencies/${agencyId}?page=${validPage}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();
@@ -78,13 +84,15 @@ export const employeeApi = {
 // Customer API
 export const customerApi = {
   getAll: async (
-    page = 0,
+    page = 1,
     size = 10,
     sortBy = "customerId",
     sortDir = "asc"
   ) => {
+    // Đảm bảo page > 0 theo quy định backend
+    const validPage = Math.max(1, Math.floor(page));
     const res = await fetch(
-      `${API_BASE_URL}/customers?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
+      `${API_BASE_URL}/customers?page=${validPage}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
       { headers: getHeaders() }
     );
     return res.json();
@@ -123,9 +131,11 @@ export const customerApi = {
     return res.json();
   },
 
-  getByMembership: async (level, page = 0, size = 10) => {
+  getByMembership: async (level, page = 1, size = 10) => {
+    // Đảm bảo page > 0 theo quy định backend
+    const validPage = Math.max(1, Math.floor(page));
     const res = await fetch(
-      `${API_BASE_URL}/customers/by-membership?level=${level}&page=${page}&size=${size}`,
+      `${API_BASE_URL}/customers/by-membership?level=${level}&page=${validPage}&size=${size}`,
       { headers: getHeaders() }
     );
     return res.json();

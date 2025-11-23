@@ -81,7 +81,7 @@ const ImportRequestDetail = () => {
         return (
             <div className="space-y-6">
                 <button
-                    onClick={() => navigate("/admin/import-request")}
+                    onClick={() => navigate("/dealerManager/import-request")}
                     className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5" />
@@ -100,7 +100,7 @@ const ImportRequestDetail = () => {
         return (
             <div className="space-y-6">
                 <button
-                    onClick={() => navigate("/admin/import-request")}
+                    onClick={() => navigate("/dealerManager/import-request")}
                     className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5" />
@@ -120,7 +120,7 @@ const ImportRequestDetail = () => {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <button
-                        onClick={() => navigate("/admin/import-request")}
+                        onClick={() => navigate("/dealerManager/import-request")}
                         className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors"
                     >
                         <ArrowLeft className="w-5 h-5" />

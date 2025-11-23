@@ -5,23 +5,24 @@ import EvmLayout from "../layouts/EvmLayout";
 import DealerLayout from "../layouts/DealerLayout";
 import DealerManagerLayout from "../layouts/DealerManagerLayout";
 import Dashboard from "../pages/admin/Dashboard";
-import ImportRequestList from "../pages/admin/ImportRequestList";
-import ImportRequestDetail from "../pages/admin/ImportRequestDetail";
-import CreateImportRequest from "../pages/admin/CreateImportRequest";
-import QuoteList from "../pages/admin/QuoteList";
-import QuoteDetail from "../pages/admin/QuoteDetail";
-import CreateQuote from "../pages/admin/CreateQuote";
-import OrderList from "../pages/admin/OrderList";
-import OrderDetail from "../pages/admin/OrderDetail";
-import CreateOrderFromQuote from "../pages/admin/CreateOrderFromQuote";
+import ImportRequestList from "../pages/dealer-manager/ImportRequestList";
+import ImportRequestDetail from "../pages/dealer-manager/ImportRequestDetail";
+import CreateImportRequest from "../pages/dealer-manager/CreateImportRequest";
+import QuoteList from "../pages/dealer-staff/QuoteList";
+import QuoteDetail from "../pages/dealer-staff/QuoteDetail";
+import CreateQuote from "../pages/dealer-staff/CreateQuote";
+import OrderList from "../pages/dealer-staff/OrderList";
+import OrderDetail from "../pages/dealer-staff/OrderDetail";
+import CreateOrderFromQuote from "../pages/dealer-staff/CreateOrderFromQuote";
 import DealerManagerOrderList from "../pages/dealer-manager/DealerManagerOrderList";
 import DealerStaffOrderList from "../pages/dealer-staff/DealerStaffOrderList";
+import DealerStaffEmployeeOrderList from "../pages/dealer-staff/DealerStaffEmployeeOrderList";
 import DealerOrderDetail from "../pages/shared/DealerOrderDetail";
 import DealerCreateOrder from "../pages/shared/DealerCreateOrder";
 import DealerDashboard from "../pages/dealer-staff/DealerDashboard";
 import DealerManagerDashboard from "../pages/dealer-manager/DealerManagerDashboard";
 import UserProfilePage from "../pages/user/UserProfilePage";
-import UserProfileDetailPage from "../pages/user/UserProfileDetailPage";
+import ProfileWrapper from "../pages/user/ProfileWrapper";
 import Users from "../pages/admin/UserManagement";
 import Inventory from "../pages/admin/InventoryReport";
 import Revenue from "../pages/admin/RevenueReport";
@@ -31,7 +32,6 @@ import ProductManagement from "../pages/admin/ProductManagement";
 import FeedbackManagementDealerManager from "../pages/dealer-manager/FeedbackManagement";
 import Reports from "../pages/dealer-manager/Reports";
 import PromotionsManager from "../pages/dealer-manager/PromotionsManager";
-import ImportRequest from "../pages/dealer-manager/ImportRequest";
 import TestDriveSchedule from "../pages/dealer-staff/TestDriveSchedule";
 import QuoteManagement from "../pages/dealer-staff/QuoteManagement";
 import VehicleInfo from "../pages/dealer-staff/VehicleInfo";
@@ -42,6 +42,10 @@ import EvmPromotions from "../pages/evm-staff/EvmPromotions";
 import DiscountManagement from "../pages/evm-staff/DiscountManagement";
 import WholesalePriceManagement from "../pages/evm-staff/WholesalePriceManagement";
 import OrderManagement from "../pages/evm-staff/OrderManagement";
+import VehicleOrderList from "../pages/dealer-manager/VehicleOrderList";
+import VehicleOrderDetail from "../pages/dealer-manager/VehicleOrderDetail";
+import CreateVehicleOrder from "../pages/dealer-manager/CreateVehicleOrder";
+import DealerAgencyOrderList from "../pages/dealer-manager/DealerAgencyOrderList";
 
 const routes = [
   // ========== ADMIN ROUTES ==========
@@ -380,6 +384,19 @@ const routes = [
     ),
   },
   {
+    path: "/dealer/employee-order",
+    element: (
+      <ProtectedRoute
+        element={
+          <DealerLayout>
+            <DealerStaffEmployeeOrderList />
+          </DealerLayout>
+        }
+        allowedUsers={["ROLE_DEALER_STAFF"]}
+      />
+    ),
+  },
+  {
     path: "/dealer/order/create",
     element: (
       <ProtectedRoute
@@ -490,13 +507,41 @@ const routes = [
       />
     ),
   },
+  // NOTE: Import Request Routes - Create (PHẢI ĐẶT TRƯỚC route /:id)
+  {
+    path: "/dealerManager/import-request/create",
+    element: (
+      <ProtectedRoute
+        element={
+          <DealerManagerLayout>
+            <CreateImportRequest />
+          </DealerManagerLayout>
+        }
+        allowedUsers={["ROLE_DEALER_MANAGER"]}
+      />
+    ),
+  },
   {
     path: "/dealerManager/import-request",
     element: (
       <ProtectedRoute
         element={
           <DealerManagerLayout>
-            <ImportRequest />
+            <ImportRequestList />
+          </DealerManagerLayout>
+        }
+        allowedUsers={["ROLE_DEALER_MANAGER"]}
+      />
+    ),
+  },
+  // NOTE: Import Request Routes - Detail (route động với :id)
+  {
+    path: "/dealerManager/import-request/:id",
+    element: (
+      <ProtectedRoute
+        element={
+          <DealerManagerLayout>
+            <ImportRequestDetail />
           </DealerManagerLayout>
         }
         allowedUsers={["ROLE_DEALER_MANAGER"]}
@@ -555,6 +600,60 @@ const routes = [
       />
     ),
   },
+  // NOTE: Agency Order Routes (đơn hàng của đại lý)
+  {
+    path: "/dealerManager/agency-order",
+    element: (
+      <ProtectedRoute
+        element={
+          <DealerManagerLayout>
+            <DealerAgencyOrderList />
+          </DealerManagerLayout>
+        }
+        allowedUsers={["ROLE_DEALER_MANAGER"]}
+      />
+    ),
+  },
+  // NOTE: Vehicle Order Routes - Create (PHẢI ĐẶT TRƯỚC route /:id)
+  {
+    path: "/dealerManager/vehicle-order/create",
+    element: (
+      <ProtectedRoute
+        element={
+          <DealerManagerLayout>
+            <CreateVehicleOrder />
+          </DealerManagerLayout>
+        }
+        allowedUsers={["ROLE_DEALER_MANAGER"]}
+      />
+    ),
+  },
+  {
+    path: "/dealerManager/vehicle-order",
+    element: (
+      <ProtectedRoute
+        element={
+          <DealerManagerLayout>
+            <VehicleOrderList />
+          </DealerManagerLayout>
+        }
+        allowedUsers={["ROLE_DEALER_MANAGER"]}
+      />
+    ),
+  },
+  {
+    path: "/dealerManager/vehicle-order/:id",
+    element: (
+      <ProtectedRoute
+        element={
+          <DealerManagerLayout>
+            <VehicleOrderDetail />
+          </DealerManagerLayout>
+        }
+        allowedUsers={["ROLE_DEALER_MANAGER"]}
+      />
+    ),
+  },
   {
     path: "/dealerManager/*",
     element: (
@@ -580,16 +679,12 @@ const routes = [
     ),
   },
 
-  // ========== USER PROFILE DETAIL ROUTE ==========
+  // ========== USER PROFILE ROUTE ==========
   {
     path: "/profile",
     element: (
       <ProtectedRoute
-        element={
-          <AdminLayout>
-            <UserProfileDetailPage />
-          </AdminLayout>
-        }
+        element={<ProfileWrapper />}
         allowedUsers={["ROLE_ADMIN", "ROLE_EVM_STAFF", "ROLE_DEALER_STAFF", "ROLE_DEALER_MANAGER"]}
       />
     ),
