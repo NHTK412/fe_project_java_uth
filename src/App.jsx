@@ -14,6 +14,7 @@ function App() {
           <Route path="/" element={<Login />} />
           {routes.map((route) => {
             if (route.children) {
+              // có children routes
               return (
                 <Route
                   key={route.path}
@@ -31,6 +32,7 @@ function App() {
                 </Route>
               );
             }
+            // không có children routes
             return (
               <Route
                 key={route.path}

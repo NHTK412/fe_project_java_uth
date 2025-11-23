@@ -1,0 +1,213 @@
+import React, { useState, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
+import LOGO from "../../assets/logo.png";
+
+/**
+ * Component Sidebar chung cho tất cả layouts
+ * Hỗ trợ đóng/mở, tìm kiếm và logout
+ */
+const SharedSidebar = ({ menuItems, bgColor = "bg-white", borderColor = "border-blue-200" }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [isOpen, setIsOpen] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+    const toggleSidebar = useCallback(() => setIsOpen((prev) => !prev), []);
+
+    const handleMenuClick = (path) => {
+        navigate(path);
+    };
+
+    const confirmLogout = useCallback(() => {
+        setShowLogoutConfirm(false);
+        try {
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+        } catch (err) { }
+        navigate("/");
+    }, [navigate]);
+
+    const isActiveMenu = (path) => {
+        if (path === "/admin" || path === "/dealer" || path === "/dealerManager" || path === "/staff") {
+            return location.pathname === path;
+        }
+        return location.pathname.startsWith(path);
+    };
+
+    // Lọc menu items theo search term
+    const filteredMenuItems = menuItems.filter(
+        (item) =>
+            !item.separator &&
+            item.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+        <aside
+            className={`flex flex-col ${bgColor} border-r ${borderColor} transition-all duration-300 ${isOpen ? "w-64" : "w-20"
+                }`}
+            style={{ height: "100vh" }}
+            role="navigation"
+            aria-label="Sidebar navigation"
+        >
+            {/* Header Logo */}
+            <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 flex-shrink-0">
+                <div className={`flex items-center gap-3 ${!isOpen ? "mx-auto" : ""}`}>
+                    <img
+                        src={LOGO}
+                        alt="EVM Logo"
+                        className="w-10 h-10 rounded-lg object-cover"
+                    />
+                    {isOpen && (
+                        <span className="font-semibold text-gray-900 text-lg truncate">
+                            EVM System
+                        </span>
+                    )}
+                </div>
+
+                {isOpen && (
+                    <button
+                        onClick={toggleSidebar}
+                        className="p-1.5 rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        aria-label="Thu gọn sidebar"
+                        title="Thu gọn"
+                    >
+                        <ChevronLeft className="w-5 h-5 text-gray-600" />
+                    </button>
+                )}
+            </div>
+
+            {/* Toggle button */}
+            {!isOpen && (
+                <div className="px-4 py-3 border-b border-gray-200">
+                    <button
+                        onClick={toggleSidebar}
+                        className="w-full p-1.5 rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        aria-label="Mở rộng sidebar"
+                        title="Mở rộng"
+                    >
+                        <ChevronRight className="w-5 h-5 text-gray-600 mx-auto" />
+                    </button>
+                </div>
+            )}
+
+            {/* Search Bar */}
+            {isOpen && (
+                <div className="px-3 py-3 border-b border-gray-200">
+                    <input
+                        type="text"
+                        placeholder="Tìm kiếm..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+            )}
+
+            {/* Main Navigation Menu */}
+            <nav className="flex-1 p-3 overflow-y-auto" aria-label="Main menu">
+                <ul className="space-y-1">
+                    {filteredMenuItems.map((item, index) => {
+                        const Icon = item.icon;
+                        const isActive = isActiveMenu(item.path);
+
+                        return (
+                            <li key={item.id || index}>
+                                <button
+                                    onClick={() => handleMenuClick(item.path)}
+                                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${isActive
+                                            ? "bg-blue-50 text-blue-600 font-semibold"
+                                            : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                                        }`}
+                                    aria-current={isActive ? "page" : undefined}
+                                    title={!isOpen ? item.label : undefined}
+                                >
+                                    <Icon className="w-5 h-5 flex-shrink-0" />
+                                    {isOpen && (
+                                        <span className="flex-1 text-left text-sm truncate">
+                                            {item.label}
+                                        </span>
+                                    )}
+
+                                    {/* Badge */}
+                                    {item.badge && isOpen && (
+                                        <span
+                                            className="px-2 py-0.5 rounded-full text-xs font-semibold text-white"
+                                            style={{ backgroundColor: item.badgeColor || "#e91e63" }}
+                                        >
+                                            {item.badge}
+                                        </span>
+                                    )}
+
+                                    {/* Tooltip when closed */}
+                                    {!isOpen && (
+                                        <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 pointer-events-none">
+                                            {item.label}
+                                            <div className="absolute top-1/2 right-full -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                                        </div>
+                                    )}
+                                </button>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </nav>
+
+            {/* Logout */}
+            <div className="p-3 border-t border-gray-200 flex-shrink-0">
+                <button
+                    onClick={() => setShowLogoutConfirm(true)}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-700 hover:bg-red-50 hover:text-red-600 group relative focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
+                    title={!isOpen ? "Đăng xuất" : undefined}
+                >
+                    <LogOut className="w-5 h-5 flex-shrink-0" />
+                    {isOpen && (
+                        <span className="flex-1 text-left text-sm">Đăng xuất</span>
+                    )}
+
+                    {!isOpen && (
+                        <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 pointer-events-none">
+                            Đăng xuất
+                            <div className="absolute top-1/2 right-full -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                        </div>
+                    )}
+                </button>
+            </div>
+
+            {/* Logout confirmation modal */}
+            {showLogoutConfirm && (
+                <div
+                    className="fixed inset-0 flex items-center justify-center z-50 bg-black/20 backdrop-blur-sm"
+                    onClick={() => setShowLogoutConfirm(false)}
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <div
+                        className="bg-white rounded-lg shadow-lg p-6 w-80"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h2 className="text-lg font-semibold mb-4 text-gray-900">Xác nhận đăng xuất</h2>
+                        <p className="text-gray-600 mb-6">Bạn chắc chắn muốn đăng xuất?</p>
+                        <div className="flex gap-3 justify-end">
+                            <button
+                                onClick={() => setShowLogoutConfirm(false)}
+                                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 font-medium"
+                            >
+                                Hủy
+                            </button>
+                            <button
+                                onClick={confirmLogout}
+                                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 font-medium"
+                            >
+                                Đăng xuất
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </aside>
+    );
+};
+
+export default SharedSidebar;

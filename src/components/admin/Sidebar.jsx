@@ -9,17 +9,20 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  Car,
+  MessageSquare,
+  Truck,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(true);
   const [activeMenu, setActiveMenu] = useState("dashboard");
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
+  // NOTE: Map menu items với các đường dẫn tương ứng
+  // Admin menu includes: Dashboard, Quản lý người dùng (Users), Báo cáo (Reports), Báo cáo tồn kho, Báo cáo doanh thu, Phản hồi, Cài đặt
   const menuItems = useMemo(
     () => [
       {
@@ -31,15 +34,27 @@ const Sidebar = () => {
       },
       {
         id: "users",
-        label: "Quản lý người dùng",
+        label: "Quản lý tài khoản nhân viên",
         icon: Users,
         path: "/admin/users",
       },
       {
+        id: "feedback",
+        label: "Ghi nhận và xử lý phản hồi",
+        icon: MessageSquare,
+        path: "/admin/feedback",
+      },
+      {
         id: "inventory-report",
-        label: "Báo cáo tồn kho",
-        icon: ShoppingCart,
+        label: "Báo cáo",
+        icon: BarChart3,
         path: "/admin/inventory",
+      },
+      {
+        id: "products",
+        label: "Quản lý sản phẩm",
+        icon: ShoppingCart,
+        path: "/admin/products",
       },
       {
         id: "revenue-report",
@@ -47,12 +62,6 @@ const Sidebar = () => {
         icon: BarChart3,
         path: "/admin/revenue",
       },
-      {
-        id: "vehicles",
-        label: "Quản lý phương tiện",
-        icon: Car,
-        path: "/admin/vehicles",
-      }
     ],
     []
   );
@@ -60,7 +69,8 @@ const Sidebar = () => {
   const toggleSidebar = useCallback(() => setIsOpen((prev) => !prev), []);
 
   const handleMenuClick = useCallback(
-    (path) => {
+    (id, path) => {
+      setActiveMenu(id);
       navigate(path);
     },
     [navigate]
@@ -78,7 +88,7 @@ const Sidebar = () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
-    } catch (err) {}
+    } catch (err) { }
     navigate("/");
   }, [navigate]);
 
@@ -96,9 +106,8 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ${
-        isOpen ? "w-64" : "w-20"
-      }`}
+      className={`flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ${isOpen ? "w-64" : "w-20"
+        }`}
       style={{ height: "100vh" }}
       role="navigation"
       aria-label="Sidebar navigation"
@@ -162,12 +171,11 @@ const Sidebar = () => {
                   </div>
                 )}
                 <button
-                  onClick={() => handleMenuClick(item.path)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${
-                    isActive
-                      ? "bg-blue-50 text-blue-600 font-semibold"
-                      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                  }`}
+                  onClick={() => handleMenuClick(item.id, item.path)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${isActive
+                    ? "bg-blue-50 text-blue-600 font-semibold"
+                    : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                    }`}
                   aria-current={isActive ? "page" : undefined}
                   title={!isOpen ? item.label : undefined}
                 >
@@ -205,12 +213,11 @@ const Sidebar = () => {
       {/* Setting + Logout */}
       <div className="p-3 border-t border-gray-200 flex-shrink-0 space-y-1">
         <button
-          onClick={() => handleMenuClick("/admin/settings")}
-          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${
-            isActiveMenu("/admin/settings")
-              ? "bg-blue-50 text-blue-600 font-semibold"
-              : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-          }`}
+          onClick={() => handleMenuClick("settings", "/admin/settings")}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${isActiveMenu("/admin/settings")
+            ? "bg-blue-50 text-blue-600 font-semibold"
+            : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+            }`}
           aria-current={isActiveMenu("/admin/settings") ? "page" : undefined}
           title={!isOpen ? "Cài đặt" : undefined}
         >

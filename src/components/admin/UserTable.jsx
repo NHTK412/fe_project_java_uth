@@ -245,7 +245,7 @@ const UserTable = ({
         </table>
       </div>
 
-      {/* // Phân trang */}
+      {/* Phân trang */}
       {pagination.totalPages > 0 && (
         <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200">
           <div className="text-sm text-gray-500">
