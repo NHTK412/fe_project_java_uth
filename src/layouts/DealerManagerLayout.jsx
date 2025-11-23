@@ -1,30 +1,62 @@
 // src/layouts/DealerManagerLayout.jsx
 import React from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { LayoutDashboard, MessageSquare, BarChart3, ShoppingCart, TrendingUp } from "lucide-react";
+import SharedSidebar from "../components/shared/SharedSidebar";
+import SharedHeader from "../components/shared/SharedHeader";
 
-const DealerManagerLayout = () => {
-  const role = localStorage.getItem("role") || null;
-
-  if (role !== "ROLE_DEALER_MANAGER") return <Navigate to="/" replace />;
+const DealerManagerLayout = ({ children }) => {
+  const menuItems = [
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: LayoutDashboard,
+      path: "/dealerManager",
+      badge: "Hot",
+      badgeColor: "#e91e63",
+    },
+    {
+      id: "feedback",
+      label: "Ghi nhận và xử lý phản hồi",
+      icon: MessageSquare,
+      path: "/dealerManager/feedback",
+    },
+    {
+      id: "reports",
+      label: "Báo cáo",
+      icon: BarChart3,
+      path: "/dealerManager/reports",
+    },
+    {
+      id: "import-request",
+      label: "Đặt xe từ hãng",
+      icon: ShoppingCart,
+      path: "/dealerManager/import-request",
+    },
+    {
+      id: "promotions",
+      label: "Quản lý khuyến mãi",
+      icon: TrendingUp,
+      path: "/dealerManager/promotions",
+    },
+    {
+      id: "orders",
+      label: "Quản lý đơn hàng bán được",
+      icon: ShoppingCart,
+      path: "/dealerManager/order",
+    },
+  ];
 
   return (
-    <div className="dealer-manager-layout flex h-screen">
-      <aside className="w-64 bg-yellow-800 text-white flex-shrink-0">
-        <div className="p-4 font-bold text-xl border-b border-yellow-700">Dealer Manager Panel</div>
-        <nav className="mt-4">
-          <ul>
-            <li className="p-2 hover:bg-yellow-700 cursor-pointer">Home</li>
-            <li className="p-2 hover:bg-yellow-700 cursor-pointer">Reports</li>
-            <li className="p-2 hover:bg-yellow-700 cursor-pointer">Settings</li>
-          </ul>
-        </nav>
-      </aside>
-      <main className="flex-1 bg-gray-100 p-6 overflow-auto">
-        <header className="mb-6">
-          <h1 className="text-2xl font-bold">Dealer Manager Dashboard</h1>
-        </header>
-        <Outlet />
-      </main>
+    <div className="flex h-screen overflow-hidden">
+      <SharedSidebar menuItems={menuItems} bgColor="bg-white" borderColor="border-gray-200" />
+      <div className="flex flex-col flex-1 min-h-0">
+        <SharedHeader title="Dealer Manager" />
+        <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+          <Outlet />
+          {children}
+        </main>
+      </div>
     </div>
   );
 };

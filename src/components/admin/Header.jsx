@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search, Bell, MessageSquareDot } from "lucide-react";
 
 const AVATAR_GRADIENT = "linear-gradient(135deg, #8b5cf6, #2563eb)";
@@ -37,9 +38,8 @@ const SearchInput = () => {
         type="text"
         placeholder="Tìm kiếm..."
         aria-label="Tìm kiếm"
-        className={`w-full py-2 pl-10 pr-4 border rounded-lg outline-none transition-all ${
-          isFocused ? "border-blue-500 ring-4 ring-blue-100" : "border-gray-200"
-        }`}
+        className={`w-full py-2 pl-10 pr-4 border rounded-lg outline-none transition-all ${isFocused ? "border-blue-500 ring-4 ring-blue-100" : "border-gray-200"
+          }`}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
@@ -47,8 +47,12 @@ const SearchInput = () => {
   );
 };
 
-const UserAvatar = ({ fullName, position, avatarInitials }) => (
-  <div className="flex items-center gap-4">
+const UserAvatar = ({ fullName, position, avatarInitials, onClick }) => (
+  <button
+    onClick={onClick}
+    className="flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer"
+    aria-label="Xem thông tin cá nhân"
+  >
     <div
       className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm"
       style={{ background: AVATAR_GRADIENT }}
@@ -60,15 +64,21 @@ const UserAvatar = ({ fullName, position, avatarInitials }) => (
       <div className="font-semibold text-gray-900">{fullName}</div>
       <div className="text-gray-500">{position}</div>
     </div>
-  </div>
+  </button>
 );
 
 const Header = () => {
+  const navigate = useNavigate();
   const [userData] = useState({
     fullName: "ADMIN",
     position: "Quản trị viên",
     avatarInitials: "AD",
   });
+
+  // Điều hướng tới trang thông tin cá nhân khi click avatar
+  const handleAvatarClick = () => {
+    navigate("/user-profile");
+  };
 
   /* 
   useEffect(() => {
@@ -130,6 +140,7 @@ const Header = () => {
             fullName={userData.fullName}
             position={userData.position}
             avatarInitials={userData.avatarInitials}
+            onClick={handleAvatarClick}
           />
         </div>
       </div>
