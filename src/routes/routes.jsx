@@ -21,6 +21,7 @@ import DealerCreateOrder from "../pages/shared/DealerCreateOrder";
 import DealerDashboard from "../pages/dealer-staff/DealerDashboard";
 import DealerManagerDashboard from "../pages/dealer-manager/DealerManagerDashboard";
 import UserProfilePage from "../pages/user/UserProfilePage";
+import UserProfileDetailPage from "../pages/user/UserProfileDetailPage";
 import Users from "../pages/admin/UserManagement";
 import Inventory from "../pages/admin/InventoryReport";
 import Revenue from "../pages/admin/RevenueReport";
@@ -572,6 +573,21 @@ const routes = [
         element={
           <AdminLayout>
             <UserProfilePage />
+          </AdminLayout>
+        }
+        allowedUsers={["ROLE_ADMIN", "ROLE_EVM_STAFF", "ROLE_DEALER_STAFF", "ROLE_DEALER_MANAGER"]}
+      />
+    ),
+  },
+
+  // ========== USER PROFILE DETAIL ROUTE ==========
+  {
+    path: "/profile",
+    element: (
+      <ProtectedRoute
+        element={
+          <AdminLayout>
+            <UserProfileDetailPage />
           </AdminLayout>
         }
         allowedUsers={["ROLE_ADMIN", "ROLE_EVM_STAFF", "ROLE_DEALER_STAFF", "ROLE_DEALER_MANAGER"]}

@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Bell, Search, User, Settings } from "lucide-react";
+import UserProfileDropdown from "./UserProfileDropdown";
 
 /**
  * Component Header chung cho tất cả layouts
  */
 const SharedHeader = ({ title = "Dashboard" }) => {
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const profileRef = useRef(null);
+
+    // Đóng dropdown khi click ngoài
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (profileRef.current && !profileRef.current.contains(e.target)) {
+                setIsProfileOpen(false);
+            }
+        };
+
+        if (isProfileOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isProfileOpen]);
+
     return (
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shadow-sm">
             <h1 className="text-xl font-semibold text-gray-900">{title}</h1>
@@ -31,13 +52,23 @@ const SharedHeader = ({ title = "Dashboard" }) => {
                     <Settings className="w-5 h-5" />
                 </button>
 
-                {/* User Profile */}
-                <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                        <User className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-gray-700 hidden md:inline">Profile</span>
-                </button>
+                {/* User Profile Dropdown */}
+                <div className="relative" ref={profileRef}>
+                    <button
+                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                        className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                            <User className="w-5 h-5 text-white" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 hidden md:inline">Profile</span>
+                    </button>
+
+                    <UserProfileDropdown
+                        isOpen={isProfileOpen}
+                        onClose={() => setIsProfileOpen(false)}
+                    />
+                </div>
             </div>
         </header>
     );
