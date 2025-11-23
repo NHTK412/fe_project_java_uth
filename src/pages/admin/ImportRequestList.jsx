@@ -10,7 +10,6 @@ const ImportRequestList = () => {
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
-    const [employeeId, setEmployeeId] = useState(1); // ID nhân viên hiện tại (mặc định 1)
     const [searchTerm, setSearchTerm] = useState("");
 
     // NOTE: Gọi API để lấy danh sách các đơn đặt xe từ hãng
@@ -19,7 +18,7 @@ const ImportRequestList = () => {
             try {
                 setLoading(true);
                 setError(null);
-                const data = await getImportRequests(page, size, employeeId);
+                const data = await getImportRequests(page, size);
                 setImportRequests(Array.isArray(data) ? data : []);
             } catch (err) {
                 setError(err.message || "Có lỗi khi tải dữ liệu");
@@ -30,7 +29,7 @@ const ImportRequestList = () => {
         };
 
         fetchImportRequests();
-    }, [page, size, employeeId]);
+    }, [page, size]);
 
     // NOTE: Lọc danh sách theo từ khóa tìm kiếm (agencyName, employeeName, note)
     const filteredRequests = importRequests.filter(

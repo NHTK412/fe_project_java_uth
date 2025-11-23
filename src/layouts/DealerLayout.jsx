@@ -1,29 +1,43 @@
 // src/layouts/DealerLayout.jsx
 import React from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const DealerLayout = () => {
-  const role = localStorage.getItem("role") || null;
+const DealerLayout = ({ children }) => {
+  const navigate = useNavigate();
 
-  if (role !== "ROLE_DEALER_STAFF") return <Navigate to="/" replace />;
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
 
   return (
     <div className="dealer-layout flex h-screen">
       <aside className="w-64 bg-green-800 text-white flex-shrink-0">
-        <div className="p-4 font-bold text-xl border-b border-green-700">Dealer Panel</div>
+        <div className="p-4 font-bold text-xl border-b border-green-700">Dealer Staff Panel</div>
         <nav className="mt-4">
           <ul>
-            <li className="p-2 hover:bg-green-700 cursor-pointer">Home</li>
-            <li className="p-2 hover:bg-green-700 cursor-pointer">Orders</li>
-            <li className="p-2 hover:bg-green-700 cursor-pointer">Profile</li>
+            <li
+              onClick={() => handleNavigate('/dealer')}
+              className="p-3 hover:bg-green-700 cursor-pointer transition-colors"
+            >
+              🏠 Dashboard
+            </li>
+            <li
+              onClick={() => handleNavigate('/dealer/order')}
+              className="p-3 hover:bg-green-700 cursor-pointer transition-colors"
+            >
+              📋 Đơn hàng của tôi
+            </li>
+            <li
+              onClick={() => handleNavigate('/user-profile')}
+              className="p-3 hover:bg-green-700 cursor-pointer transition-colors"
+            >
+              👤 Hồ sơ
+            </li>
           </ul>
         </nav>
       </aside>
-      <main className="flex-1 bg-gray-100 p-6 overflow-auto">
-        <header className="mb-6">
-          <h1 className="text-2xl font-bold">Dealer Dashboard</h1>
-        </header>
-        <Outlet />
+      <main className="flex-1 bg-gray-100 overflow-auto">
+        {children}
       </main>
     </div>
   );

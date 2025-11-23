@@ -72,7 +72,7 @@ const VehicleTypeSelectorModal = ({ onSelect, onClose }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-30 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 {/* NOTE: Header */}
                 <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">

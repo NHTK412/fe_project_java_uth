@@ -1,11 +1,13 @@
 // src/layouts/DealerManagerLayout.jsx
 import React from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const DealerManagerLayout = () => {
-  const role = localStorage.getItem("role") || null;
+const DealerManagerLayout = ({ children }) => {
+  const navigate = useNavigate();
 
-  if (role !== "ROLE_DEALER_MANAGER") return <Navigate to="/" replace />;
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
 
   return (
     <div className="dealer-manager-layout flex h-screen">
@@ -13,17 +15,29 @@ const DealerManagerLayout = () => {
         <div className="p-4 font-bold text-xl border-b border-yellow-700">Dealer Manager Panel</div>
         <nav className="mt-4">
           <ul>
-            <li className="p-2 hover:bg-yellow-700 cursor-pointer">Home</li>
-            <li className="p-2 hover:bg-yellow-700 cursor-pointer">Reports</li>
-            <li className="p-2 hover:bg-yellow-700 cursor-pointer">Settings</li>
+            <li
+              onClick={() => handleNavigate('/dealerManager')}
+              className="p-3 hover:bg-yellow-700 cursor-pointer transition-colors"
+            >
+              🏠 Dashboard
+            </li>
+            <li
+              onClick={() => handleNavigate('/dealerManager/order')}
+              className="p-3 hover:bg-yellow-700 cursor-pointer transition-colors"
+            >
+              📋 Quản lý đơn hàng
+            </li>
+            <li
+              onClick={() => handleNavigate('/user-profile')}
+              className="p-3 hover:bg-yellow-700 cursor-pointer transition-colors"
+            >
+              👤 Hồ sơ
+            </li>
           </ul>
         </nav>
       </aside>
-      <main className="flex-1 bg-gray-100 p-6 overflow-auto">
-        <header className="mb-6">
-          <h1 className="text-2xl font-bold">Dealer Manager Dashboard</h1>
-        </header>
-        <Outlet />
+      <main className="flex-1 bg-gray-100 overflow-auto">
+        {children}
       </main>
     </div>
   );

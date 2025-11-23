@@ -31,6 +31,8 @@ const Sidebar = () => {
       },
       { id: "users", label: "Quản lý người dùng", icon: Users, path: "/admin/users" },
       { id: "import-request", label: "Đặt xe từ hãng", icon: Truck, path: "/admin/import-request" },
+      { id: "quote", label: "Quản lý báo giá", icon: ShoppingCart, path: "/admin/quote" },
+      { id: "order", label: "Quản lý đơn hàng", icon: ShoppingCart, path: "/admin/order" },
       { id: "inventory-report", label: "Báo cáo tồn kho", icon: ShoppingCart, path: "/admin/inventory-report" },
       { id: "revenue-report", label: "Báo cáo doanh thu", icon: BarChart3, path: "/admin/revenue-report" },
     ],

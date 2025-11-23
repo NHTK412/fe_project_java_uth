@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Mail, Phone, MapPin, Briefcase, Calendar, Building2, User } from "lucide-react";
-import { getEmployeeInfo } from "../../services/api/userService";
+import { getUserInfo, getEmployeeInfo } from "../../services/api/userService";
 import { toast } from "react-toastify";
 
 // Ánh xạ giới tính tiếng Việt
@@ -76,7 +76,8 @@ const UserProfile = ({ employeeId = 1 }) => {
             try {
                 setLoading(true);
                 setError(null);
-                const data = await getEmployeeInfo(employeeId);
+                // Sử dụng getUserInfo thay vì getEmployeeInfo vì endpoint /users/me dùng chung cho tất cả roles
+                const data = await getUserInfo();
                 setEmployee(data);
             } catch (err) {
                 const errorMessage = "Không thể lấy thông tin nhân viên";
