@@ -184,3 +184,21 @@ export const createCustomer = async (data) => {
         throw error;
     }
 };
+
+/**
+ * Gọi API để tạo đơn hàng từ báo giá
+ * @param {Object} data - Dữ liệu OrderFromQuoteRequestDTO
+ * @returns {Promise<Object>} - Đơn hàng vừa tạo
+ */
+export const createOrderFromQuote = async (data) => {
+    try {
+        const response = await apiFetch("/order/from-quotation", {
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Lỗi khi gọi API tạo đơn hàng từ báo giá:", error);
+        throw error;
+    }
+};

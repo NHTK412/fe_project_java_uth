@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getOrderById, updateOrderStatus, updateDeliveryStatus, formatCurrency, formatDate } from '../../services/api/orderService';
+import PaymentModal from '../../components/shared/PaymentModal';
+import DeliveryModal from '../../components/shared/DeliveryModal';
 import { toast } from 'react-toastify';
 
 const OrderDetail = () => {
@@ -9,6 +11,7 @@ const OrderDetail = () => {
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(false);
     const [showDeliveryModal, setShowDeliveryModal] = useState(false);
+    const [paymentModalOpen, setPaymentModalOpen] = useState(false);
     const [updatingStatus, setUpdatingStatus] = useState(false);
 
     const orderStatusMap = {
@@ -91,6 +94,11 @@ const OrderDetail = () => {
         } finally {
             setUpdatingStatus(false);
         }
+    };
+
+    const handlePaymentSuccess = async () => {
+        setPaymentModalOpen(false);
+        await loadOrder();
     };
 
     const getStatusColor = (status, map) => {
@@ -332,13 +340,29 @@ const OrderDetail = () => {
                     {/* Hành động */}
                     <div className="bg-white rounded-lg shadow p-6">
                         <h2 className="text-lg font-bold text-gray-900 mb-4">Hành động</h2>
-                        <button
-                            onClick={handleUpdateStatus}
-                            disabled={updatingStatus || !orderStatusMap[order.status]?.nextStatus}
-                            className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {updatingStatus ? 'Đang cập nhật...' : `Chuyển sang "${orderStatusMap[orderStatusMap[order.status]?.nextStatus]?.label || 'N/A'}"`}
-                        </button>
+                        <div className="space-y-2">
+                            {order.status === 'PENDING' && (
+                                <button
+                                    onClick={() => setPaymentModalOpen(true)}
+                                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                                >
+                                    💳 Thanh toán
+                                </button>
+                            )}
+                            {order.status === 'PAID' && (
+                                <button
+                                    onClick={() => setShowDeliveryModal(true)}
+                                    className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+                                >
+                                    🚚 Giao hàng
+                                </button>
+                            )}
+                            {order.status !== 'PENDING' && order.status !== 'PAID' && (
+                                <p className="text-gray-500 text-sm italic text-center py-2">
+                                    Không có hành động nào có sẵn cho trạng thái này
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -371,6 +395,15 @@ const OrderDetail = () => {
                         </button>
                     </div>
                 </div>
+            )}
+
+            {/* Payment Modal */}
+            {paymentModalOpen && (
+                <PaymentModal
+                    orderId={orderId}
+                    onClose={() => setPaymentModalOpen(false)}
+                    onSuccess={handlePaymentSuccess}
+                />
             )}
         </div>
     );

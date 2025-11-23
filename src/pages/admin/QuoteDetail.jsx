@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader } from "lucide-react";
 import { getQuoteById, updateQuoteStatus, deleteQuote } from "../../services/api/quoteService";
+import ConvertQuoteToOrderModal from "../../components/shared/ConvertQuoteToOrderModal";
 import { toast } from "react-toastify";
 
 const QuoteDetail = () => {
@@ -11,6 +12,7 @@ const QuoteDetail = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [statusLoading, setStatusLoading] = useState(false);
+    const [showConvertModal, setShowConvertModal] = useState(false);
 
     // NOTE: Gọi API để lấy chi tiết báo giá
     useEffect(() => {
@@ -99,6 +101,13 @@ const QuoteDetail = () => {
                 console.error("Lỗi xóa báo giá:", err);
             }
         }
+    };
+
+    // NOTE: Xử lý chuyển sang đơn hàng
+    const handleConvertSuccess = (orderData) => {
+        toast.success("Đơn hàng đã được tạo thành công!");
+        // Reload page hoặc điều hướng
+        navigate(`/admin/order/${orderData.orderId}`);
     };
 
     // NOTE: Format tiền tệ
@@ -459,10 +468,10 @@ const QuoteDetail = () => {
                     {quote.status === "PROCESSING" && (
                         <>
                             <button
-                                onClick={() => handleStatusChange("ORDERED")}
+                                onClick={() => setShowConvertModal(true)}
                                 className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium"
                             >
-                                Đã đặt hàng
+                                📦 Chuyển sang Đơn hàng
                             </button>
                             <button
                                 onClick={() => handleStatusChange("REJECTED")}
@@ -481,6 +490,14 @@ const QuoteDetail = () => {
                         </button>
                     )}
                 </div>
+
+                {/* Convert Modal */}
+                <ConvertQuoteToOrderModal
+                    quoteId={quoteId}
+                    isOpen={showConvertModal}
+                    onClose={() => setShowConvertModal(false)}
+                    onSuccess={handleConvertSuccess}
+                />
             </div>
         </div>
     );
