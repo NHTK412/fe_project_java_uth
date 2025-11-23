@@ -17,9 +17,12 @@ import VehicleTypeDetailPage from "../pages/admin/VehicleTypeDetailPage";
 // Import các pages evm staff
 import WarehouseReceiptManagement from "../pages/evm-staff/WarehouseReceiptManagement";
 import WarehouseReceiptDetailPage from "../pages/evm-staff/WarehouseReceiptDetailPage";
+import WarehouseReleaseManagement from "../pages/evm-staff/WarehouseReleaseManagement";
+import WarehouseReleaseDetailPage from "../pages/evm-staff/WarehouseReleaseDetailPage";
 import DashboardEVM from "../pages/evm-staff/DashboardEVM";
-
+import Login from "../services/auth/Login";
 const routes = [
+  { path: "/login", element: <Login /> }, 
   {
     path: "/admin",
     element: (
@@ -55,6 +58,8 @@ const routes = [
       { index: true, element: <DashboardEVM /> },
       {path: "warehouse-receipts", element: <WarehouseReceiptManagement />},
       {path: "warehouse-receipt/:warehouseReceiptId", element: <WarehouseReceiptDetailPage />},
+      {path: "warehouse-release-notes", element: <WarehouseReleaseManagement />},
+      {path: "warehouse-release-notes/:warehouseReleaseNoteId", element: <WarehouseReleaseDetailPage />},
       {path: "settings", element: <Settings /> },
     ],
   },
