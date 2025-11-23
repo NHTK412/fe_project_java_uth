@@ -1,177 +1,218 @@
-import { useState, useEffect } from "react";
-import { Dialog } from "@headlessui/react";
-import { X } from "lucide-react";
-import { vehicleTypeDetailApi } from "../../../services/api/admin/vehicleTypeDetailApi";
-import { vehicleTypeApi } from "../../../services/api/admin/vehicleTypeApi";
-import { showError, showSuccess } from "../../shared/toast";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { showError } from "../../shared/toast";
 
-export default function VehicleTypeDetailModal({ isOpen, onClose, mode = "create", initialData = null, onRefresh }) {
-  const [formData, setFormData] = useState({
-    vehicleImage: "",
-    configuration: "",
-    color: "",
-    version: "",
-    features: "",
-    price: "",
-    vehicleTypeId: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [vehicleTypes, setVehicleTypes] = useState([]);
+export default function VehicleTypeDetailModal({ isOpen, onClose, onSubmit, initialData }) {
+  const [vehicleImage, setVehicleImage] = useState("");
+  const [previewURL, setPreviewURL] = useState("");
+  const [configuration, setConfiguration] = useState("");
+  const [color, setColor] = useState("");
+  const [version, setVersion] = useState("");
+  const [features, setFeatures] = useState("");
+  const [price, setPrice] = useState("");
+  const [vehicleTypeId, setVehicleTypeId] = useState("");
 
-  // Load danh sách vehicle type để select
+  const [uploading, setUploading] = useState(false);
+
+  const getToken = () => localStorage.getItem("token");
+
+  // Load initial data
   useEffect(() => {
-    const fetchVehicleTypes = async () => {
-      try {
-        const res = await vehicleTypeApi.getAll(0, 100); // lấy 100 loại xe
-        if (res.success) setVehicleTypes(res.data.content || []);
-        else showError(res.message || "Lỗi tải loại xe");
-      } catch (err) {
-        showError(err.message);
+    if (!isOpen) return;
+
+    if (initialData) {
+      setVehicleImage(initialData.vehicleImage || "");
+
+      setPreviewURL(
+        initialData.vehicleImage
+          ? `http://localhost:8080/api/images/${encodeURIComponent(initialData.vehicleImage)}`
+          : ""
+      );
+
+      setConfiguration(initialData.configuration || "");
+      setColor(initialData.color || "");
+      setVersion(initialData.version || "");
+      setFeatures(initialData.features || "");
+      setPrice(initialData.price ?? "");
+      setVehicleTypeId(initialData.vehicleType?.vehicleTypeId ?? "");
+    } else {
+      setVehicleImage("");
+      setPreviewURL("");
+      setConfiguration("");
+      setColor("");
+      setVersion("");
+      setFeatures("");
+      setPrice("");
+      setVehicleTypeId("");
+    }
+  }, [initialData, isOpen]);
+
+  // cleanup preview
+  useEffect(() => {
+    return () => {
+      if (previewURL && previewURL.startsWith("blob:")) {
+        URL.revokeObjectURL(previewURL);
       }
     };
-    fetchVehicleTypes();
-  }, []);
+  }, [previewURL]);
 
-  useEffect(() => {
-    if (initialData) {
-      setFormData({
-        vehicleImage: initialData.vehicleImage || "",
-        configuration: initialData.configuration || "",
-        color: initialData.color || "",
-        version: initialData.version || "",
-        features: initialData.features || "",
-        price: initialData.price || "",
-        vehicleTypeId: initialData.vehicleTypeId || "",
-      });
-    } else {
-      setFormData({
-        vehicleImage: "",
-        configuration: "",
-        color: "",
-        version: "",
-        features: "",
-        price: "",
-        vehicleTypeId: "",
-      });
+  if (!isOpen) return null;
+
+  // handle file upload
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const tempURL = URL.createObjectURL(file);
+    setPreviewURL(tempURL);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setUploading(true);
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/api/file-upload/image",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+
+      if (res.data.success) {
+        const fileName = res.data.data.fileName;
+        setVehicleImage(fileName);
+        setPreviewURL(`http://localhost:8080/api/images/${encodeURIComponent(fileName)}`);
+      } else {
+        showError(res.data.message || "Upload ảnh thất bại");
+      }
+    } catch (err) {
+      console.error(err);
+      showError("Upload ảnh thất bại");
+    } finally {
+      setUploading(false);
     }
-  }, [initialData]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      let res;
-      if (mode === "create") res = await vehicleTypeDetailApi.create(formData);
-      else if (mode === "edit" && initialData?.id) res = await vehicleTypeDetailApi.update(initialData.id, formData);
-
-      if (res.success) {
-        showSuccess(mode === "create" ? "Thêm mới thành công!" : "Cập nhật thành công!");
-        onClose();
-        onRefresh();
-      } else showError(res.message || "Thao tác thất bại");
-    } catch (err) {
-      showError(err.message);
-    } finally {
-      setLoading(false);
+  const handleSubmit = () => {
+    if (
+      !vehicleImage ||
+      !configuration ||
+      !color ||
+      !version ||
+      !features ||
+      !price ||
+      !vehicleTypeId
+    ) {
+      showError("Vui lòng điền đầy đủ thông tin");
+      return;
     }
+
+    onSubmit({
+      vehicleImage,
+      configuration,
+      color,
+      version,
+      features,
+      price: parseFloat(price),
+      vehicleTypeId: parseInt(vehicleTypeId, 10),
+    });
   };
 
   return (
-    <Dialog open={isOpen} onClose={onClose} className="fixed inset-0 z-50 flex items-center justify-center">
-      <Dialog.Overlay className="fixed inset-0 bg-black/30" />
-      <div className="bg-white rounded-lg shadow-lg w-96 p-6 relative">
-        <button onClick={onClose} className="absolute top-3 right-3"><X /></button>
-        <Dialog.Title className="text-lg font-bold mb-4">
-          {mode === "create" ? "Thêm chi tiết loại xe" : mode === "edit" ? "Sửa chi tiết loại xe" : "Chi tiết loại xe"}
-        </Dialog.Title>
-
-        <div className="flex flex-col gap-3">
-          <label className="text-sm font-medium">Hình ảnh xe</label>
-          <input
-            name="vehicleImage"
-            value={formData.vehicleImage}
-            onChange={handleChange}
-            disabled={mode === "view"}
-            className="border p-2 rounded"
-          />
-
-          <label className="text-sm font-medium">Cấu hình</label>
-          <input
-            name="configuration"
-            value={formData.configuration}
-            onChange={handleChange}
-            disabled={mode === "view"}
-            className="border p-2 rounded"
-          />
-
-          <label className="text-sm font-medium">Màu sắc</label>
-          <input
-            name="color"
-            value={formData.color}
-            onChange={handleChange}
-            disabled={mode === "view"}
-            className="border p-2 rounded"
-          />
-
-          <label className="text-sm font-medium">Phiên bản</label>
-          <input
-            name="version"
-            value={formData.version}
-            onChange={handleChange}
-            disabled={mode === "view"}
-            className="border p-2 rounded"
-          />
-
-          <label className="text-sm font-medium">Tính năng</label>
-          <textarea
-            name="features"
-            value={formData.features}
-            onChange={handleChange}
-            disabled={mode === "view"}
-            className="border p-2 rounded"
-          />
-
-          <label className="text-sm font-medium">Giá</label>
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            disabled={mode === "view"}
-            className="border p-2 rounded"
-          />
-
-          <label className="text-sm font-medium">Loại xe</label>
-          <select
-            name="vehicleTypeId"
-            value={formData.vehicleTypeId}
-            onChange={handleChange}
-            disabled={mode === "view"}
-            className="border p-2 rounded"
-          >
-            <option value="">Chọn loại xe</option>
-            {vehicleTypes.map((type) => (
-              <option key={type.id} value={type.id}>
-                {type.vehicleTypeName}
-              </option>
-            ))}
-          </select>
+    <div
+      className="fixed inset-0 bg-black/40 flex justify-center items-center z-50 p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-3xl shadow-xl w-full max-w-lg p-6 relative animate-fadeIn overflow-y-auto max-h-[90vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {initialData ? "Cập nhật thông tin xe" : "Thêm mới xe"}
+          </h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 p-1">
+            ✕
+          </button>
         </div>
 
-        {mode !== "view" && (
+        {/* Form */}
+        <div className="space-y-4">
+          {/* Upload ảnh */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Ảnh xe</label>
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={() => document.getElementById("vehicleFileInput").click()}
+                className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
+              >
+                {uploading ? "Đang upload..." : "Chọn ảnh"}
+              </button>
+              <input
+                type="file"
+                id="vehicleFileInput"
+                className="hidden"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+              {previewURL && (
+                <img
+                  src={previewURL}
+                  className="w-24 h-24 object-cover rounded-xl border border-gray-300"
+                  alt="preview"
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Input fields */}
+          {[
+            { label: "Cấu hình", value: configuration, setValue: setConfiguration },
+            { label: "Màu sắc", value: color, setValue: setColor },
+            { label: "Phiên bản", value: version, setValue: setVersion },
+            { label: "Tính năng", value: features, setValue: setFeatures },
+            { label: "Giá", value: price, setValue: setPrice, type: "number" },
+            {
+              label: "Vehicle Type ID",
+              value: vehicleTypeId,
+              setValue: setVehicleTypeId,
+              type: "number",
+            },
+          ].map(({ label, value, setValue, type }) => (
+            <div key={label}>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+              <input
+                type={type || "text"}
+                value={value ?? ""}
+                onChange={(e) => setValue(e.target.value)}
+                className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Buttons */}
+        <div className="flex justify-end gap-4 mt-6">
+          <button
+            onClick={onClose}
+            className="px-5 py-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300"
+          >
+            Hủy
+          </button>
           <button
             onClick={handleSubmit}
-            disabled={loading}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="px-5 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700"
           >
-            {mode === "create" ? "Thêm mới" : "Cập nhật"}
+            {initialData ? "Cập nhật" : "Thêm mới"}
           </button>
-        )}
+        </div>
       </div>
-    </Dialog>
+    </div>
   );
 }

@@ -1,98 +1,120 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { vehicleApi } from "../../services/api/admin/vehicleApi";
+import axios from "axios";
 import { showError } from "../../components/shared/toast";
 
 export default function VehicleTypeDetailPage() {
-  const { vehicleTypeId } = useParams();
+  const { vehicleTypeDetailId } = useParams();
   const navigate = useNavigate();
-  const [details, setDetails] = useState([]);
+
+  const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchDetails = async () => {
-    setLoading(true);
-    try {
-      const res = await vehicleApi.getAllTypeDetail(0, 10, vehicleTypeId);
-      if (res.success && res.data?.content) {
-        setDetails(res.data.content);
-      } else {
-        showError(res.message || "Không thể tải chi tiết loại xe");
-      }
-    } catch (error) {
-      showError("Có lỗi xảy ra khi tải dữ liệu");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const BASE_URL = "http://localhost:8080/api";
 
   useEffect(() => {
-    if (vehicleTypeId) fetchDetails();
-  }, [vehicleTypeId]);
+    const id = Number(vehicleTypeDetailId); // Ép kiểu số
+    if (!id) {
+      showError("ID loại xe không hợp lệ");
+      return;
+    }
+
+    const fetchDetail = async () => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem("token");
+
+        const res = await axios.get(`${BASE_URL}/vehicle/type/detail/${id}`, {
+          headers: { Authorization: `Bearer ${token}`, Accept: "*/*" },
+        });
+
+        if (res.data.success && res.data.data) {
+          setDetail(res.data.data);
+        } else {
+          showError(res.data.message || "Không thể tải dữ liệu");
+        }
+      } catch (err) {
+        console.error(err);
+        showError(err.response?.data?.message || "Lỗi tải dữ liệu từ server");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDetail();
+  }, [vehicleTypeDetailId]);
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow p-8 text-center">
-        <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"></div>
-        <p className="mt-4 text-gray-500">Đang tải...</p>
+      <div className="bg-gray-50 min-h-screen flex items-center justify-center">
+        <div className="animate-spin w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"></div>
       </div>
     );
   }
 
+  if (!detail) return null;
+
+  const d = detail;
+
+  const cards = [
+    [
+      { label: "ID", value: d.vehicleTypeDetailId },
+      { label: "Màu sắc", value: d.color || "-" },
+      { label: "Phiên bản", value: d.version || "-" },
+    ],
+    [
+      { label: "Cấu hình", value: d.configuration || "-" },
+      { label: "Tính năng", value: d.features || "-" },
+      { label: "Giá", value: d.price ? `${d.price} USD` : "-" },
+    ],
+    [
+      { label: "ID Loại xe", value: d.vehicleTypeId || "-" },
+      { label: "Ảnh", value: d.vehicleImage || "-" },
+    ],
+  ];
+
   return (
-    <div className="space-y-6 p-4">
-      {/* Back button */}
+    <div className="space-y-8 p-6 bg-gray-50 min-h-screen">
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-gray-600 hover:text-blue-600"
+        className="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-medium"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeft className="w-5 h-5" />
         Quay lại
       </button>
 
-      <h1 className="text-2xl font-bold text-gray-800">Chi tiết loại xe</h1>
+      <h1 className="text-3xl font-extrabold text-gray-900 text-center">
+        Chi tiết loại xe
+      </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {details.length === 0 ? (
-          <p className="text-gray-500 col-span-full text-center">Không có dữ liệu</p>
-        ) : (
-          details.map((d) => (
-            <div
-              key={d.vehicleTypeDetailId}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-            >
-              {/* Ảnh trên cùng */}
-              {d.vehicleImage && (
-                <div className="w-full h-40 bg-gray-100 flex items-center justify-center">
-                  <img
-                    src={`/images/${d.vehicleImage}`}
-                    alt={d.version}
-                    className="max-h-40 object-contain"
-                  />
-                </div>
-              )}
+      {d.vehicleImage && (
+        <div className="w-full max-w-3xl mx-auto rounded-3xl overflow-hidden shadow-2xl bg-white">
+          <img
+            src={`${BASE_URL}/images/${d.vehicleImage.split("/").pop()}`}
+            alt={d.version || "Ảnh xe"}
+            className="w-full h-96 object-cover transition-transform duration-500 hover:scale-105"
+            onError={(e) => {
+              e.target.src = "/placeholder.png"; // ảnh fallback nếu server không có
+            }}
+          />
+        </div>
+      )}
 
-              {/* Thông tin chi tiết */}
-              <div className="p-6 space-y-2">
-                <h2 className="text-lg font-semibold text-gray-800">{d.version}</h2>
-                <div className="text-sm text-gray-500 space-y-1">
-                  <p>
-                    <span className="font-medium text-gray-600">Cấu hình:</span> {d.configuration}
-                  </p>
-                  <p>
-                    <span className="font-medium text-gray-600">Màu sắc:</span> {d.color}
-                  </p>
-                  <p>
-                    <span className="font-medium text-gray-600">Tính năng:</span> {d.features}
-                  </p>
-                  <p>
-                    <span className="font-medium text-gray-600">Giá:</span> {d.price} USD
-                  </p>
-                </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {cards.map((group, idx) => (
+          <div
+            key={idx}
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-6 flex flex-col space-y-2"
+          >
+            {group.map((item) => (
+              <div key={item.label}>
+                <p className="text-sm text-gray-500 font-semibold">{item.label}</p>
+                <p className="text-lg text-gray-800 font-bold mt-1">{item.value}</p>
               </div>
-            </div>
-          ))
-        )}
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );

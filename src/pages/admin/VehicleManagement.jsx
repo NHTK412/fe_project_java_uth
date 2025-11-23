@@ -127,6 +127,7 @@ const VehicleManagement = () => {
 
   const handleViewVehicle = (item) => navigate(`/admin/vehicle/${item.id}`);
   const handleViewVehicleType = (item) => navigate(`/admin/vehicle-type/${item.vehicleTypeId}`);
+  const handleViewVehicleTypeDetail = (item) => navigate(`/admin/vehicle/type/detail/${item.vehicleTypeDetailId || item.id}`);
   const handleEdit = (item) => { setModalMode("edit"); setSelectedItem(item); setModalOpen(true); };
 
   // ================= HANDLE =================
@@ -167,8 +168,7 @@ const handleView = (item) => {
   } else if (activeTab === "vehicleType") {
     navigate(`/admin/vehicle-type/${item.vehicleTypeId}`);
   } else {
-    // chi tiết loại xe
-    navigate(`/admin/vehicle-type-detail/${item.id}`);
+    navigate(`/admin/vehicle/type/detail/${item.vehicleTypeDetailId || item.id}`);
   }
 };
 
@@ -193,6 +193,31 @@ const handleView = (item) => {
       setSubmitLoading(false);
     }
   };
+
+  const handleSubmitVehicleTypeDetail = async (data) => {
+  setSubmitLoading(true);
+  try {
+    let res;
+    if (modalMode === "create") {
+      res = await vehicleTypeDetailApi.create(data); // data có vehicleImage
+    } else if (modalMode === "edit") {
+      res = await vehicleTypeDetailApi.update(selectedItem.id, data);
+    }
+
+    if (res?.success) {
+      showSuccess(modalMode === "create" ? "Thêm chi tiết xe thành công" : "Cập nhật thành công");
+      fetchData();
+      setModalOpen(false);
+    } else {
+      showError(res?.message || "Thất bại");
+    }
+  } catch (err) {
+    console.error(err);
+    showError(err.response?.data?.message || "Thất bại do server");
+  } finally {
+    setSubmitLoading(false);
+  }
+};
 
   // ================= RENDER =================
   const renderTableAndFilter = () => {
@@ -232,9 +257,9 @@ const handleView = (item) => {
             loading={vehicleTypeLoading}
             pagination={vehicleTypePagination}
             onPageChange={handlePageChange}
-            onView={handleViewVehicleType} // xem chi tiết
+            onView={handleViewVehicleType} 
             onEdit={handleEdit}
-            onDelete={handleDelete}
+            onDelete={handleDelete}xx
           />
         </>
       );
@@ -254,6 +279,7 @@ const handleView = (item) => {
             pagination={vehicleTypeDetailPagination}
             onPageChange={handlePageChange}
             onEdit={handleEdit}
+            onView={handleViewVehicleTypeDetail}
             onDelete={handleDelete}
           />
         </>
@@ -286,11 +312,11 @@ const handleView = (item) => {
     if (activeTab === "vehicleTypeDetail") return (
       <VehicleTypeDetailModal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onSubmit={() => {}}
-        initialData={selectedItem}
-        mode={modalMode}
-        loading={submitLoading}
+      onClose={() => setModalOpen(false)}
+      onSubmit={handleSubmitVehicleTypeDetail} // <-- sửa đây
+      initialData={selectedItem}
+      mode={modalMode}
+      loading={submitLoading}
       />
     );
   };

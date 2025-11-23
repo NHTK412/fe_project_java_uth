@@ -86,7 +86,7 @@ export default function VehicleModal({
         </button>
 
         <h2 className="text-2xl font-bold mb-4">
-          {mode === "create" ? "Thêm Xe" : "Cập Nhật Xe"}
+          {mode === "create" ? "Thêm Xe Mới" : "Cập Nhật Xe"}
         </h2>
 
         <div className="grid grid-cols-1 gap-4">
