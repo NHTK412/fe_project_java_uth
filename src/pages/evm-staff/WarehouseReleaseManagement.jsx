@@ -68,7 +68,7 @@ const WarehouseReleaseManagement = () => {
   };
 
   const handleView = (item) =>
-    navigate(`/staff/warehouse-release-notes/${item.warehouseReleaseNoteId}`);
+    navigate(`/admin/warehouse-release-notes/${item.warehouseReleaseNoteId}`);
 
   const handleEdit = (item) => {
     setModalMode("edit");

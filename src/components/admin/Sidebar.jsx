@@ -91,7 +91,20 @@ const Sidebar = () => {
         id:"wholesale",
         label:"Quản lý giá sỉ",
         icon: ShoppingCart,
-        path:"/admin/wholesale",
+        path:"/admin/wholesale-price",
+      },
+
+      {
+        id:"warehouse-receipt",
+        label:"Quản lý phiếu nhập kho",
+        icon: ShoppingCart,
+        path:"/admin/warehouse-receipt",
+      },
+      {
+        id:"warehouse-release",
+        label:"Quản lý phiếu xuất kho",
+        icon: ShoppingCart,
+        path:"/admin/warehouse-release-note",
       },
     ],
     []

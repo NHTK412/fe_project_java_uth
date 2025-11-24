@@ -39,7 +39,6 @@ import EvmInventory from "../pages/evm-staff/EvmInventory";
 import DealerManagement from "../pages/evm-staff/DealerManagement";
 import EvmPromotions from "../pages/evm-staff/EvmPromotions";
 import DiscountManagement from "../pages/evm-staff/DiscountManagement";
-import WholesalePriceManagement from "../pages/evm-staff/WholesalePriceManagement";
 import OrderManagement from "../pages/evm-staff/OrderManagement";
 import VehicleOrderList from "../pages/dealer-manager/VehicleOrderList";
 import VehicleOrderDetail from "../pages/dealer-manager/VehicleOrderDetail";
@@ -65,6 +64,7 @@ import WholesalePolicyManagement from "../pages/evm-staff/WholesalePolicyManagem
 import AgencyManagement from "../pages/AgencyManagement";
 import VehicleInventoryManagement from "../pages/evm-staff/VehicleInventoryManagement";
 import CreateImportRequest from "../pages/dealer-manager/CreateImportRequest";
+import WholesaleManagement from "../pages/admin/WholesaleManagement";
 import { Import } from "lucide-react";
 
 
@@ -82,7 +82,7 @@ const routes = [
       { path: "agencies", element: <AgencyManagement /> }, 
       { path: "promotion", element:<PromotionsManager />},
       { path: "policy", element:<WholesalePolicyManagement />},
-      { path: "wholesale", element:<WholesalePriceManagement />},
+      { path: "wholesale", element:<WholesaleManagement />},
       { path: "settings", element: <Settings /> },
       { path: "*", element: <EvmLayout />},
     ],
@@ -105,7 +105,11 @@ const routes = [
       { path: "agencies", element: <AgencyManagement /> }, 
       { path: "promotion", element:<PromotionsManager />},
       { path: "policy", element:<WholesalePolicyManagement />},
-      { path: "wholesale", element:<WholesalePriceManagement />},
+      { path: "wholesale", element:<WholesaleManagement />},
+      { path: "warehouse-receipt", element:<WarehouseReceiptManagement /> },
+      { path: "warehouse-release-note", element:<WarehouseReleaseManagement />},
+      { path: "warehouse-receipt/:warehouseReceiptId", element:<WarehouseReceiptDetailPage />},
+      { path: "warehouse-release-notes/:warehouseReleaseNoteId", element:<WarehouseReleaseDetailPage />},
       { path: "settings", element: <Settings /> },
       {path: "*", element: <AdminLayout />},
     ],

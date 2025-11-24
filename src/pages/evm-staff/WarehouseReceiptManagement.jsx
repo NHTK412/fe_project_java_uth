@@ -76,7 +76,7 @@ const WarehouseReceiptManagement = () => {
     setModalOpen(true);
   };
 
-  const handleView = (item) => navigate(`/staff/warehouse-receipt/${item.warehouseReceiptId}`);
+  const handleView = (item) => navigate(`/admin/warehouse-receipt/${item.warehouseReceiptId}`);
 
   const handleEdit = (item) => {
     setModalMode("edit");
