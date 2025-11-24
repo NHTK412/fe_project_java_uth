@@ -59,12 +59,14 @@ const Sidebar = () => {
         icon: Users,
         path: "/admin/agencies",
       },
+      { path: "/admin/wholesale", icon: ShoppingCart, label: "Bán sỉ" },
       {
         id: "settings",
         label: "Cài đặt",
         icon: Settings,
         path: "/admin/settings",
       },
+
     ],
     []
   );
