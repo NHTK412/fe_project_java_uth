@@ -1,38 +1,23 @@
 import React from "react";
-import { Outlet, Navigate } from "react-router-dom";
-
-// Lấy role từ localStorage
-const getUserRole = () => localStorage.getItem("role") || null;
+import { Outlet } from "react-router-dom";
+import Header from "../components/evm-staff/Header";
+import Sidebar from "../components/evm-staff/Sidebar";
 
 const EvmLayout = () => {
-  const role = getUserRole();
-
-  // Nếu không phải staff EVM, redirect về home
-  if (role !== "ROLE_EVM_STAFF") {
-    return <Navigate to="/" replace />;
-  }
-
   return (
-    <div className="evm-layout flex h-screen">
-      <aside className="w-64 bg-blue-800 text-white flex-shrink-0">
-        <div className="p-4 font-bold text-xl border-b border-blue-700">
-          EVM Panel
-        </div>
-        <nav className="mt-4">
-          <ul>
-            <li className="p-2 hover:bg-blue-700 cursor-pointer">Home</li>
-            <li className="p-2 hover:bg-blue-700 cursor-pointer">Orders</li>
-            <li className="p-2 hover:bg-blue-700 cursor-pointer">Profile</li>
-          </ul>
-        </nav>
-      </aside>
+    <div className="flex h-screen overflow-hidden">
+      {/* Sidebar */}
+      <Sidebar />
 
-      <main className="flex-1 bg-gray-100 p-6 overflow-auto">
-        <header className="mb-6">
-          <h1 className="text-2xl font-bold">EVM Dashboard</h1>
-        </header>
-        <Outlet />
-      </main>
+      {/* Main area */}
+      <div className="flex flex-col flex-1 min-h-0">
+        <Header />
+
+        {/* Content area */}
+        <main className="flex-1 overflow-y-auto bg-gray-100 p-6">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

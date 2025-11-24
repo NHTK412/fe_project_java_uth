@@ -49,7 +49,7 @@ function Login() {
       if (role === "ROLE_ADMIN") navigate("/admin");
       else if (role === "ROLE_EVM_STAFF") navigate("/staff");
       else if (role === "ROLE_DEALER_STAFF") navigate("/dealer");
-      else if (role === "ROLE_DEALER_MANAGER") navigate("/dealerManager");
+      else if (role === "ROLE_DEALER_MANAGER") navigate("/Dealer-Manager");
       else navigate("/");
     } catch (err) {
       setError("shake"); 
