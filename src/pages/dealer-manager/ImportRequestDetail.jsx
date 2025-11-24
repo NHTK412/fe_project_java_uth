@@ -4,7 +4,7 @@ import { ArrowLeft, Loader, Edit2, Trash2 } from "lucide-react";
 import { getImportRequestDetail } from "../../services/api/importRequestService";
 
 const ImportRequestDetail = () => {
-    const { id } = useParams();
+    const { importRequestId} = useParams();
     const navigate = useNavigate();
     const [detail, setDetail] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -12,24 +12,26 @@ const ImportRequestDetail = () => {
 
     // NOTE: Gọi API để lấy chi tiết đơn đặt xe
     useEffect(() => {
-        const fetchDetail = async () => {
-            try {
-                setLoading(true);
-                setError(null);
-                const data = await getImportRequestDetail(id);
-                setDetail(data);
-            } catch (err) {
-                setError(err.message || "Có lỗi khi tải chi tiết đơn");
-                console.error("Lỗi tải chi tiết:", err);
-            } finally {
-                setLoading(false);
+    const fetchDetail = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const response = await getImportRequestDetail(importRequestId);
+            if (response.success) {
+                setDetail(response.data);
+            } else {
+                setError("Không tìm thấy đơn đặt xe");
             }
-        };
-
-        if (id) {
-            fetchDetail();
+        } catch (err) {
+            setError(err.message || "Có lỗi khi tải chi tiết đơn");
+        } finally {
+            setLoading(false);
         }
-    }, [id]);
+    };
+
+    if (importRequestId) 
+        fetchDetail();
+    }, [importRequestId]);
 
     // NOTE: Map trạng thái thành màu sắc - theo enum ImportRequestStatusEnum
     const getStatusBadge = (status) => {
@@ -81,7 +83,7 @@ const ImportRequestDetail = () => {
         return (
             <div className="space-y-6">
                 <button
-                    onClick={() => navigate("/dealerManager/import-request")}
+                    onClick={() => navigate("/Dealer-Manager/import-request")}
                     className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5" />
@@ -100,7 +102,7 @@ const ImportRequestDetail = () => {
         return (
             <div className="space-y-6">
                 <button
-                    onClick={() => navigate("/dealerManager/import-request")}
+                    onClick={() => navigate("/Dealer-Manager/import-request")}
                     className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5" />
@@ -120,7 +122,7 @@ const ImportRequestDetail = () => {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <button
-                        onClick={() => navigate("/dealerManager/import-request")}
+                        onClick={() => navigate("/Dealer-Manager/import-request")}
                         className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors"
                     >
                         <ArrowLeft className="w-5 h-5" />

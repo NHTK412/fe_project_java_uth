@@ -115,7 +115,7 @@ const CreateImportRequest = () => {
 
             // Chuyển hướng về danh sách sau 2 giây
             setTimeout(() => {
-                navigate("/dealerManager/import-request");
+                navigate("/Dealer-Manager/import-request");
             }, 2000);
         } catch (err) {
             setError(err.message || "Có lỗi khi tạo đơn đặt xe");
@@ -130,7 +130,7 @@ const CreateImportRequest = () => {
             {/* NOTE: Header với nút quay lại */}
             <div className="flex items-center gap-4">
                 <button
-                    onClick={() => navigate("/admin/import-request")}
+                    onClick={() => navigate("/Dealer-Manager/import-request")}
                     className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5" />
@@ -325,7 +325,7 @@ const CreateImportRequest = () => {
                     </button>
                     <button
                         type="button"
-                        onClick={() => navigate("/admin/import-request")}
+                        onClick={() => navigate("/Dealer-Manager/import-request")}
                         disabled={loading}
                         className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >

@@ -39,24 +39,24 @@ const Sidebar = () => {
         icon: Users,
         path: "/admin/users",
       },
-      // {
-      //   id: "feedback",
-      //   label: "Ghi nhận và xử lý phản hồi",
-      //   icon: MessageSquare,
-      //   path: "/admin/feedback",
-      // },
+      {
+        id: "feedback",
+        label: "Ghi nhận và xử lý phản hồi",
+        icon: MessageSquare,
+        path: "/admin/feedback",
+      },
       {
         id: "inventory-report",
         label: "Báo cáo",
         icon: BarChart3,
         path: "/admin/inventory",
       },
-      // {
-      //   id: "products",
-      //   label: "Quản lý sản phẩm",
-      //   icon: ShoppingCart,
-      //   path: "/admin/products",
-      // },
+      {
+        id: "products",
+        label: "Quản lý sản phẩm",
+        icon: ShoppingCart,
+        path: "/admin/products",
+      },
       {
         id: "revenue-report",
         label: "Báo cáo doanh thu",
@@ -65,7 +65,7 @@ const Sidebar = () => {
       },
       {
         id: "vehicles",
-        label: "Quản lý Sản Phẩm",
+        label: "Quản lý phương tiện",
         icon: Car,
         path: "/admin/vehicles",
       },
@@ -75,12 +75,11 @@ const Sidebar = () => {
         icon: Users,
         path: "/admin/agencies",
       },
-      // { 
-      //   path: "/admin/wholesale", 
-      //   icon: ShoppingCart, l
-      //   abel: "Bán sỉ" 
-      // },
-      
+      { 
+        path: "/admin/wholesale", 
+        icon: ShoppingCart, 
+        label: "Bán sỉ" 
+      },
     ],
     []
   );

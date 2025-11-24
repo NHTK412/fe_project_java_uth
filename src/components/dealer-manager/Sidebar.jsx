@@ -31,25 +31,25 @@ const Sidebar = () => {
         label: "Dashboard",
         icon: LayoutDashboard,
         isHot: true,
-        path: "/admin",
+        path: "/Dealer-Manager",
       },
       {
         id: "users",
-        label: "Quản lý tài khoản nhân viên",
+        label: "Quản lý tài khoản khách hàng",
         icon: Users,
-        path: "/admin/users",
+        path: "/Dealer-Manager/users",
       },
-      // {
-      //   id: "feedback",
-      //   label: "Ghi nhận và xử lý phản hồi",
-      //   icon: MessageSquare,
-      //   path: "/admin/feedback",
-      // },
+      {
+        id: "feedback",
+        label: "Ghi nhận và xử lý phản hồi",
+        icon: MessageSquare,
+        path: "/Dealer-Manager/feedback",
+      },
       {
         id: "inventory-report",
         label: "Báo cáo",
         icon: BarChart3,
-        path: "/admin/inventory",
+        path: "/Dealer-Manager/inventory",
       },
       // {
       //   id: "products",
@@ -61,25 +61,31 @@ const Sidebar = () => {
         id: "revenue-report",
         label: "Báo cáo doanh thu",
         icon: BarChart3,
-        path: "/admin/revenue",
+        path: "/Dealer-Manager/revenue",
       },
-      {
-        id: "vehicles",
-        label: "Quản lý Sản Phẩm",
-        icon: Car,
-        path: "/admin/vehicles",
-      },
-      {
-        id: "agency-management",
-        label: "Quản lý đại lý",
-        icon: Users,
-        path: "/admin/agencies",
-      },
+      // {
+      //   id: "vehicles",
+      //   label: "Quản lý phương tiện",
+      //   icon: Car,
+      //   path: "/admin/vehicles",
+      // },
+      // {
+      //   id: "agency-management",
+      //   label: "Quản lý đại lý",
+      //   icon: Users,
+      //   path: "/admin/agencies",
+      // },
       // { 
       //   path: "/admin/wholesale", 
-      //   icon: ShoppingCart, l
-      //   abel: "Bán sỉ" 
+      //   icon: ShoppingCart, 
+      //   label: "Bán sỉ" 
       // },
+      {
+        id: "order",
+        label:"Yêu cầu nhập hàng",
+        icon: ShoppingCart,
+        path:"/Dealer-Manager/import-request",
+      },
       
     ],
     []

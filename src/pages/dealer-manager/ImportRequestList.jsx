@@ -78,7 +78,7 @@ const ImportRequestList = () => {
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-gray-900">Đặt xe từ hãng</h1>
                 <button
-                    onClick={() => navigate("/dealerManager/import-request/create")}
+                    onClick={() => navigate("/Dealer-Manager/import-request/create")}
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                     <Plus className="w-5 h-5" />
@@ -171,7 +171,7 @@ const ImportRequestList = () => {
                                         <td className="px-4 py-3 text-xs whitespace-nowrap">
                                             <button
                                                 onClick={() =>
-                                                    navigate(`/dealerManager/import-request/${request.importRequestId}`)
+                                                    navigate(`/Dealer-Manager/import-request/${request.importRequestId}`)
                                                 }
                                                 className="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors text-xs font-medium"
                                             >

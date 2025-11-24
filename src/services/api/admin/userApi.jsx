@@ -20,7 +20,7 @@ export const employeeApi = {
     sortDir = "asc"
   ) => {
     const res = await fetch(
-      `${API_BASE}/employees?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
+      `${API_BASE}/employees?page=${page-1}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
       { headers: getHeaders() }
     );
     return res.json();
@@ -85,7 +85,7 @@ export const customerApi = {
     sortDir = "asc"
   ) => {
     const res = await fetch(
-      `${API_BASE}/customers?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
+      `${API_BASE}/customers?page=${page-1}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`,
       { headers: getHeaders() }
     );
     return res.json();
