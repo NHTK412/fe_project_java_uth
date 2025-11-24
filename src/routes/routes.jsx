@@ -36,7 +36,6 @@ import PromotionsManager from "../pages/dealer-manager/PromotionsManager";
 import TestDriveSchedule from "../pages/dealer-staff/TestDriveSchedule";
 import QuoteManagement from "../pages/dealer-staff/QuoteManagement";
 import VehicleInfo from "../pages/dealer-staff/VehicleInfo";
-import InventoryManagement from "../pages/dealer-staff/InventoryManagement";
 import EvmInventory from "../pages/evm-staff/EvmInventory";
 import DealerManagement from "../pages/evm-staff/DealerManagement";
 import EvmPromotions from "../pages/evm-staff/EvmPromotions";
@@ -52,7 +51,9 @@ import VehicleDetailPage from "../pages/admin/VehicleDetailPage";
 import VehicleTypePage from "../pages/admin/VehicleTypePage";
 import VehicleTypeDetailPage from "../pages/admin/VehicleTypeDetailPage";
 import VehicleTypeDetailListPage from "../pages/admin/VehicleTypeDetailListPage";
-import OrderOfAgency from "../pages/evm-staff/OrderOfAgency";
+import ImportRequestListPage from "../pages/shared/ImportRequestListPage";
+import ImportRequestDetailPage from "../pages/shared/ImportRequestDetailPage";
+import SharedInventoryManagement from "../pages/shared/SharedInventoryManagement";
 import Policy from "../pages/evm-staff/Policy"
 // Import các pages evm staff
 import WarehouseReceiptManagement from "../pages/evm-staff/WarehouseReceiptManagement";
@@ -77,8 +78,8 @@ const routes = [
     ),
     children: [
       { index: true, element: <DashboardEVM /> },
-      { path: "order-of-agency", element: <OrderOfAgency /> },
-      { path: "management-inventory", element: <InventoryManagement /> },
+      { path: "order-of-agency", element: <ImportRequestListPage /> },
+      { path: "management-inventory", element: <SharedInventoryManagement /> },
       { path: "agencies", element: <AgencyManagement /> },
       { path: "promotion", element: <PromotionsManager /> },
       { path: "policy", element: <Policy /> },
@@ -102,8 +103,8 @@ const routes = [
       { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
       { path: "vehicle-type/:vehicleTypeId/details", element: <VehicleTypeDetailListPage /> },
       { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
-      { path: "order-of-agency", element: <OrderOfAgency /> },
-      { path: "management-inventory", element: <InventoryManagement /> },
+      { path: "order-of-agency", element: <ImportRequestListPage /> },
+      { path: "management-inventory", element: <SharedInventoryManagement /> },
       { path: "agencies", element: <AgencyManagement /> },
       { path: "promotion", element: <PromotionsManager /> },
       { path: "policy", element: <Policy /> },
@@ -130,7 +131,7 @@ const routes = [
       { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
       { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
       { path: "test-drive", element: <TestDriveSchedule /> },
-      { path: "inventory-management", element: <InventoryManagement /> },
+      { path: "inventory-management", element: <SharedInventoryManagement /> },
       { path: "agency-oder-management", element: <AgencyOrderManagement /> },
       { path: "employee-oder-management", element: <EmployeeOrderManagement /> },
       { path: "*", element: <DealerManagerLayout /> },
@@ -149,7 +150,7 @@ const routes = [
       { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
       { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
       { path: "test-drive", element: <TestDriveSchedule /> },
-      { path: "inventory-management", element: <InventoryManagement /> },
+      { path: "inventory-management", element: <SharedInventoryManagement /> },
       { path: "agency-oder-management", element: <AgencyOrderManagement /> },
       { path: "employee-oder-management", element: <EmployeeOrderManagement /> },
       { path: "*", element: <DealerLayout /> },

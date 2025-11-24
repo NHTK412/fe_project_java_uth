@@ -59,15 +59,15 @@ const Sidebar = () => {
       },
       {
         id:"order-of-agency",
-        label:"Quản lý đơn nhập xe",
+        label:"Đơn đặt hàng từ đại lý",
         icon: Car,
-        path: "admin/order-of-agency",
+        path: "/admin/order-of-agency",
       },
       {
         id:"management-inventory",
-        label:"Quản lý xe tồn kho",
+        label:"Quản lý tồn kho",
         icon: Car,
-        path:"admin/management-inventory"
+        path:"/admin/management-inventory"
       },
       {
         id: "agency-management",

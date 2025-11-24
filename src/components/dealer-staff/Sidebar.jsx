@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ShoppingCart, Package, Car, Settings, Clipboard } from "lucide-react";
+import { ShoppingCart, Package, Car, Settings, Clipboard , LayoutDashboard, Briefcase, Building2, Boxes, Calendar, ChevronLeft ,LogOut } from "lucide-react";
 
 import LOGO from "../../assets/logo.png";
 

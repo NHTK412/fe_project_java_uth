@@ -3,7 +3,7 @@ import { Eye, Loader, AlertCircle } from "lucide-react";
 import inventoryApi from "../../services/api/inventory/inventoryApi";
 import InventoryDetailModal from "../../components/shared/InventoryDetailModal";
 
-const InventoryManagement = () => {
+const SharedInventoryManagement = () => {
     const [inventory, setInventory] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ const InventoryManagement = () => {
     const [detailVehicles, setDetailVehicles] = useState([]);
     const [vehiclesLoading, setVehiclesLoading] = useState(false);
 
-    // Get agencyId from localStorage (assuming it's stored there)
+    // Get agencyId from localStorage
     const agencyId = localStorage.getItem("agencyId") || 1;
 
     // Fetch inventory list
@@ -182,4 +182,4 @@ const InventoryManagement = () => {
     );
 };
 
-export default InventoryManagement;
+export default SharedInventoryManagement;
