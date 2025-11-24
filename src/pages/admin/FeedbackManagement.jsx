@@ -702,7 +702,7 @@ const FeedbackManagement = () => {
                     className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all duration-200 font-medium shadow-sm"
                   >
                     <MessageCircle className="w-5 h-5" />
-                    Xử lý phản hồi này
+                    Xử lý phản hồi này 
                   </button>
                 </div>
               )}

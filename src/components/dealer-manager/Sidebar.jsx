@@ -49,13 +49,13 @@ const Sidebar = () => {
   },
   {
     id: "inventory",
-    label: "Kho xe",
+    label: "Báo cáo tồn kho",
     icon: Home,
     path: "/Dealer-Manager/inventory",
   },
   {
     id: "revenue",
-    label: "Doanh thu",
+    label: "Báo cáo doanh thu",
     icon: BarChart3,
     path: "/Dealer-Manager/revenue",
   },
@@ -67,13 +67,13 @@ const Sidebar = () => {
   },
   {
     id: "promotion",
-    label: "Khuyến mãi",
+    label: "Quản lý khuyến mãi",
     icon: Gift,
     path: "/Dealer-Manager/promotion",
   },
   {
     id: "users",
-    label: "Người dùng",
+    label: "Quản lý người dùng",
     icon: Users,
     path: "/Dealer-Manager/users",
   },
@@ -85,7 +85,7 @@ const Sidebar = () => {
   },
   {
     id: "vehicles",
-    label: "Danh mục xe",
+    label: "Quản lý sản phẩm",
     icon: Car,
     path: "/Dealer-Manager/vehicles",
   },
@@ -97,19 +97,19 @@ const Sidebar = () => {
   },
   {
     id: "inventory-management",
-    label: "Quản lý tồn kho",
+    label: "Quản lý xe tồn kho",
     icon: Clipboard,
     path: "/Dealer-Manager/inventory-management",
   },
   {
     id: "agency-order-management",
-    label: "Đơn hàng đại lý",
+    label: "Đơn hàng của đại lý",
     icon: Building,
     path: "/Dealer-Manager/agency-oder-management",
   },
   {
     id: "employee-order-management",
-    label: "Đơn hàng nhân viên",
+    label: "Đơn hàng của nhân viên",
     icon: Briefcase,
     path: "/Dealer-Manager/employee-oder-management",
   },

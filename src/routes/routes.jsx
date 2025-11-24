@@ -8,7 +8,6 @@ import DealerManagerLayout from "../layouts/DealerManagerLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import ImportRequestList from "../pages/dealer-manager/ImportRequestList";
 import ImportRequestDetail from "../pages/dealer-manager/ImportRequestDetail";
-import CreateImportRequest from "../pages/dealer-manager/CreateImportRequest";
 import QuoteList from "../pages/dealer-staff/QuoteList";
 import QuoteDetail from "../pages/dealer-staff/QuoteDetail";
 import CreateQuote from "../pages/dealer-staff/CreateQuote";
@@ -30,7 +29,6 @@ import Revenue from "../pages/admin/RevenueReport";
 import Settings from "../pages/admin/Setting";
 import FeedbackManagement from "../pages/admin/FeedbackManagement";
 import ProductManagement from "../pages/admin/ProductManagement";
-import FeedbackManagementDealerManager from "../pages/dealer-manager/FeedbackManagement";
 import Reports from "../pages/dealer-manager/Reports";
 import PromotionsManager from "../pages/dealer-manager/PromotionsManager";
 import TestDriveSchedule from "../pages/dealer-staff/TestDriveSchedule";
@@ -66,6 +64,7 @@ import WholesalePolicyManagement from "../pages/evm-staff/WholesalePolicyManagem
 // Import Agency page
 import AgencyManagement from "../pages/AgencyManagement";
 import VehicleInventoryManagement from "../pages/evm-staff/VehicleInventoryManagement";
+import CreateImportRequest from "../pages/dealer-manager/CreateImportRequest";
 import { Import } from "lucide-react";
 
 
@@ -115,12 +114,13 @@ const routes = [
   path: "/Dealer-Manager",
   element: <ProtectedRoute element={<DealerManagerLayout />} allowedUsers={["ROLE_DEALER_MANAGER"]} />,
   children:[
-    { index: true, element: <DealerManagerLayout /> }, 
+    { index: true, element: <DashboardDM/> }, 
     { path: "feedback", element: <FeedbackManagement />},
     { path: "inventory", element: <Inventory />,},
     { path: "revenue", element: <Revenue />,},
     { path: "import-request", element: <ImportRequestList />}, 
-    { path: "import-request/importRequestId", element:<ImportRequestDetail /> },
+    { path: "import-request/:importRequestId", element:<ImportRequestDetail /> },
+    { path: "import-request/create", element:<CreateImportRequest />},
     { path: "promotion", element:<PromotionsManager />},
     { path: "users", element: <Users /> },
     { path: "order", element:<OrderList />},
@@ -129,7 +129,7 @@ const routes = [
     { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
     { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
     { path: "test-drive", element: <TestDriveSchedule /> },
-    { path: "inventory-management", element: <InventoryManagement />},
+    { path: "inventory-management", element: <VehicleInventoryManagement />},
     { path: "agency-oder-management", element: <AgencyOrderManagement />},
     { path: "employee-oder-management", element: <EmployeeOrderManagement />},
     { path: "*", element: <DealerManagerLayout />},

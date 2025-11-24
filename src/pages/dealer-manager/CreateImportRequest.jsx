@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Loader } from "lucide-react";
 import { createImportRequest } from "../../services/api/importRequestService";
 import VehicleTypeSelectorModal from "../../components/admin/VehicleTypeSelectorModal";
+import { showSuccess } from "../../components/shared/toast";
 
 const CreateImportRequest = () => {
     const navigate = useNavigate();
@@ -111,12 +112,12 @@ const CreateImportRequest = () => {
             setError(null);
 
             const response = await createImportRequest(formData);
-            setSuccessMessage("Tạo đơn đặt xe thành công!");
+            showSuccess("Tạo đơn đặt xe thành công!");
 
             // Chuyển hướng về danh sách sau 2 giây
             setTimeout(() => {
                 navigate("/Dealer-Manager/import-request");
-            }, 2000);
+            }, 1000);
         } catch (err) {
             setError(err.message || "Có lỗi khi tạo đơn đặt xe");
             console.error("Lỗi tạo đơn:", err);
