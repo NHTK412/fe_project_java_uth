@@ -27,59 +27,65 @@ const Sidebar = () => {
   // NOTE: Map menu items với các đường dẫn tương ứng
   // Admin menu includes: Dashboard, Quản lý người dùng (Users), Báo cáo (Reports), Báo cáo tồn kho, Báo cáo doanh thu, Phản hồi, Cài đặt
   const menuItems = useMemo(
-  () => [
-    {
-      id: "dashboard",
-      label: "Dashboard",
-      icon: LayoutDashboard,
-      isHot: true,
-      path: "/Evm-Staff",   // Trang chính
-    },
-    {
-      id: "order-of-agency",
-      label: "Đơn đặt hàng từ đại lý",
-      icon: ShoppingCart,
-      path: "/Evm-Staff/order-of-agency",
-    },
-    {
-      id: "management-inventory",
-      label: "Quản lý tồn kho",
-      icon: MessageSquare,
-      path: "/Evm-Staff/management-inventory",
-    },
-    {
-      id: "agencies",
-      label: "Quản lý đại lý",
-      icon: Users,
-      path: "/Evm-Staff/agencies",
-    },
-    {
-      id: "promotion",
-      label: "Khuyến mãi",
-      icon: Gift,
-      path: "/Evm-Staff/promotion",
-    },
-    {
-      id: "policy",
-      label: "Chính sách",
-      icon: BarChart3,
-      path: "/Evm-Staff/policy",
-    },
-    {
-      id: "wholesale",
-      label: "Giá sỉ",
-      icon: Truck,
-      path: "/Evm-Staff/wholesale",
-    },
-    {
-      id: "settings",
-      label: "Cài đặt",
-      icon: Settings,
-      path: "/Evm-Staff/settings",
-    },
-  ],
-  []
-);
+    () => [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: LayoutDashboard,
+        isHot: true,
+        path: "/Evm-Staff",   // Trang chính
+      },
+      {
+        id: "order-of-agency",
+        label: "Đơn đặt hàng từ đại lý",
+        icon: ShoppingCart,
+        path: "/Evm-Staff/order-of-agency",
+      },
+      {
+        id: "agency-order",
+        label: "Tạo đơn hàng cho đại lý",
+        icon: ShoppingCart,
+        path: "/Evm-Staff/agency-order",
+      },
+      {
+        id: "management-inventory",
+        label: "Quản lý tồn kho",
+        icon: MessageSquare,
+        path: "/Evm-Staff/management-inventory",
+      },
+      {
+        id: "agencies",
+        label: "Quản lý đại lý",
+        icon: Users,
+        path: "/Evm-Staff/agencies",
+      },
+      {
+        id: "promotion",
+        label: "Khuyến mãi",
+        icon: Gift,
+        path: "/Evm-Staff/promotion",
+      },
+      {
+        id: "policy",
+        label: "Chính sách",
+        icon: BarChart3,
+        path: "/Evm-Staff/policy",
+      },
+      {
+        id: "wholesale",
+        label: "Giá sỉ",
+        icon: Truck,
+        path: "/Evm-Staff/wholesale",
+      },
+      {
+        id: "settings",
+        label: "Cài đặt",
+        icon: Settings,
+        path: "/Evm-Staff/settings",
+      },
+    ],
+    []
+  );
 
   const toggleSidebar = useCallback(() => setIsOpen((prev) => !prev), []);
 

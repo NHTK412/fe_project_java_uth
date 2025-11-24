@@ -54,6 +54,7 @@ import VehicleTypeDetailListPage from "../pages/admin/VehicleTypeDetailListPage"
 import ImportRequestListPage from "../pages/shared/ImportRequestListPage";
 import ImportRequestDetailPage from "../pages/shared/ImportRequestDetailPage";
 import SharedInventoryManagement from "../pages/shared/SharedInventoryManagement";
+import AgencyOrderListPage from "../pages/shared/AgencyOrderListPage";
 import Policy from "../pages/evm-staff/Policy"
 // Import các pages evm staff
 import WarehouseReceiptManagement from "../pages/evm-staff/WarehouseReceiptManagement";
@@ -79,6 +80,7 @@ const routes = [
     children: [
       { index: true, element: <DashboardEVM /> },
       { path: "order-of-agency", element: <ImportRequestListPage /> },
+      { path: "agency-order", element: <AgencyOrderListPage /> },
       { path: "management-inventory", element: <SharedInventoryManagement /> },
       { path: "agencies", element: <AgencyManagement /> },
       { path: "promotion", element: <PromotionsManager /> },
@@ -104,6 +106,7 @@ const routes = [
       { path: "vehicle-type/:vehicleTypeId/details", element: <VehicleTypeDetailListPage /> },
       { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
       { path: "order-of-agency", element: <ImportRequestListPage /> },
+      { path: "agency-order", element: <AgencyOrderListPage /> },
       { path: "management-inventory", element: <SharedInventoryManagement /> },
       { path: "agencies", element: <AgencyManagement /> },
       { path: "promotion", element: <PromotionsManager /> },
