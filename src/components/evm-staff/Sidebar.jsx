@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ShoppingCart, PackageOpen, Settings, LogOut, ChevronLeft, ChevronRight } from "lucide-react";
+import { Car, ShoppingCart, PackageOpen, Settings, LogOut, ChevronLeft, ChevronRight } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
 const Sidebar = () => {
@@ -34,6 +34,31 @@ const Sidebar = () => {
         label: "Quản lý phiếu xuất kho",
         icon: PackageOpen,
         path: "/staff/warehouse-release-notes",
+      },
+      {
+        id: "inventory",
+        label: "Quản lý tồn kho",
+        icon: ShoppingCart,
+        path:"/staff/inventory",
+      },
+      {
+        id: "promotion",
+        label:"Quản lý khuyến mãi",
+        icon: ShoppingCart,
+        path:"/staff/promotion",
+      },
+      {
+        id:"wholesale",
+        label:"Quản lý giá sỉ",
+        icon: ShoppingCart,
+        path:"/staff/wholesale",
+      },
+      {
+        id:"discount",
+        label:"Quản lý chiết khấu",
+        icon: ShoppingCart,
+        path:"/staff/discounts",
+
       },
     ],
     []

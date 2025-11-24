@@ -265,95 +265,45 @@ const routes = [
 
   
   
-
-  // ========== EVM STAFF ROUTES ==========
-  // {
-  //   path: "/staff",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={<EvmLayout><Dashboard /></EvmLayout>}
-  //       allowedUsers={["ROLE_EVM_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/staff/inventory",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <EvmLayout>
-  //           <EvmInventory />
-  //         </EvmLayout>
-  //       }
-  //       allowedUsers={["ROLE_EVM_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/staff/dealers",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <EvmLayout>
-  //           <DealerManagement />
-  //         </EvmLayout>
-  //       }
-  //       allowedUsers={["ROLE_EVM_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/staff/promotions",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <EvmLayout>
-  //           <EvmPromotions />
-  //         </EvmLayout>
-  //       }
-  //       allowedUsers={["ROLE_EVM_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/staff/discounts",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <EvmLayout>
-  //           <DiscountManagement />
-  //         </EvmLayout>
-  //       }
-  //       allowedUsers={["ROLE_EVM_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/staff/wholesale",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <EvmLayout>
-  //           <WholesalePriceManagement />
-  //         </EvmLayout>
-  //       }
-  //       allowedUsers={["ROLE_EVM_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/staff/orders",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <EvmLayout>
-  //           <OrderManagement />
-  //         </EvmLayout>
-  //       }
-  //       allowedUsers={["ROLE_EVM_STAFF"]}
-  //     />
-  //   ),
-  // },
+{
+    path: "/staff",
+    element: (
+      <ProtectedRoute element={<EvmLayout />} allowedUsers={["ROLE_EVM_STAFF"]} />
+    ),
+    children: [
+     { index: true, element: <DashboardEVM /> },
+       { path: "warehouse-receipts", element: <WarehouseReceiptManagement /> },
+  { path: "warehouse-receipt/:warehouseReceiptId", element: <WarehouseReceiptDetailPage /> },
+     { path: "warehouse-release-notes", element: <WarehouseReleaseManagement /> },
+   { path: "warehouse-release-notes/:warehouseReleaseNoteId", element: <WarehouseReleaseDetailPage /> },
+    { path: "agencies", element: <AgencyManagement /> },
+      { path: "settings", element: <Settings /> },
+  {
+    path: "/staff/inventory",
+    element: <EvmInventory />
+  },
+  {
+    path: "/staff/dealers",
+    element: <DealerManagement />
+  },
+  {
+    path: "/staff/promotion",
+    element: <EvmPromotions />
+  },
+  {
+    path: "/staff/discounts",
+    element: <DiscountManagement />
+  },
+  {
+    path: "/staff/wholesale",
+    element:<WholesalePriceManagement />
+  },
+  {
+    path: "/staff/orders",
+    element:<OrderManagement />  
+  },
+]
+},
   // {
   //   path: "/staff/*",
   //   element: (
