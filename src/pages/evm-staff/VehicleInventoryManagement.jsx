@@ -152,25 +152,25 @@ const VehicleInventoryManagement = () => {
 
           {/* Statistics Cards */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
-              <p className="text-xs text-blue-600 font-medium mb-1">Tổng Số Xe</p>
-              <p className="text-2xl font-bold text-blue-700">{pagination.totalElements}</p>
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
+              <p className="text-xs text-purple-600 font-medium mb-1">Tổng Số Xe</p>
+              <p className="text-2xl font-bold text-purple-700">{pagination.totalElements}</p>
             </div>
             <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
-              <p className="text-xs text-green-600 font-medium mb-1">Còn Hàng</p>
+              <p className="text-xs text-green-600 font-medium mb-1">Còn Hàng (Tồn kho)</p>
               <p className="text-2xl font-bold text-green-700">{statusCounts.IN_STOCK || 0}</p>
             </div>
             <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 rounded-lg border border-yellow-200">
-              <p className="text-xs text-yellow-600 font-medium mb-1">Đã Đặt</p>
-              <p className="text-2xl font-bold text-yellow-700">{statusCounts.RESERVED || 0}</p>
+              <p className="text-xs text-yellow-600 font-medium mb-1">Đã Đặt (Đang vận chuyển)</p>
+              <p className="text-2xl font-bold text-yellow-700">{statusCounts.IN_TRANSIT || 0}</p>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
               <p className="text-xs text-blue-600 font-medium mb-1">Đã Bán</p>
               <p className="text-2xl font-bold text-blue-700">{statusCounts.SOLD || 0}</p>
             </div>
             <div className="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg border border-red-200">
-              <p className="text-xs text-red-600 font-medium mb-1">Hư Hỏng</p>
-              <p className="text-2xl font-bold text-red-700">{statusCounts.DAMAGED || 0}</p>
+              <p className="text-xs text-red-600 font-medium mb-1">Xe mẫu lái thử</p>
+              <p className="text-2xl font-bold text-red-700">{statusCounts.TEST_DRIVE || 0}</p>
             </div>
           </div>
 
