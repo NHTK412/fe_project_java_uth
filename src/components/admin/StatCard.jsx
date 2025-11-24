@@ -15,15 +15,32 @@ const StatCard = ({
     green: "bg-green-100 text-green-500",
   };
 
+  const formatValue = (val) => {
+    if (typeof val === "number") {
+      if (label === "Tổng doanh thu") {
+        return new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(val);
+      }
+      return new Intl.NumberFormat("vi-VN").format(val);
+    }
+    return val;
+  };
+
   return (
     <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-gray-500 text-sm">{label}</p>
-          <p className="text-3xl font-bold text-gray-800 mt-2">{value}</p>
+          <p className="text-3xl font-bold text-gray-800 mt-2">
+            {formatValue(value)}
+          </p>
           {change && (
             <p
-              className={`text-sm mt-2 ${changeType === "positive" ? "text-green-500" : "text-red-500"}`}
+              className={`text-sm mt-2 ${
+                changeType === "positive" ? "text-green-500" : "text-red-500"
+              }`}
             >
               {changeType === "positive" ? "↑" : "↓"} {change}
             </p>
