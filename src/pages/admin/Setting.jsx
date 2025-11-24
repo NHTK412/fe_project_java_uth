@@ -14,7 +14,7 @@ const Settings = () => {
       {/*Settings */}
       <div className="bg-white rounded-lg p-6 border border-gray-200">
         <p className="text-gray-600">
-          Tính năng đang được phát triển. Vui lòng thử lại trong thòi gian tới.
+          Tính năng đang được phát triển. Vui lòng thử lại trong thời gian tới.
         </p>
         <br></br>
         <img

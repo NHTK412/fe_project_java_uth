@@ -43,7 +43,7 @@ const Sidebar = () => {
     },
     {
       id: "management-inventory",
-      label: "Quản lý tồn kho",
+      label: "Quản lý xe tồn kho",
       icon: MessageSquare,
       path: "/Evm-Staff/management-inventory",
     },
@@ -55,27 +55,21 @@ const Sidebar = () => {
     },
     {
       id: "promotion",
-      label: "Khuyến mãi",
+      label: "Quản lý khuyến mãi",
       icon: Gift,
       path: "/Evm-Staff/promotion",
     },
     {
       id: "policy",
-      label: "Chính sách",
+      label: "Quản lý chiết khấu",
       icon: BarChart3,
       path: "/Evm-Staff/policy",
     },
     {
       id: "wholesale",
-      label: "Giá sỉ",
+      label: "Quản lý giá sỉ",
       icon: Truck,
       path: "/Evm-Staff/wholesale",
-    },
-    {
-      id: "settings",
-      label: "Cài đặt",
-      icon: Settings,
-      path: "/Evm-Staff/settings",
     },
   ],
   []
@@ -228,12 +222,12 @@ const Sidebar = () => {
       {/* Setting + Logout */}
       <div className="p-3 border-t border-gray-200 flex-shrink-0 space-y-1">
         <button
-          onClick={() => handleMenuClick("settings", "/admin/settings")}
+          onClick={() => handleMenuClick("settings", "/Evm-Staff/settings")}
           className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all group relative focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${isActiveMenu("/admin/settings")
             ? "bg-blue-50 text-blue-600 font-semibold"
             : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
             }`}
-          aria-current={isActiveMenu("/admin/settings") ? "page" : undefined}
+          aria-current={isActiveMenu("/Evm-Staff/settings") ? "page" : undefined}
           title={!isOpen ? "Cài đặt" : undefined}
         >
           <Settings className="w-5 h-5 flex-shrink-0" />

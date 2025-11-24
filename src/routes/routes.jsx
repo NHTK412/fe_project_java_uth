@@ -79,7 +79,7 @@ const routes = [
     children: [
       { index: true, element:<DashboardEVM />},
       { path: "order-of-agency", element: <OrderOfAgency />},
-      { path: "management-inventory", element:<InventoryManagement />},
+      { path: "management-inventory", element: <VehicleInventoryManagement />},
       { path: "agencies", element: <AgencyManagement /> }, 
       { path: "promotion", element:<PromotionsManager />},
       { path: "policy", element:<WholesalePolicyManagement />},
