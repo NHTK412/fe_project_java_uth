@@ -14,6 +14,7 @@ import {
   Gift,
   ShoppingCart,
   Users,
+  Percent,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
@@ -46,6 +47,12 @@ const Sidebar = () => {
         label: "Tạo đơn hàng cho đại lý",
         icon: ShoppingCart,
         path: "/Evm-Staff/agency-order",
+      },
+      {
+        id: "policy-management",
+        label: "Quản lý chính sách chiết khấu",
+        icon: Percent,
+        path: "/Evm-Staff/policy-management",
       },
       {
         id: "management-inventory",

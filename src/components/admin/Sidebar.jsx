@@ -12,6 +12,7 @@ import {
   ChevronRight,
   MessageSquare,
   Truck,
+  Percent,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
@@ -70,6 +71,12 @@ const Sidebar = () => {
         path: "/admin/agency-order",
       },
       {
+        id: "policy-management",
+        label: "Quản lý chính sách chiết khấu",
+        icon: Percent,
+        path: "/admin/policy-management",
+      },
+      {
         id: "management-inventory",
         label: "Quản lý tồn kho",
         icon: Car,
@@ -88,10 +95,10 @@ const Sidebar = () => {
         path: "/admin/promotion",
       },
       {
-        id: "policy",
-        label: "Quản lý chiết khấu",
-        icon: Car,
-        path: "/admin/policy",
+        id: "policy-management",
+        label: "Quản lý chính sách chiết khấu",
+        icon: Percent,
+        path: "/admin/policy-management",
       },
       {
         id: "wholesale",
