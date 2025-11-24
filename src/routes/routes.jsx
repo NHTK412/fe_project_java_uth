@@ -65,6 +65,7 @@ import EmployeeOrderManagement from "../pages/dealer-manager/EmployeeOrderManage
 import WholesalePolicyManagement from "../pages/evm-staff/WholesalePolicyManagement";
 // Import Agency page
 import AgencyManagement from "../pages/AgencyManagement";
+import VehicleInventoryManagement from "../pages/evm-staff/VehicleInventoryManagement";
 import { Import } from "lucide-react";
 
 
@@ -81,7 +82,7 @@ const routes = [
       { path: "management-inventory", element:<InventoryManagement />},
       { path: "agencies", element: <AgencyManagement /> }, 
       { path: "promotion", element:<PromotionsManager />},
-      { path: "policy", element:<Policy />},
+      { path: "policy", element:<WholesalePolicyManagement />},
       { path: "wholesale", element:<WholesalePriceManagement />},
       { path: "settings", element: <Settings /> },
       { path: "*", element: <EvmLayout />},
@@ -101,7 +102,7 @@ const routes = [
       { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
       { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
       { path: "order-of-agency", element: <OrderOfAgency />},
-      { path: "management-inventory", element:<InventoryManagement />},
+      { path: "management-inventory", element: <VehicleInventoryManagement />},
       { path: "agencies", element: <AgencyManagement /> }, 
       { path: "promotion", element:<PromotionsManager />},
       { path: "policy", element:<WholesalePolicyManagement />},
