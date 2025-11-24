@@ -72,7 +72,7 @@ export const getImportRequestDetail = async (importRequestId) => {
         const response = await apiFetch(`/import-request/${importRequestId}`, {
             method: "GET",
         });
-        return response.data.data;
+        return response;
     } catch (error) {
         console.error("Lỗi khi gọi API lấy chi tiết đơn đặt xe:", error);
         throw error;

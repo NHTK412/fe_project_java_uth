@@ -5,6 +5,7 @@ import { getImportRequestDetail } from "../../services/api/importRequestService"
 
 const ImportRequestDetail = () => {
     const { importRequestId} = useParams();
+    const importRequestIdNumber = Number(importRequestId);
     const navigate = useNavigate();
     const [detail, setDetail] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -16,7 +17,9 @@ const ImportRequestDetail = () => {
         try {
             setLoading(true);
             setError(null);
-            const response = await getImportRequestDetail(importRequestId);
+            const response = await getImportRequestDetail(importRequestIdNumber);
+            console.log("API response:", response);
+
             if (response.success) {
                 setDetail(response.data);
             } else {
