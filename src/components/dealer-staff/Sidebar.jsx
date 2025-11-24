@@ -82,6 +82,12 @@ const Sidebar = () => {
         icon: Search,
         path: "/Dealer-Staff/vehicle-inquiry",
       },
+      {
+        id: "test-drive-appointments",
+        label: "Quản lý lịch hẹn",
+        icon: Calendar,
+        path: "/Dealer-Staff/test-drive-appointments",
+      },
     ],
     []
   );

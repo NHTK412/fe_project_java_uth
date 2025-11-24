@@ -72,6 +72,7 @@ import AgencyOrderList from "../pages/shared/AgencyOrderList";
 import CustomerManagement from "../pages/shared/CustomerManagement";
 import VehicleTypeInquiry from "../pages/shared/VehicleTypeInquiry";
 import VehicleTypeDetailInquiry from "../pages/shared/VehicleTypeDetailInquiry";
+import TestDriveAppointmentManagement from "../pages/shared/TestDriveAppointmentManagement";
 
 // Import Agency page
 import AgencyManagement from "../pages/AgencyManagement";
@@ -153,6 +154,7 @@ const routes = [
       { path: "customer-management", element: <CustomerManagement /> },
       { path: "vehicle-inquiry", element: <VehicleTypeInquiry /> },
       { path: "vehicle-inquiry/:vehicleTypeId", element: <VehicleTypeDetailInquiry /> },
+      { path: "test-drive-appointments", element: <TestDriveAppointmentManagement /> },
       { path: "*", element: <DealerManagerLayout /> },
     ]
 
@@ -177,6 +179,7 @@ const routes = [
       { path: "customer-management", element: <CustomerManagement /> },
       { path: "vehicle-inquiry", element: <VehicleTypeInquiry /> },
       { path: "vehicle-inquiry/:vehicleTypeId", element: <VehicleTypeDetailInquiry /> },
+      { path: "test-drive-appointments", element: <TestDriveAppointmentManagement /> },
       { path: "*", element: <DealerLayout /> },
     ]
   },

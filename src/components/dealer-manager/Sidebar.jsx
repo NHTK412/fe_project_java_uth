@@ -147,6 +147,12 @@ const Sidebar = () => {
         icon: Search,
         path: "/Dealer-Manager/vehicle-inquiry",
       },
+      {
+        id: "test-drive-appointments",
+        label: "Quản lý lịch hẹn",
+        icon: Calendar,
+        path: "/Dealer-Manager/test-drive-appointments",
+      },
     ],
     []
   );
