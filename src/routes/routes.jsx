@@ -13,7 +13,7 @@ import VehicleManagement from "../pages/admin/VehicleManagement";
 import VehicleTypePage from "../pages/admin/VehicleTypePage";
 import VehicleDetailPage from "../pages/admin/VehicleDetailPage";
 import VehicleTypeDetailPage from "../pages/admin/VehicleTypeDetailPage";
-import WholeSale from "../pages/admin/Wholesale";
+import WholesaleManagement from "../pages/admin/WholesaleManagement";
 // Import các pages evm staff
 import WarehouseReceiptManagement from "../pages/evm-staff/WarehouseReceiptManagement";
 import WarehouseReceiptDetailPage from "../pages/evm-staff/WarehouseReceiptDetailPage";
@@ -40,7 +40,7 @@ const routes = [
       { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
       { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
       { path: "agencies", element: <AgencyManagement /> }, 
-      { path: "wholesale",element: <WholeSale />, },
+      { path: "wholesale",element: <WholesaleManagement/>, },
       { path: "settings", element: <Settings /> },
     ],
   },
