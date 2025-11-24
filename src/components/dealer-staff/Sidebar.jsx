@@ -88,6 +88,12 @@ const Sidebar = () => {
         icon: Calendar,
         path: "/Dealer-Staff/test-drive-appointments",
       },
+      {
+        id: "payment-management",
+        label: "Quản lý thanh toán",
+        icon: ShoppingCart,
+        path: "/Dealer-Staff/payment-management",
+      },
     ],
     []
   );
