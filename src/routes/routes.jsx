@@ -152,7 +152,7 @@ const routes = [
     { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
     { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
     { path: "test-drive", element: <TestDriveSchedule /> },
-    { path: "inventory-management", element: <InventoryManagement />},
+    { path: "inventory-management", element: <VehicleInventoryManagement />},
     { path: "agency-oder-management", element: <AgencyOrderManagement />},
     { path: "employee-oder-management", element: <EmployeeOrderManagement />},
     { path: "*", element: <DealerLayout />},
