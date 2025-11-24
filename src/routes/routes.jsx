@@ -56,6 +56,7 @@ import ImportRequestDetailPage from "../pages/shared/ImportRequestDetailPage";
 import SharedInventoryManagement from "../pages/shared/SharedInventoryManagement";
 import AgencyOrderListPage from "../pages/shared/AgencyOrderListPage";
 import PolicyManagement from "../pages/shared/PolicyManagement";
+import TotalInventoryManagement from "../pages/shared/TotalInventoryManagement";
 import Policy from "../pages/evm-staff/Policy"
 // Import các pages evm staff
 import WarehouseReceiptManagement from "../pages/evm-staff/WarehouseReceiptManagement";
@@ -111,6 +112,7 @@ const routes = [
       { path: "agency-order", element: <AgencyOrderListPage /> },
       { path: "policy-management", element: <PolicyManagement /> },
       { path: "management-inventory", element: <SharedInventoryManagement /> },
+      { path: "total-inventory", element: <TotalInventoryManagement /> },
       { path: "agencies", element: <AgencyManagement /> },
       { path: "promotion", element: <PromotionsManager /> },
       { path: "policy", element: <Policy /> },
@@ -138,6 +140,7 @@ const routes = [
       { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
       { path: "test-drive", element: <TestDriveSchedule /> },
       { path: "inventory-management", element: <SharedInventoryManagement /> },
+      { path: "total-inventory", element: <TotalInventoryManagement /> },
       { path: "agency-oder-management", element: <AgencyOrderManagement /> },
       { path: "employee-oder-management", element: <EmployeeOrderManagement /> },
       { path: "*", element: <DealerManagerLayout /> },

@@ -13,6 +13,7 @@ import {
   MessageSquare,
   Truck,
   Percent,
+  Warehouse,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
@@ -81,6 +82,12 @@ const Sidebar = () => {
         label: "Quản lý tồn kho",
         icon: Car,
         path: "/admin/management-inventory"
+      },
+      {
+        id: "total-inventory",
+        label: "Quản lý tồn kho tổng",
+        icon: Warehouse,
+        path: "/admin/total-inventory"
       },
       {
         id: "agency-management",
