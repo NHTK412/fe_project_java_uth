@@ -106,7 +106,7 @@ function WholesaleManagement() {
           minimumQuantity: data.minimumQuantity || "",
           startDate: data.startDate ? new Date(data.startDate).toISOString().slice(0, 16) : "",
           endDate: data.endDate ? new Date(data.endDate).toISOString().slice(0, 16) : "",
-          status: data.status || "NOT_ACTIVE",
+          status: data.status ,
           agencyId: data.agency?.agencyId || "",
           vehicleTypeDetailId: data.vehicleTypeDetail?.vehicleTypeDetailId || "",
         });
@@ -307,7 +307,7 @@ function WholesaleManagement() {
         icon: XCircle
       },
     };
-    const config = statusMap[status] || statusMap.NOT_ACTIVE;
+    const config = statusMap[status] || statusMap.ACTIVE ;
     const IconComponent = config.icon;
     return (
       <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${config.className}`}>

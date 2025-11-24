@@ -2,6 +2,26 @@
 import React, { useState } from "react";
 import { Eye, Edit, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { showSuccess, showError } from "../../shared/toast";
+const STATUS =
+  {
+    IN_STOCK:{
+      label:"Tồn kho",
+      color: "bg-purple-100 text-purple-700",
+    },
+    SOLD:{
+      label:"Đã bán",
+      color: "bg-blue-100 text-blue-700",
+    },
+    
+    IN_TRANSIT:{
+      label:"Đamg vận chuyển",
+      color: "bg-green-100 text-green-700",
+    },
+    TEST_DRIVE:{
+      label:"Xe lái thử",
+      color: "bg-orange-100 text-orange-700",
+    },
+  };
 
 const VehicleTable = ({
   data = [],
@@ -94,13 +114,21 @@ const VehicleTable = ({
                       className="rounded border-gray-300"
                     />
                   </td>
-                  <td className="px-4 py-3 text-gray-700 text-sm">{item.id}</td>
+                  <td className="px-4 py-3 text-gray-700 text-sm">0{item.id}</td>
                   <td className="px-4 py-3 text-gray-700 text-sm">{item.chassisNumber}</td>
                   <td className="px-4 py-3 text-gray-700 text-sm">{item.machineNumber}</td>
                   <td className="px-4 py-3">
-                    <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
-                      {item.status}
-                    </span>
+                    {STATUS[item.status] ? (
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${STATUS[item.status].color}`}
+                      >
+                        {STATUS[item.status].label}
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                        Không xác định
+                      </span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-gray-700 text-sm">{item.vehicleCondition}</td>
                   <td className="px-4 py-3">

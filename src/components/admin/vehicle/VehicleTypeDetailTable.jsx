@@ -111,7 +111,7 @@ const VehicleTypeDetailTable = ({ onView, onEdit, onDelete }) => {
           type="number"
           min={1}
           value={typeId}
-          onChange={(e) => setTypeId(Number(e.target.value))}
+          onChange={(e) => setTypeId((e.target.value))}
           className="border px-2 py-1 rounded w-24"
         />
         <button

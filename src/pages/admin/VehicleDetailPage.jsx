@@ -4,6 +4,20 @@ import { ArrowLeft } from "lucide-react";
 import { vehicleApi } from "../../services/api/admin/vehicleApi";
 import { showError } from "../../components/shared/toast";
 
+const STATUS = {
+  IN_STOCK: {
+    label: "Tồn kho",
+  },
+  SOLD: {
+    label: "Đã bán",
+  },
+  IN_TRANSIT: {
+    label: "Đang vận chuyển",
+  },
+  TEST_DRIVE: {
+    label: "Xe lái thử",
+  },
+};
 export default function VehicleDetailPage() {
   const { vehicleId } = useParams();
   const navigate = useNavigate();
@@ -50,7 +64,14 @@ export default function VehicleDetailPage() {
       { label: "Mã máy", value: vehicle.machineNumber },
     ],
     [
-      { label: "Trạng thái", value: vehicle.status },
+      {
+        label: "Trạng thái",
+        value: (
+          <span className={`py-1 ${STATUS[vehicle.status]?.color}`}>
+            {STATUS[vehicle.status]?.label || "Không xác định"}
+          </span>
+        ),
+      },
       { label: "Tình trạng", value: vehicle.vehicleCondition },
     ],
     [
@@ -58,7 +79,7 @@ export default function VehicleDetailPage() {
       { label: "Màu sắc", value: v.color },
       { label: "Cấu hình", value: v.configuration },
       { label: "Tính năng", value: v.features },
-      { label: "Giá", value: `${v.price} USD` },
+      { label: "Giá", value: `${v.price} VND` },
     ],
     [
       { label: "Đại lý", value: a.agencyName },

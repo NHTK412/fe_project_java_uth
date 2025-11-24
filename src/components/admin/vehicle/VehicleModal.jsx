@@ -148,7 +148,7 @@ export default function VehicleModal({
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  vehicleTypeDetailId: Number(e.target.value),
+                  vehicleTypeDetailId: (e.target.value),
                 })
               }
             />
@@ -163,7 +163,7 @@ export default function VehicleModal({
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  agencyId: Number(e.target.value),
+                  agencyId: (e.target.value),
                 })
               }
             />

@@ -15,6 +15,8 @@ import {
 } from "../../components/shared/toast";
 import { inventoryApi } from "../../services/api/admin/inventoryApi";
 
+
+
 const InventoryReport = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -40,6 +42,11 @@ const InventoryReport = () => {
     { value: "IN_TRANSIT", label: "Đang Trung Chuyển" },
     { value: "TEST_DRIVE", label: "Xe Lái Thử" },
   ];
+
+  useEffect(() => {
+    fetchReport(); 
+  }, []);
+
 
   const fetchReport = async (params = {}) => {
     setLoading(true);

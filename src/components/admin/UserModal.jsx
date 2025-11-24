@@ -13,7 +13,7 @@ import {
   Save,
   Loader2,
 } from "lucide-react";
-
+import { showError } from "../shared/toast";
 const ROLES = [
   {
     value: "ROLE_ADMIN",
@@ -32,7 +32,7 @@ const ROLES = [
   },
   {
     value: "ROLE_EVM_STAFF",
-    label: "Nhân viên hãng",
+    label: "Nhân viên hãng xe",
     color: "bg-orange-100 text-orange-700",
   },
 ];
@@ -65,7 +65,7 @@ const UserModal = ({
   const isCreateMode = mode === "create";
 
   const [formData, setFormData] = useState({});
-
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   useEffect(() => {
     if (isOpen) {
       if (initialData && (isViewMode || isEditMode)) {
@@ -93,6 +93,10 @@ const UserModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!emailRegex.test(formData.email)) {
+    showError("Email không hợp lệ");
+    return;
+  }
     onSubmit(formData);
   };
 

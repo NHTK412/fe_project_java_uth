@@ -14,13 +14,16 @@ const ROLE_LABELS = {
     label: "Quản trị viên",
     color: "bg-purple-100 text-purple-700",
   },
-  ROLE_DEALER_MANAGER: { label: "Quản lý", color: "bg-blue-100 text-blue-700" },
+  ROLE_DEALER_MANAGER: { 
+    label: "Quản lý đại lý", 
+    color: "bg-blue-100 text-blue-700" 
+  },
   ROLE_DEALER_STAFF: {
-    label: "NV Kinh doanh",
+    label: "Nhân viên đại lý",
     color: "bg-green-100 text-green-700",
   },
   ROLE_EVM_STAFF: {
-    label: "NV Giao hàng",
+    label: "Nhân viên hãng xe",
     color: "bg-orange-100 text-orange-700",
   },
 };
@@ -249,7 +252,7 @@ const UserTable = ({
       {pagination.totalPages > 0 && (
         <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200">
           <div className="text-sm text-gray-500">
-            Hiển thị {pagination.size * pagination.page + 1} -{" "}
+            Hiển thị {pagination.totalElements} -{" "}
             {Math.min(
               pagination.size * (pagination.page + 1),
               pagination.totalElements

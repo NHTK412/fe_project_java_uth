@@ -55,7 +55,7 @@ function WholesaleManagement() {
     minimumQuantity: "",
     startDate: "",
     endDate: "",
-    status: "NOT_ACTIVE",
+    status: "",
     agencyId: "",
     vehicleTypeDetailId: "",
   });
@@ -106,7 +106,7 @@ function WholesaleManagement() {
           minimumQuantity: data.minimumQuantity || "",
           startDate: data.startDate ? new Date(data.startDate).toISOString().slice(0, 16) : "",
           endDate: data.endDate ? new Date(data.endDate).toISOString().slice(0, 16) : "",
-          status: data.status || "NOT_ACTIVE",
+          status: data.status || "",
           agencyId: data.agency?.agencyId || "",
           vehicleTypeDetailId: data.vehicleTypeDetail?.vehicleTypeDetailId || "",
         });
@@ -259,7 +259,7 @@ function WholesaleManagement() {
       minimumQuantity: "",
       startDate: "",
       endDate: "",
-      status: "NOT_ACTIVE",
+      status: "",
       agencyId: "",
       vehicleTypeDetailId: "",
     });

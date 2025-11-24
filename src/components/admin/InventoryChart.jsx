@@ -55,7 +55,7 @@ const InventoryChart = ({ data, loading }) => {
               <span className="font-medium text-gray-700">{dealer.name}</span>
             </div>
             <span className="text-gray-900 font-semibold">
-              {dealer.value.toLocaleString()} sp
+              {dealer.value.toLocaleString()} vnđ
             </span>
           </div>
         ))}

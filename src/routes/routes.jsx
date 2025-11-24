@@ -62,10 +62,11 @@ import DashboardEVM from "../pages/evm-staff/DashboardEVM";
 import DashboardDM from "../pages/dealer-manager/DashboardDM";
 import AgencyOrderManagement from "../pages/dealer-manager/AgencyOrderManagement";
 import EmployeeOrderManagement from "../pages/dealer-manager/EmployeeOrderManagement";
-
+import WholesalePolicyManagement from "../pages/evm-staff/WholesalePolicyManagement";
 // Import Agency page
 import AgencyManagement from "../pages/AgencyManagement";
 import { Import } from "lucide-react";
+
 
 const routes = [
   { path: "/login", element: <Login /> }, 
@@ -103,7 +104,7 @@ const routes = [
       { path: "management-inventory", element:<InventoryManagement />},
       { path: "agencies", element: <AgencyManagement /> }, 
       { path: "promotion", element:<PromotionsManager />},
-      { path: "policy", element:<Policy />},
+      { path: "policy", element:<WholesalePolicyManagement />},
       { path: "wholesale", element:<WholesalePriceManagement />},
       { path: "settings", element: <Settings /> },
       {path: "*", element: <AdminLayout />},

@@ -66,7 +66,7 @@ export default function VehicleTypeDetailPage() {
     [
       { label: "Cấu hình", value: d.configuration || "-" },
       { label: "Tính năng", value: d.features || "-" },
-      { label: "Giá", value: d.price ? `${d.price} USD` : "-" },
+      { label: "Giá", value: d.price ? `${d.price} VND` : "-" },
     ],
     [
       { label: "ID Loại xe", value: d.vehicleTypeId || "-" },
