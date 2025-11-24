@@ -34,34 +34,22 @@ const Sidebar = () => {
         path: "/admin",
       },
       {
-        id: "users",
-        label: "Quản lý tài khoản nhân viên",
-        icon: Users,
-        path: "/admin/users",
-      },
-      // {
-      //   id: "feedback",
-      //   label: "Ghi nhận và xử lý phản hồi",
-      //   icon: MessageSquare,
-      //   path: "/admin/feedback",
-      // },
-      {
         id: "inventory-report",
-        label: "Báo cáo",
+        label: "Báo cáo tồn kho",
         icon: BarChart3,
         path: "/admin/inventory",
       },
-      // {
-      //   id: "products",
-      //   label: "Quản lý sản phẩm",
-      //   icon: ShoppingCart,
-      //   path: "/admin/products",
-      // },
       {
         id: "revenue-report",
         label: "Báo cáo doanh thu",
         icon: BarChart3,
         path: "/admin/revenue",
+      },
+      {
+        id: "users",
+        label: "Quản lý tài khoản nhân viên và người dùng",
+        icon: Users,
+        path: "/admin/users",
       },
       {
         id: "vehicles",
@@ -70,17 +58,41 @@ const Sidebar = () => {
         path: "/admin/vehicles",
       },
       {
+        id:"order-of-agency",
+        label:"Quản lý đơn nhập xe",
+        icon: Car,
+        path: "admin/order-of-agency",
+      },
+      {
+        id:"management-inventory",
+        label:"Quản lý xe tồn kho",
+        icon: Car,
+        path:"admin/management-inventory"
+      },
+      {
         id: "agency-management",
         label: "Quản lý đại lý",
         icon: Users,
-        path: "/admin/agencies",
+        path:"/admin/agencies",
       },
-      // { 
-      //   path: "/admin/wholesale", 
-      //   icon: ShoppingCart, l
-      //   abel: "Bán sỉ" 
-      // },
-      
+      {
+        id:"promotion",
+        label:"Quản lý khuyến mãi",
+        icon: Car,
+        path:"/admin/promotion",
+      },
+      {
+        id:"policy",
+        label:"Quản lý chiết khấu",
+        icon: Car,
+        path:"/admin/policy",
+      },
+      {
+        id:"wholesale",
+        label:"Quản lý giá sỉ",
+        icon: ShoppingCart,
+        path:"/admin/wholesale",
+      },
     ],
     []
   );

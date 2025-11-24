@@ -3,8 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
   Car,
   LayoutDashboard,
-  Users,
-  ShoppingCart,
+  User,
   BarChart3,
   Settings,
   LogOut,
@@ -12,6 +11,15 @@ import {
   ChevronRight,
   MessageSquare,
   Truck,
+  Gift,
+  ShoppingCart,
+  Users,
+  Calendar,
+  Clipboard,
+  Building,
+  Briefcase,
+  Boxes,
+  Home,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
@@ -25,71 +33,89 @@ const Sidebar = () => {
   // NOTE: Map menu items với các đường dẫn tương ứng
   // Admin menu includes: Dashboard, Quản lý người dùng (Users), Báo cáo (Reports), Báo cáo tồn kho, Báo cáo doanh thu, Phản hồi, Cài đặt
   const menuItems = useMemo(
-    () => [
-      {
-        id: "dashboard",
-        label: "Dashboard",
-        icon: LayoutDashboard,
-        isHot: true,
-        path: "/Dealer-Manager",
-      },
-      {
-        id: "users",
-        label: "Quản lý tài khoản khách hàng",
-        icon: Users,
-        path: "/Dealer-Manager/users",
-      },
-      {
-        id: "feedback",
-        label: "Ghi nhận và xử lý phản hồi",
-        icon: MessageSquare,
-        path: "/Dealer-Manager/feedback",
-      },
-      {
-        id: "inventory-report",
-        label: "Báo cáo",
-        icon: BarChart3,
-        path: "/Dealer-Manager/inventory",
-      },
-      // {
-      //   id: "products",
-      //   label: "Quản lý sản phẩm",
-      //   icon: ShoppingCart,
-      //   path: "/admin/products",
-      // },
-      {
-        id: "revenue-report",
-        label: "Báo cáo doanh thu",
-        icon: BarChart3,
-        path: "/Dealer-Manager/revenue",
-      },
-      // {
-      //   id: "vehicles",
-      //   label: "Quản lý phương tiện",
-      //   icon: Car,
-      //   path: "/admin/vehicles",
-      // },
-      // {
-      //   id: "agency-management",
-      //   label: "Quản lý đại lý",
-      //   icon: Users,
-      //   path: "/admin/agencies",
-      // },
-      // { 
-      //   path: "/admin/wholesale", 
-      //   icon: ShoppingCart, 
-      //   label: "Bán sỉ" 
-      // },
-      {
-        id: "order",
-        label:"Yêu cầu nhập hàng",
-        icon: ShoppingCart,
-        path:"/Dealer-Manager/import-request",
-      },
-      
-    ],
-    []
-  );
+  () => [
+   {
+    id: "dashboard",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+    isHot: true,
+    path: "/Dealer-Manager",
+  },
+  {
+    id: "feedback",
+    label: "Phản hồi khách hàng",
+    icon: MessageSquare,
+    path: "/Dealer-Manager/feedback",
+  },
+  {
+    id: "inventory",
+    label: "Kho xe",
+    icon: Home,
+    path: "/Dealer-Manager/inventory",
+  },
+  {
+    id: "revenue",
+    label: "Doanh thu",
+    icon: BarChart3,
+    path: "/Dealer-Manager/revenue",
+  },
+  {
+    id: "import-request",
+    label: "Yêu cầu nhập hàng",
+    icon: Truck,
+    path: "/Dealer-Manager/import-request",
+  },
+  {
+    id: "promotion",
+    label: "Khuyến mãi",
+    icon: Gift,
+    path: "/Dealer-Manager/promotion",
+  },
+  {
+    id: "users",
+    label: "Người dùng",
+    icon: Users,
+    path: "/Dealer-Manager/users",
+  },
+  {
+    id: "orders",
+    label: "Quản lý đơn hàng",
+    icon: ShoppingCart,
+    path: "/Dealer-Manager/order",
+  },
+  {
+    id: "vehicles",
+    label: "Danh mục xe",
+    icon: Car,
+    path: "/Dealer-Manager/vehicles",
+  },
+  {
+    id: "test-drive",
+    label: "Lịch lái thử",
+    icon: Calendar,
+    path: "/Dealer-Manager/test-drive",
+  },
+  {
+    id: "inventory-management",
+    label: "Quản lý tồn kho",
+    icon: Clipboard,
+    path: "/Dealer-Manager/inventory-management",
+  },
+  {
+    id: "agency-order-management",
+    label: "Đơn hàng đại lý",
+    icon: Building,
+    path: "/Dealer-Manager/agency-oder-management",
+  },
+  {
+    id: "employee-order-management",
+    label: "Đơn hàng nhân viên",
+    icon: Briefcase,
+    path: "/Dealer-Manager/employee-oder-management",
+  },
+],
+  []
+);
 
   const toggleSidebar = useCallback(() => setIsOpen((prev) => !prev), []);
 

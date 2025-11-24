@@ -47,8 +47,8 @@ function Login() {
       toast.showSuccess(t("login.success"));
       // Navigate theo role
       if (role === "ROLE_ADMIN") navigate("/admin");
-      else if (role === "ROLE_EVM_STAFF") navigate("/staff");
-      else if (role === "ROLE_DEALER_STAFF") navigate("/dealer");
+      else if (role === "ROLE_EVM_STAFF") navigate("/Evm-Staff");
+      else if (role === "ROLE_DEALER_STAFF") navigate("/Dealer-Staff");
       else if (role === "ROLE_DEALER_MANAGER") navigate("/Dealer-Manager");
       else navigate("/");
     } catch (err) {
