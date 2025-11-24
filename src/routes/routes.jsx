@@ -57,6 +57,7 @@ import SharedInventoryManagement from "../pages/shared/SharedInventoryManagement
 import AgencyOrderListPage from "../pages/shared/AgencyOrderListPage";
 import PolicyManagement from "../pages/shared/PolicyManagement";
 import TotalInventoryManagement from "../pages/shared/TotalInventoryManagement";
+import QuoteManagementPage from "../pages/shared/QuoteManagementPage";
 import Policy from "../pages/evm-staff/Policy"
 // Import các pages evm staff
 import WarehouseReceiptManagement from "../pages/evm-staff/WarehouseReceiptManagement";
@@ -67,6 +68,8 @@ import DashboardEVM from "../pages/evm-staff/DashboardEVM";
 import DashboardDM from "../pages/dealer-manager/DashboardDM";
 import AgencyOrderManagement from "../pages/dealer-manager/AgencyOrderManagement";
 import EmployeeOrderManagement from "../pages/dealer-manager/EmployeeOrderManagement";
+import AgencyOrderList from "../pages/shared/AgencyOrderList";
+import CustomerManagement from "../pages/shared/CustomerManagement";
 
 // Import Agency page
 import AgencyManagement from "../pages/AgencyManagement";
@@ -143,6 +146,9 @@ const routes = [
       { path: "total-inventory", element: <TotalInventoryManagement /> },
       { path: "agency-oder-management", element: <AgencyOrderManagement /> },
       { path: "employee-oder-management", element: <EmployeeOrderManagement /> },
+      { path: "quote-management", element: <QuoteManagementPage /> },
+      { path: "order-management", element: <AgencyOrderList /> },
+      { path: "customer-management", element: <CustomerManagement /> },
       { path: "*", element: <DealerManagerLayout /> },
     ]
 
@@ -162,6 +168,9 @@ const routes = [
       { path: "inventory-management", element: <SharedInventoryManagement /> },
       { path: "agency-oder-management", element: <AgencyOrderManagement /> },
       { path: "employee-oder-management", element: <EmployeeOrderManagement /> },
+      { path: "quote-management", element: <QuoteManagementPage /> },
+      { path: "order-management", element: <AgencyOrderList /> },
+      { path: "customer-management", element: <CustomerManagement /> },
       { path: "*", element: <DealerLayout /> },
     ]
   },

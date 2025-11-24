@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ShoppingCart, Package, Car, Settings, Clipboard , LayoutDashboard, Briefcase, Building2, Boxes, Calendar, ChevronLeft ,LogOut } from "lucide-react";
+import { ShoppingCart, Package, Car, Settings, Clipboard, LayoutDashboard, Briefcase, Building2, Boxes, Calendar, ChevronLeft, LogOut, FileText, UserCog } from "lucide-react";
 
 import LOGO from "../../assets/logo.png";
 
@@ -15,50 +15,68 @@ const Sidebar = () => {
   // Admin menu includes: Dashboard, Quản lý người dùng (Users), Báo cáo (Reports), Báo cáo tồn kho, Báo cáo doanh thu, Phản hồi, Cài đặt
   const menuItems = useMemo(
     () => [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    isHot: true,
-    path: "/Dealer-Staff",
-  },
-  {
-    id: "order",
-    label: "Đơn hàng",
-    icon: ShoppingCart,
-    path: "/Dealer-Staff/order",
-  },
-  {
-    id: "vehicles",
-    label: "Danh mục xe",
-    icon: Car,
-    path: "/Dealer-Staff/vehicles",
-  },
-  {
-    id: "test-drive",
-    label: "Lịch lái thử",
-    icon: Calendar,
-    path: "/Dealer-Staff/test-drive",
-  },
-  {
-    id: "inventory-management",
-    label: "Quản lý tồn kho",
-    icon: Boxes,
-    path: "/Dealer-Staff/inventory-management",
-  },
-  {
-    id: "agency-order-management",
-    label: "Đơn hàng đại lý",
-    icon: Building2,
-    path: "/Dealer-Staff/agency-oder-management",
-  },
-  {
-    id: "employee-order-management",
-    label: "Đơn hàng nhân viên",
-    icon: Briefcase,
-    path: "/Dealer-Staff/employee-oder-management",
-  },
-],
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: LayoutDashboard,
+        isHot: true,
+        path: "/Dealer-Staff",
+      },
+      {
+        id: "order",
+        label: "Đơn hàng",
+        icon: ShoppingCart,
+        path: "/Dealer-Staff/order",
+      },
+      {
+        id: "vehicles",
+        label: "Danh mục xe",
+        icon: Car,
+        path: "/Dealer-Staff/vehicles",
+      },
+      {
+        id: "test-drive",
+        label: "Lịch lái thử",
+        icon: Calendar,
+        path: "/Dealer-Staff/test-drive",
+      },
+      {
+        id: "quote-management",
+        label: "Quản lý báo giá",
+        icon: FileText,
+        path: "/Dealer-Staff/quote-management",
+      },
+      {
+        id: "inventory-management",
+        label: "Quản lý tồn kho",
+        icon: Boxes,
+        path: "/Dealer-Staff/inventory-management",
+      },
+      {
+        id: "agency-order-management",
+        label: "Đơn hàng đại lý",
+        icon: Building2,
+        path: "/Dealer-Staff/agency-oder-management",
+      },
+      {
+        id: "employee-order-management",
+        label: "Đơn hàng nhân viên",
+        icon: Briefcase,
+        path: "/Dealer-Staff/employee-oder-management",
+      },
+      {
+        id: "order-management",
+        label: "Quản lý đơn hàng",
+        icon: Package,
+        path: "/Dealer-Staff/order-management",
+      },
+      {
+        id: "customer-management",
+        label: "Quản lý khách hàng",
+        icon: UserCog,
+        path: "/Dealer-Staff/customer-management",
+      },
+    ],
     []
   );
 

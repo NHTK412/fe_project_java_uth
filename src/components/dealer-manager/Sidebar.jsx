@@ -21,6 +21,8 @@ import {
   Boxes,
   Home,
   Warehouse,
+  FileText,
+  UserCog,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
@@ -97,6 +99,12 @@ const Sidebar = () => {
         path: "/Dealer-Manager/test-drive",
       },
       {
+        id: "quote-management",
+        label: "Quản lý báo giá",
+        icon: FileText,
+        path: "/Dealer-Manager/quote-management",
+      },
+      {
         id: "inventory-management",
         label: "Quản lý tồn kho",
         icon: Clipboard,
@@ -119,6 +127,18 @@ const Sidebar = () => {
         label: "Đơn hàng nhân viên",
         icon: Briefcase,
         path: "/Dealer-Manager/employee-oder-management",
+      },
+      {
+        id: "order-management",
+        label: "Quản lý đơn hàng",
+        icon: Boxes,
+        path: "/Dealer-Manager/order-management",
+      },
+      {
+        id: "customer-management",
+        label: "Quản lý khách hàng",
+        icon: UserCog,
+        path: "/Dealer-Manager/customer-management",
       },
     ],
     []
