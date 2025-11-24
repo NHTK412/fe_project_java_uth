@@ -323,130 +323,49 @@ const routes = [
   // },
 
   // // ========== DEALER STAFF ROUTES ==========
-  // {
-  //   path: "/dealer",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={<DealerLayout><DealerDashboard /></DealerLayout>}
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/test-drive",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <DealerLayout>
-  //           <TestDriveSchedule />
-  //         </DealerLayout>
-  //       }
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/order",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <DealerLayout>
-  //           <DealerStaffOrderList />
-  //         </DealerLayout>
-  //       }
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/employee-order",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <DealerLayout>
-  //           <DealerStaffEmployeeOrderList />
-  //         </DealerLayout>
-  //       }
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/order/create",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <DealerLayout>
-  //           <DealerCreateOrder isDealerManager={false} />
-  //         </DealerLayout>
-  //       }
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/order/:orderId",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <DealerLayout>
-  //           <DealerOrderDetail isDealerManager={false} />
-  //         </DealerLayout>
-  //       }
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/quotes",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <DealerLayout>
-  //           <QuoteManagement />
-  //         </DealerLayout>
-  //       }
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/vehicles",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <DealerLayout>
-  //           <VehicleInfo />
-  //         </DealerLayout>
-  //       }
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/inventory",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={
-  //         <DealerLayout>
-  //           <InventoryManagement />
-  //         </DealerLayout>
-  //       }
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
-  // {
-  //   path: "/dealer/*",
-  //   element: (
-  //     <ProtectedRoute
-  //       element={<DealerLayout />}
-  //       allowedUsers={["ROLE_DEALER_STAFF"]}
-  //     />
-  //   ),
-  // },
+  {
+    path: "/dealer",
+    element:<DealerDashboard />
+  },
+  {
+    path: "/dealer/test-drive",
+    element: <TestDriveSchedule />   
+  },
+  {
+    path: "/dealer/order",
+    element: <DealerStaffOrderList />    
+  },
+  {
+    path: "/dealer/employee-order",
+    element:<DealerStaffEmployeeOrderList />
+  },
+  {
+    path: "/dealer/order/create",
+    element: <DealerCreateOrder isDealerManager={false} />
+  },
+  {
+    path: "/dealer/order/:orderId",
+    element:<DealerOrderDetail isDealerManager={false} />
+  },
+  {
+    path: "/dealer/quotes",
+    element: <QuoteManagement />     
+  },
+  {
+    path: "/dealer/vehicles",
+    element:<VehicleInfo />
+  },
+  {
+    path: "/dealer/inventory",
+    element: <InventoryManagement />
+  },
+  {
+    path: "/dealer/*",
+    element:<DealerLayout />
 
-  // // ========== DEALER MANAGER ROUTES ==========
+  },
+
+  /* // // ========== DEALER MANAGER ROUTES ==========
   // {
   //   path: "/dealerManager",
   //   element: (<DealerManagerLayout />
@@ -648,7 +567,7 @@ const routes = [
   //       allowedUsers={["ROLE_ADMIN", "ROLE_EVM_STAFF", "ROLE_DEALER_STAFF", "ROLE_DEALER_MANAGER"]}
   //     />
   //   ),
-  // },
+  // }, */
 
   // ========== USER PROFILE ROUTE ==========
   {

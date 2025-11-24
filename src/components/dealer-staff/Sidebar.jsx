@@ -27,59 +27,53 @@ const Sidebar = () => {
   const menuItems = useMemo(
     () => [
       {
-        id: "dashboard",
-        label: "Dashboard",
-        icon: LayoutDashboard,
-        isHot: true,
-        path: "/admin",
-      },
-      {
-        id: "users",
-        label: "Quản lý tài khoản nhân viên",
-        icon: Users,
-        path: "/admin/users",
-      },
-      {
-        id: "feedback",
-        label: "Ghi nhận và xử lý phản hồi",
-        icon: MessageSquare,
-        path: "/admin/feedback",
-      },
-      {
-        id: "inventory-report",
-        label: "Báo cáo",
-        icon: BarChart3,
-        path: "/admin/inventory",
-      },
-      {
-        id: "products",
-        label: "Quản lý sản phẩm",
-        icon: ShoppingCart,
-        path: "/admin/products",
-      },
-      {
-        id: "revenue-report",
-        label: "Báo cáo doanh thu",
-        icon: BarChart3,
-        path: "/admin/revenue",
-      },
-      {
-        id: "vehicles",
-        label: "Quản lý phương tiện",
-        icon: Car,
-        path: "/admin/vehicles",
-      },
-      {
-        id: "agency-management",
-        label: "Quản lý đại lý",
-        icon: Users,
-        path: "/admin/agencies",
-      },
-      { 
-        path: "/admin/wholesale", 
-        icon: ShoppingCart, 
-        label: "Bán sỉ" 
-      },
+  id: "dealer-dashboard",
+  label: "Dashboard",
+  icon: ShoppingCart,
+  path: "/dealer",
+},
+{
+  id: "dealer-testdrive",
+  label: "Lịch lái thử",
+  icon: Car,
+  path: "/dealer/test-drive",
+},
+{
+  id: "dealer-order",
+  label: "Quản lý đơn hàng",
+  icon: ShoppingCart,
+  path: "/dealer/order",
+},
+{
+  id: "dealer-employee-order",
+  label: "Đơn hàng nhân viên",
+  icon: ShoppingCart,
+  path: "/dealer/employee-order",
+},
+{
+  id: "dealer-create-order",
+  label: "Tạo đơn mới",
+  icon: ShoppingCart,
+  path: "/dealer/order/create",
+},
+{
+  id: "dealer-quotes",
+  label: "Quản lý báo giá",
+  icon: PackageOpen,
+  path: "/dealer/quotes",
+},
+{
+  id: "dealer-vehicles",
+  label: "Xe",
+  icon: Car,
+  path: "/dealer/vehicles",
+},
+{
+  id: "dealer-inventory",
+  label: "Tồn kho",
+  icon: ShoppingCart,
+  path: "/dealer/inventory",
+},
     ],
     []
   );
