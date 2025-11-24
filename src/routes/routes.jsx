@@ -70,6 +70,8 @@ import AgencyOrderManagement from "../pages/dealer-manager/AgencyOrderManagement
 import EmployeeOrderManagement from "../pages/dealer-manager/EmployeeOrderManagement";
 import AgencyOrderList from "../pages/shared/AgencyOrderList";
 import CustomerManagement from "../pages/shared/CustomerManagement";
+import VehicleTypeInquiry from "../pages/shared/VehicleTypeInquiry";
+import VehicleTypeDetailInquiry from "../pages/shared/VehicleTypeDetailInquiry";
 
 // Import Agency page
 import AgencyManagement from "../pages/AgencyManagement";
@@ -149,6 +151,8 @@ const routes = [
       { path: "quote-management", element: <QuoteManagementPage /> },
       { path: "order-management", element: <AgencyOrderList /> },
       { path: "customer-management", element: <CustomerManagement /> },
+      { path: "vehicle-inquiry", element: <VehicleTypeInquiry /> },
+      { path: "vehicle-inquiry/:vehicleTypeId", element: <VehicleTypeDetailInquiry /> },
       { path: "*", element: <DealerManagerLayout /> },
     ]
 
@@ -171,6 +175,8 @@ const routes = [
       { path: "quote-management", element: <QuoteManagementPage /> },
       { path: "order-management", element: <AgencyOrderList /> },
       { path: "customer-management", element: <CustomerManagement /> },
+      { path: "vehicle-inquiry", element: <VehicleTypeInquiry /> },
+      { path: "vehicle-inquiry/:vehicleTypeId", element: <VehicleTypeDetailInquiry /> },
       { path: "*", element: <DealerLayout /> },
     ]
   },

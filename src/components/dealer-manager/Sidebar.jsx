@@ -23,6 +23,7 @@ import {
   Warehouse,
   FileText,
   UserCog,
+  Search,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
@@ -139,6 +140,12 @@ const Sidebar = () => {
         label: "Quản lý khách hàng",
         icon: UserCog,
         path: "/Dealer-Manager/customer-management",
+      },
+      {
+        id: "vehicle-inquiry",
+        label: "Truy vấn thông tin xe",
+        icon: Search,
+        path: "/Dealer-Manager/vehicle-inquiry",
       },
     ],
     []

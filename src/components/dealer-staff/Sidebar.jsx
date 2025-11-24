@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ShoppingCart, Package, Car, Settings, Clipboard, LayoutDashboard, Briefcase, Building2, Boxes, Calendar, ChevronLeft, LogOut, FileText, UserCog } from "lucide-react";
+import { ShoppingCart, Package, Car, Settings, Clipboard, LayoutDashboard, Briefcase, Building2, Boxes, Calendar, ChevronLeft, LogOut, FileText, UserCog, Search } from "lucide-react";
 
 import LOGO from "../../assets/logo.png";
 
@@ -75,6 +75,12 @@ const Sidebar = () => {
         label: "Quản lý khách hàng",
         icon: UserCog,
         path: "/Dealer-Staff/customer-management",
+      },
+      {
+        id: "vehicle-inquiry",
+        label: "Truy vấn thông tin xe",
+        icon: Search,
+        path: "/Dealer-Staff/vehicle-inquiry",
       },
     ],
     []
