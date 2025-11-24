@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { showError } from "../../shared/toast";
+import { vehicleTypeApi } from "../../../services/api/admin/vehicleTypeApi";
 
 export default function VehicleTypeDetailModal({ isOpen, onClose, onSubmit, initialData }) {
   const [vehicleImage, setVehicleImage] = useState("");
@@ -11,10 +12,22 @@ export default function VehicleTypeDetailModal({ isOpen, onClose, onSubmit, init
   const [features, setFeatures] = useState("");
   const [price, setPrice] = useState("");
   const [vehicleTypeId, setVehicleTypeId] = useState("");
+  const [vehicleTypes, setVehicleTypes] = useState([]);
 
   const [uploading, setUploading] = useState(false);
 
   const getToken = () => localStorage.getItem("token");
+
+  // Load danh sách vehicle types khi modal mở
+  useEffect(() => {
+    if (!isOpen) return;
+
+    vehicleTypeApi.fetchAllVehicleTypes().then((response) => {
+      if (response.success && response.data) {
+        setVehicleTypes(response.data);
+      }
+    });
+  }, [isOpen]);
 
   // Load initial data
   useEffect(() => {
@@ -178,12 +191,6 @@ export default function VehicleTypeDetailModal({ isOpen, onClose, onSubmit, init
             { label: "Phiên bản", value: version, setValue: setVersion },
             { label: "Tính năng", value: features, setValue: setFeatures },
             { label: "Giá", value: price, setValue: setPrice, type: "number" },
-            {
-              label: "Vehicle Type ID",
-              value: vehicleTypeId,
-              setValue: setVehicleTypeId,
-              type: "number",
-            },
           ].map(({ label, value, setValue, type }) => (
             <div key={label}>
               <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
@@ -195,6 +202,23 @@ export default function VehicleTypeDetailModal({ isOpen, onClose, onSubmit, init
               />
             </div>
           ))}
+
+          {/* Dropdown cho Vehicle Type */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Loại xe</label>
+            <select
+              value={vehicleTypeId ?? ""}
+              onChange={(e) => setVehicleTypeId(e.target.value)}
+              className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-400"
+            >
+              <option value="">Chọn loại xe</option>
+              {vehicleTypes.map((vt) => (
+                <option key={vt.vehicleTypeId} value={vt.vehicleTypeId}>
+                  {vt.vehicleTypeName}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Buttons */}

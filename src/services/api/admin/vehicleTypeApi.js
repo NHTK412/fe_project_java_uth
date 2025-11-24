@@ -82,4 +82,42 @@ export const vehicleTypeApi = {
       return { success: false, message: error.message };
     }
   },
+
+  fetchAllVehicleTypes: async () => {
+    try {
+      let allVehicleTypes = [];
+      let page = 1;
+      let hasMore = true;
+
+      while (hasMore) {
+        const url = `${BASE_URL}?page=${page}&size=100`;
+        const res = await fetch(url, { method: "GET", headers: getHeaders() });
+        const result = await handleResponse(res);
+
+        if (result.success && result.data && result.data.content && Array.isArray(result.data.content)) {
+          allVehicleTypes = [...allVehicleTypes, ...result.data.content];
+
+          if (result.data.content.length < 100 || result.data.last) {
+            hasMore = false;
+          } else {
+            page++;
+          }
+        } else {
+          hasMore = false;
+        }
+      }
+
+      return {
+        success: true,
+        message: 'Lấy danh sách loại xe thành công',
+        data: allVehicleTypes
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message || 'Không thể tải danh sách loại xe',
+        data: []
+      };
+    }
+  },
 };
