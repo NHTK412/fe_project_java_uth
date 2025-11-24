@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { X, Loader, ShoppingCart } from 'lucide-react';
 import { showError, showSuccess } from './toast';
-import { createOrderFromQuote } from '../../services/api/quoteService';
+import { createOrderFromQuote, updateQuoteStatus } from '../../services/api/quoteService';
 
 const ConvertQuoteToOrderModal = ({ quote, isOpen, onClose, onOrderCreated }) => {
     const [loading, setLoading] = useState(false);
+    const [paymentPlans, setPaymentPlans] = useState([]);
     const [formData, setFormData] = useState({
         customerId: '',
         quoteId: '',
         notes: '',
         paymentType: 'FULL_PAYMENT',
-        paymentPlanId: null
+        paymentPlanId: 0
     });
 
     useEffect(() => {
@@ -20,8 +21,10 @@ const ConvertQuoteToOrderModal = ({ quote, isOpen, onClose, onOrderCreated }) =>
                 quoteId: quote.quoteId || '',
                 notes: '',
                 paymentType: 'FULL_PAYMENT',
-                paymentPlanId: null
+                paymentPlanId: 0
             });
+            // TODO: Load payment plans if needed
+            // fetchPaymentPlans();
         }
     }, [quote, isOpen]);
 
@@ -53,12 +56,18 @@ const ConvertQuoteToOrderModal = ({ quote, isOpen, onClose, onOrderCreated }) =>
                 quoteId: Number(formData.quoteId),
                 notes: formData.notes || '',
                 paymentType: formData.paymentType,
-                paymentPlanId: formData.paymentType === 'INSTALLMENT' ? Number(formData.paymentPlanId) : null
+                paymentPlanId: formData.paymentType === 'INSTALLMENT' ? Number(formData.paymentPlanId) : 0
             };
 
-            console.log('Converting quote to order with data:', payload);
-            await createOrderFromQuote(payload);
+            console.log('Step 1: Updating quote status to ORDERED...');
+            // Bước 1: Cập nhật trạng thái báo giá thành ORDERED
+            await updateQuoteStatus(formData.quoteId, 'ORDERED');
 
+            console.log('Step 2: Creating order from quote...');
+            // Bước 2: Tạo đơn hàng từ báo giá
+            const orderResponse = await createOrderFromQuote(payload);
+
+            console.log('Order created successfully:', orderResponse);
             showSuccess('Chuyển báo giá thành đơn hàng thành công!');
             onOrderCreated?.();
         } catch (error) {
@@ -123,17 +132,21 @@ const ConvertQuoteToOrderModal = ({ quote, isOpen, onClose, onOrderCreated }) =>
                         {formData.paymentType === 'INSTALLMENT' && (
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    ID Gói trả góp <span className="text-red-500">*</span>
+                                    Gói trả góp <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="number"
                                     name="paymentPlanId"
                                     value={formData.paymentPlanId || ''}
                                     onChange={handleChange}
-                                    placeholder="Nhập ID gói trả góp"
+                                    placeholder="Nhập ID gói trả góp (ví dụ: 1, 2, 3...)"
+                                    min="1"
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                     required
                                 />
+                                <p className="text-xs text-gray-500 mt-1">
+                                    💡 Nhập ID của gói trả góp mà bạn muốn áp dụng
+                                </p>
                             </div>
                         )}
 

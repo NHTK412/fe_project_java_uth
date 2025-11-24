@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { X, Loader, AlertCircle, User, Phone, Mail, Briefcase, Package, DollarSign, ChevronDown, ChevronUp } from "lucide-react";
+import { X, Loader, AlertCircle, User, Phone, Mail, Briefcase, Package, DollarSign, ChevronDown, ChevronUp, ShoppingCart } from "lucide-react";
 import { getQuoteById } from "../../services/api/quoteService";
+import ConvertQuoteToOrderModal from "./ConvertQuoteToOrderModal";
 
-const QuoteDetailModal = ({ isOpen, onClose, quoteId }) => {
+const QuoteDetailModal = ({ isOpen, onClose, quoteId, onOrderCreated }) => {
     const [quote, setQuote] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [expandedDetails, setExpandedDetails] = useState({});
+    const [showConvertModal, setShowConvertModal] = useState(false);
 
     useEffect(() => {
         if (isOpen && quoteId) {
@@ -69,6 +71,16 @@ const QuoteDetailModal = ({ isOpen, onClose, quoteId }) => {
                 {statusInfo.label}
             </span>
         );
+    };
+
+    const handleConvertToOrder = () => {
+        setShowConvertModal(true);
+    };
+
+    const handleOrderCreatedSuccess = () => {
+        setShowConvertModal(false);
+        onOrderCreated?.();
+        onClose();
     };
 
     if (!isOpen) return null;
@@ -281,14 +293,35 @@ const QuoteDetailModal = ({ isOpen, onClose, quoteId }) => {
                 </div>
 
                 {/* Footer */}
-                <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end">
+                <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+                    <div>
+                        {quote && quote.status !== 'ORDERED' && quote.status !== 'REJECTED' && (
+                            <button
+                                onClick={handleConvertToOrder}
+                                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium flex items-center gap-2"
+                            >
+                                <ShoppingCart className="w-4 h-4" />
+                                Chuyển thành đơn hàng
+                            </button>
+                        )}
+                    </div>
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"
+                        className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"
                     >
                         Đóng
                     </button>
                 </div>
+
+                {/* Convert to Order Modal */}
+                {showConvertModal && quote && (
+                    <ConvertQuoteToOrderModal
+                        quote={quote}
+                        isOpen={showConvertModal}
+                        onClose={() => setShowConvertModal(false)}
+                        onOrderCreated={handleOrderCreatedSuccess}
+                    />
+                )}
             </div>
         </div>
     );

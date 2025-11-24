@@ -360,6 +360,7 @@ const QuoteManagementPage = () => {
                         setShowDetailModal(false);
                         setSelectedQuoteId(null);
                     }}
+                    onOrderCreated={fetchQuotes}
                 />
             )}
 

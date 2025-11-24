@@ -28,14 +28,9 @@ const UpdateQuoteStatusModal = ({ isOpen, onClose, quote, onStatusUpdated }) => 
             icon: XCircle,
             color: "red",
             description: "Báo giá đã bị từ chối"
-        },
-        {
-            value: "ORDERED",
-            label: "Đã đặt hàng",
-            icon: ShoppingCart,
-            color: "green",
-            description: "Đã chuyển thành đơn hàng"
         }
+        // Note: ORDERED status should only be set via "Chuyển thành đơn hàng" button
+        // which uses ConvertQuoteToOrderModal to create order and update status
     ];
 
     const handleSubmit = async (e) => {
