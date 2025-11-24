@@ -13,6 +13,7 @@ import {
   Save,
   Loader2,
 } from "lucide-react";
+import { fetchAgenciesActive } from "../../services/api/agencyApi";
 
 const ROLES = [
   {
@@ -65,6 +66,17 @@ const UserModal = ({
   const isCreateMode = mode === "create";
 
   const [formData, setFormData] = useState({});
+  const [agencies, setAgencies] = useState([]);
+
+  useEffect(() => {
+    if (isOpen && isEmployee) {
+      fetchAgenciesActive().then((response) => {
+        if (response.success && response.data) {
+          setAgencies(response.data);
+        }
+      });
+    }
+  }, [isOpen, isEmployee]);
 
   useEffect(() => {
     if (isOpen) {
@@ -190,8 +202,8 @@ const UserModal = ({
                     <p className="font-medium text-gray-800">
                       {formData.birthDate
                         ? new Date(formData.birthDate).toLocaleDateString(
-                            "vi-VN"
-                          )
+                          "vi-VN"
+                        )
                         : "-"}
                     </p>
                   </div>
@@ -425,12 +437,11 @@ const UserModal = ({
               {isEmployee && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Mã đại lý
+                    Đại lý
                   </label>
                   <div className="relative">
                     <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <input
-                      type="number"
+                    <select
                       value={formData.agencyId || ""}
                       onChange={(e) =>
                         handleChange(
@@ -438,9 +449,15 @@ const UserModal = ({
                           e.target.value ? parseInt(e.target.value) : null
                         )
                       }
-                      className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Nhập mã đại lý (nếu có)"
-                    />
+                      className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    >
+                      <option value="">Chọn đại lý (nếu có)</option>
+                      {agencies.map((agency) => (
+                        <option key={agency.agencyId} value={agency.agencyId}>
+                          {agency.agencyName}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               )}
@@ -471,11 +488,10 @@ const UserModal = ({
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-white rounded-xl transition-colors font-medium ${
-                    isEmployee
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-white rounded-xl transition-colors font-medium ${isEmployee
                       ? "bg-blue-500 hover:bg-blue-600"
                       : "bg-purple-500 hover:bg-purple-600"
-                  } disabled:opacity-50`}
+                    } disabled:opacity-50`}
                 >
                   {loading ? (
                     <Loader2 className="w-5 h-5 animate-spin" />

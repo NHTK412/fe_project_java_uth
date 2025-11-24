@@ -132,3 +132,52 @@ export const deleteAgency = async (agencyId) => {
     };
   }
 };
+
+export const fetchAgenciesActive = async () => {
+  try {
+    let allAgencies = [];
+    let page = 1;
+    let hasMore = true;
+
+    while (hasMore) {
+      const response = await fetch(`${API_BASE}/agency?page=${page}&size=100`, {
+        method: 'GET',
+        headers: getHeaders()
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success && result.data && Array.isArray(result.data)) {
+        const activeAgencies = result.data.filter(
+          agency => agency.status === "Đang Hoạt Động"
+        );
+        allAgencies = [...allAgencies, ...activeAgencies];
+
+        if (result.data.length < 100) {
+          hasMore = false;
+        } else {
+          page++;
+        }
+      } else {
+        hasMore = false;
+      }
+    }
+
+    return {
+      success: true,
+      message: 'Lấy danh sách đại lý thành công',
+      data: allAgencies
+    };
+  } catch (error) {
+    console.error('Error fetching active agencies:', error);
+    return {
+      success: false,
+      message: error.message || 'Không thể tải danh sách đại lý',
+      data: []
+    };
+  }
+};
