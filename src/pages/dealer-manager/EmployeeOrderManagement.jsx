@@ -1,4 +1,7 @@
-function EmployeeOrderManagement(){
-    //dung de quan ly don hang cua nhan vien hien tai dang dang nhap
-}
+import SharedInventoryManagement from "../shared/SharedInventoryManagement";
+
+const EmployeeOrderManagement = () => {
+    return <SharedInventoryManagement />;
+};
+
 export default EmployeeOrderManagement;

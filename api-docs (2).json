@@ -17,204 +17,6 @@
         }
     ],
     "paths": {
-        "/warehouse/import/{warehouseReceiptId}": {
-            "get": {
-                "tags": [
-                    "warehouse-controller"
-                ],
-                "operationId": "getImportById",
-                "parameters": [
-                    {
-                        "name": "warehouseReceiptId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseWarehouseImportReceiptResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "warehouse-controller"
-                ],
-                "operationId": "updateImport",
-                "parameters": [
-                    {
-                        "name": "warehouseReceiptId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/WarehouseImportReceiptRequestDTO"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseWarehouseImportReceiptResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "warehouse-controller"
-                ],
-                "operationId": "deleteImport",
-                "parameters": [
-                    {
-                        "name": "warehouseReceiptId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseWarehouseImportReceiptResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/warehouse/export/{warehouseReceiptId}": {
-            "get": {
-                "tags": [
-                    "warehouse-controller"
-                ],
-                "operationId": "getExportById",
-                "parameters": [
-                    {
-                        "name": "warehouseReceiptId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseWarehouseExportReceiptResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "warehouse-controller"
-                ],
-                "operationId": "updateExport",
-                "parameters": [
-                    {
-                        "name": "warehouseReceiptId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/WarehouseExportReceiptRequestDTO"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseWarehouseExportReceiptResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "warehouse-controller"
-                ],
-                "operationId": "deleteExport",
-                "parameters": [
-                    {
-                        "name": "warehouseReceiptId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseWarehouseExportReceiptResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/vehicle/{vehicleId}": {
             "get": {
                 "tags": [
@@ -809,105 +611,6 @@
                 }
             }
         },
-        "/payments/{id}": {
-            "get": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "getPaymentById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponsePaymentResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "updatePayment",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/PaymentUpdateSummaryDTO"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponsePaymentResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "deletePayment",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseVoid"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/import-request/{importRequestId}": {
             "get": {
                 "tags": [
@@ -990,6 +693,48 @@
                         "schema": {
                             "type": "integer",
                             "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseImportRequestResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "import-request-controller"
+                ],
+                "operationId": "changeImportRequestStatus",
+                "parameters": [
+                    {
+                        "name": "importRequestId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "REQUESTED",
+                                "APPROVED",
+                                "REJECTED"
+                            ]
                         }
                     }
                 ],
@@ -1198,6 +943,105 @@
                             "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ApiResponseVoid"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/category/{categoryId}": {
+            "get": {
+                "tags": [
+                    "category-controller"
+                ],
+                "operationId": "getCategoryById",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseCategoryResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "category-controller"
+                ],
+                "operationId": "updateCategory",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseCategoryResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "category-controller"
+                ],
+                "operationId": "deleteCategory",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseCategoryResponseDTO"
                                 }
                             }
                         }
@@ -1436,7 +1280,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseListWarehouseImportReceiptSummaryDTO"
+                                    "$ref": "#/components/schemas/ApiResponsePageWarehouseReceiptSummaryDTO"
                                 }
                             }
                         }
@@ -1452,7 +1296,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/WarehouseImportReceiptRequestDTO"
+                                "$ref": "#/components/schemas/WarehouseReceiptRequestDTO"
                             }
                         }
                     },
@@ -1464,7 +1308,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseWarehouseImportReceiptResponseDTO"
+                                    "$ref": "#/components/schemas/ApiResponseWarehouseReceiptResponseDTO"
                                 }
                             }
                         }
@@ -1505,7 +1349,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseListWarehouseExportReceiptSummaryDTO"
+                                    "$ref": "#/components/schemas/ApiResponsePageWarehouseReleaseNoteSummaryDTO"
                                 }
                             }
                         }
@@ -1521,7 +1365,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/WarehouseExportReceiptRequestDTO"
+                                "$ref": "#/components/schemas/WarehouseReleaseNoteRequestDTO"
                             }
                         }
                     },
@@ -1533,7 +1377,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseWarehouseExportReceiptResponseDTO"
+                                    "$ref": "#/components/schemas/ApiResponseWarehouseReleaseNoteResponseDTO"
                                 }
                             }
                         }
@@ -1573,7 +1417,7 @@
                         "content": {
                             "*/*": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseListVehicleSummaryDTO"
+                                    "$ref": "#/components/schemas/ApiResponsePageVehicleSummaryDTO"
                                 }
                             }
                         }
@@ -1747,6 +1591,36 @@
                             "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ApiResponseVehicleTypeDetailResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vehicle-deliveries": {
+            "post": {
+                "tags": [
+                    "vehicle-delivery-controller"
+                ],
+                "operationId": "createVehicleDelivery",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VehicleDeliveryRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseVehicleDeliveryResponseDTO"
                                 }
                             }
                         }
@@ -2139,116 +2013,6 @@
                 }
             }
         },
-        "/payments": {
-            "get": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "getAllPayments",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseListPaymentResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "createPayment",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/PaymentCreateSummaryDTO"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponsePaymentResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/payments/{id}/vnpay": {
-            "post": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "createVNPAYPayment",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseVNPAYResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/payments/{id}/confirm-cash": {
-            "post": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "confirmCashPayment",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponsePaymentResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/order": {
             "post": {
                 "tags": [
@@ -2265,90 +2029,6 @@
                     },
                     "required": true
                 },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseOrderResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/order/{orderId}/delivery": {
-            "post": {
-                "tags": [
-                    "order-controller"
-                ],
-                "operationId": "createDelivery",
-                "parameters": [
-                    {
-                        "name": "orderId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/VehicleDeliveryRequestDTO"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseOrderResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "order-controller"
-                ],
-                "operationId": "updateDelivery",
-                "parameters": [
-                    {
-                        "name": "orderId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    },
-                    {
-                        "name": "vehicleDeliveryStatusEnum",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "PREPARING",
-                                "DELIVERING",
-                                "DELIVERED",
-                                "RESCHEDULED"
-                            ]
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2843,6 +2523,77 @@
                 }
             }
         },
+        "/category": {
+            "get": {
+                "tags": [
+                    "category-controller"
+                ],
+                "operationId": "getAllCategories",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10,
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListCategoryResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "category-controller"
+                ],
+                "operationId": "createCategory",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseCategoryResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/auth/refresh-token": {
             "post": {
                 "tags": [
@@ -3041,6 +2792,249 @@
                 }
             }
         },
+        "/warehouse/import/{warehouseReceiptId}": {
+            "get": {
+                "tags": [
+                    "warehouse-controller"
+                ],
+                "operationId": "getImportById",
+                "parameters": [
+                    {
+                        "name": "warehouseReceiptId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseWarehouseReceiptResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "warehouse-controller"
+                ],
+                "operationId": "deleteImport",
+                "parameters": [
+                    {
+                        "name": "warehouseReceiptId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseWarehouseReceiptResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "warehouse-controller"
+                ],
+                "operationId": "updateWarehouseReceiptStatus",
+                "parameters": [
+                    {
+                        "name": "warehouseReceiptId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WarehouseReceiptStatusUpdateDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseWarehouseReceiptResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/warehouse/export/{warehouseReleaseNoteId}": {
+            "get": {
+                "tags": [
+                    "warehouse-controller"
+                ],
+                "operationId": "getExportById",
+                "parameters": [
+                    {
+                        "name": "warehouseReleaseNoteId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseWarehouseReleaseNoteResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "warehouse-controller"
+                ],
+                "operationId": "deleteExport",
+                "parameters": [
+                    {
+                        "name": "warehouseReleaseNoteId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseWarehouseReleaseNoteResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "warehouse-controller"
+                ],
+                "operationId": "updateWarehouseExportStatus",
+                "parameters": [
+                    {
+                        "name": "warehouseReleaseNoteId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WarehouseReleaseNoteStatusUpdateDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseWarehouseReleaseNoteResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vehicle-deliveries/{vehicleDeliveryId}/status": {
+            "patch": {
+                "tags": [
+                    "vehicle-delivery-controller"
+                ],
+                "operationId": "updateStatus",
+                "parameters": [
+                    {
+                        "name": "vehicleDeliveryId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "PREPARING",
+                                "DELIVERING",
+                                "DELIVERED",
+                                "RESCHEDULED"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseVehicleDeliveryResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/test-drive-appointments/{id}": {
             "patch": {
                 "tags": [
@@ -3125,98 +3119,15 @@
                 }
             }
         },
-        "/order/{orderId}": {
-            "get": {
-                "tags": [
-                    "order-controller"
-                ],
-                "operationId": "getOrderById",
-                "parameters": [
-                    {
-                        "name": "orderId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseOrderResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
+        "/payments/payment/{paymentId}": {
             "patch": {
                 "tags": [
-                    "order-controller"
-                ],
-                "operationId": "updateOrderById",
-                "parameters": [
-                    {
-                        "name": "orderId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    },
-                    {
-                        "name": "status",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "PENDING",
-                                "PENDING_DELIVERY",
-                                "DELIVERED",
-                                "PAID",
-                                "INSTALLMENT"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "contractNumber",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseOrderResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/order/{orderId}/process-payment": {
-            "patch": {
-                "tags": [
-                    "order-controller"
+                    "payment-controller"
                 ],
                 "operationId": "updatePaymentStatus",
                 "parameters": [
                     {
-                        "name": "orderId",
+                        "name": "paymentId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -3235,6 +3146,37 @@
                     },
                     "required": true
                 },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponsePaymentResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order/{orderId}/cancel": {
+            "patch": {
+                "tags": [
+                    "order-controller"
+                ],
+                "operationId": "cancelOrderById",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -3328,6 +3270,415 @@
                 }
             }
         },
+        "/sales-report/employee/{employeeId}/year": {
+            "get": {
+                "tags": [
+                    "sales-report-controller"
+                ],
+                "operationId": "getEmployeeSalesByEmployeeAndYear",
+                "parameters": [
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseEmployeeSalesDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales-report/employee/{employeeId}/month": {
+            "get": {
+                "tags": [
+                    "sales-report-controller"
+                ],
+                "operationId": "getEmployeeSalesByEmployeeAndMonth",
+                "parameters": [
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseEmployeeSalesDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales-report/employee/year": {
+            "get": {
+                "tags": [
+                    "sales-report-controller"
+                ],
+                "operationId": "getEmployeeSalesByYear",
+                "parameters": [
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListEmployeeSalesDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales-report/employee/month": {
+            "get": {
+                "tags": [
+                    "sales-report-controller"
+                ],
+                "operationId": "getEmployeeSalesByMonth",
+                "parameters": [
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListEmployeeSalesDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales-report/agency/{agencyId}/year": {
+            "get": {
+                "tags": [
+                    "sales-report-controller"
+                ],
+                "operationId": "getAgencySalesByAgencyAndYear",
+                "parameters": [
+                    {
+                        "name": "agencyId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListAgencySalesDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales-report/agency/{agencyId}/month": {
+            "get": {
+                "tags": [
+                    "sales-report-controller"
+                ],
+                "operationId": "getAgencySalesByAgencyAndMonth",
+                "parameters": [
+                    {
+                        "name": "agencyId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseAgencySalesDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales-report/agency/year": {
+            "get": {
+                "tags": [
+                    "sales-report-controller"
+                ],
+                "operationId": "getAgencySalesByYear",
+                "parameters": [
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListAgencySalesDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sales-report/agency/month": {
+            "get": {
+                "tags": [
+                    "sales-report-controller"
+                ],
+                "operationId": "getAgencySalesByMonth",
+                "parameters": [
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListAgencySalesDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reports/inventory/{agencyId}": {
+            "get": {
+                "tags": [
+                    "inventory-report-controller"
+                ],
+                "operationId": "getFullInventoryReport",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "agencyId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListInventorySummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reports/inventory/{agencyId}/vehicle-type-detail/{vehicleTypeDetailId}": {
+            "get": {
+                "tags": [
+                    "inventory-report-controller"
+                ],
+                "operationId": "getVehiclesByVehicleTypeDetailInInventory",
+                "parameters": [
+                    {
+                        "name": "agencyId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "vehicleTypeDetailId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListVehicleSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/quote/{quoteId}/down": {
             "get": {
                 "tags": [
@@ -3352,88 +3703,33 @@
                 }
             }
         },
-        "/payments/vnpay-callback": {
+        "/payments/customer/{customerPhone}": {
             "get": {
                 "tags": [
                     "payment-controller"
                 ],
-                "operationId": "handleVNPAYCallback",
+                "operationId": "getPaymentsByCustomerPhone",
                 "parameters": [
                     {
-                        "name": "vnp_TxnRef",
-                        "in": "query",
+                        "name": "customerPhone",
+                        "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string"
                         }
                     },
                     {
-                        "name": "vnp_ResponseCode",
+                        "name": "page",
                         "in": "query",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer",
+                            "format": "int32"
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponsePaymentResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/payments/status/{status}": {
-            "get": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "getPaymentsByStatus",
-                "parameters": [
+                    },
                     {
-                        "name": "status",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "PAID",
-                                "UNPAID"
-                            ]
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiResponseListPaymentResponseDTO"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/payments/orders/{orderId}": {
-            "get": {
-                "tags": [
-                    "payment-controller"
-                ],
-                "operationId": "getPaymentsByOrderId",
-                "parameters": [
-                    {
-                        "name": "orderId",
-                        "in": "path",
+                        "name": "size",
+                        "in": "query",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -3455,6 +3751,37 @@
                 }
             }
         },
+        "/order/{orderId}": {
+            "get": {
+                "tags": [
+                    "order-controller"
+                ],
+                "operationId": "getOrderById",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseOrderResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/order/employee": {
             "get": {
                 "tags": [
@@ -3462,6 +3789,55 @@
                 ],
                 "operationId": "getOrdersByEmployeeId",
                 "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListOrderSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order/customer": {
+            "get": {
+                "tags": [
+                    "order-controller"
+                ],
+                "operationId": "getOrderByCustomer",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
                     {
                         "name": "page",
                         "in": "query",
@@ -3518,6 +3894,14 @@
                         "schema": {
                             "type": "integer",
                             "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "customerPhone",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
@@ -3911,6 +4295,40 @@
                 }
             }
         },
+        "/category/status/{status}": {
+            "get": {
+                "tags": [
+                    "category-controller"
+                ],
+                "operationId": "getCategoriesByStatus",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "ACTIVE",
+                                "INACTIVE"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListCategoryResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/file-upload/{fileName}": {
             "delete": {
                 "tags": [
@@ -3940,43 +4358,69 @@
                     }
                 }
             }
+        },
+        "/category/{categoryId}/permanent": {
+            "delete": {
+                "tags": [
+                    "category-controller"
+                ],
+                "operationId": "permanentDeleteCategory",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseVoid"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
-            "WarehouseImportReceiptRequestDTO": {
+            "VehicleRequestDTO": {
                 "type": "object",
                 "properties": {
-                    "warehouseReceiptDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "reason": {
+                    "chassisNumber": {
                         "type": "string"
                     },
-                    "totalAmount": {
-                        "type": "number"
-                    },
-                    "note": {
+                    "machineNumber": {
                         "type": "string"
                     },
                     "status": {
+                        "type": "string",
+                        "enum": [
+                            "IN_STOCK",
+                            "SOLD",
+                            "IN_TRANSIT",
+                            "TEST_DRIVE"
+                        ]
+                    },
+                    "vehicleCondition": {
                         "type": "string"
                     },
-                    "employeeId": {
+                    "vehicleTypeDetailId": {
                         "type": "integer",
                         "format": "int32"
                     },
                     "agencyId": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "vehicleIds": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
                     }
                 }
             },
@@ -4015,7 +4459,7 @@
                     }
                 }
             },
-            "ApiResponseWarehouseImportReceiptResponseDTO": {
+            "ApiResponseVehicleResponseDTO": {
                 "type": "object",
                 "properties": {
                     "success": {
@@ -4025,66 +4469,7 @@
                         "type": "string"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/WarehouseImportReceiptResponseDTO"
-                    }
-                }
-            },
-            "EmployeeResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "employeeId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "username": {
-                        "type": "string"
-                    },
-                    "employeeName": {
-                        "type": "string"
-                    },
-                    "gender": {
-                        "type": "string",
-                        "enum": [
-                            "MALE",
-                            "FEMALE"
-                        ]
-                    },
-                    "birthDate": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "phoneNumber": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "address": {
-                        "type": "string"
-                    },
-                    "role": {
-                        "type": "string",
-                        "enum": [
-                            "ROLE_ADMIN",
-                            "ROLE_DEALER_STAFF",
-                            "ROLE_DEALER_MANAGER",
-                            "ROLE_EVM_STAFF"
-                        ]
-                    },
-                    "agencyId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "agencyName": {
-                        "type": "string"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date-time"
+                        "$ref": "#/components/schemas/VehicleResponseDTO"
                     }
                 }
             },
@@ -4116,9 +4501,8 @@
                     "vehicleTypeDetail": {
                         "$ref": "#/components/schemas/VehicleTypeDetailResponseDTO"
                     },
-                    "agencyId": {
-                        "type": "integer",
-                        "format": "int32"
+                    "agency": {
+                        "$ref": "#/components/schemas/AgencyResponseDTO"
                     }
                 }
             },
@@ -4150,175 +4534,6 @@
                     "vehicleTypeId": {
                         "type": "integer",
                         "format": "int32"
-                    }
-                }
-            },
-            "WarehouseImportReceiptResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "warehouseReceiptId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "warehouseReceiptDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "reason": {
-                        "type": "string"
-                    },
-                    "totalAmount": {
-                        "type": "number"
-                    },
-                    "note": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "employee": {
-                        "$ref": "#/components/schemas/EmployeeResponseDTO"
-                    },
-                    "agency": {
-                        "$ref": "#/components/schemas/AgencyResponseDTO"
-                    },
-                    "vehicles": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/VehicleResponseDTO"
-                        }
-                    }
-                }
-            },
-            "WarehouseExportReceiptRequestDTO": {
-                "type": "object",
-                "properties": {
-                    "warehouseReceiptDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "reason": {
-                        "type": "string"
-                    },
-                    "totalAmount": {
-                        "type": "number"
-                    },
-                    "note": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "employeeId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "agencyId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "vehicleIds": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                }
-            },
-            "ApiResponseWarehouseExportReceiptResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "success": {
-                        "type": "boolean"
-                    },
-                    "message": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "$ref": "#/components/schemas/WarehouseExportReceiptResponseDTO"
-                    }
-                }
-            },
-            "WarehouseExportReceiptResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "warehouseReceiptId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "warehouseReceiptDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "reason": {
-                        "type": "string"
-                    },
-                    "totalAmount": {
-                        "type": "number"
-                    },
-                    "note": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "employee": {
-                        "$ref": "#/components/schemas/EmployeeResponseDTO"
-                    },
-                    "agency": {
-                        "$ref": "#/components/schemas/AgencyResponseDTO"
-                    },
-                    "vehicles": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/VehicleResponseDTO"
-                        }
-                    }
-                }
-            },
-            "VehicleRequestDTO": {
-                "type": "object",
-                "properties": {
-                    "chassisNumber": {
-                        "type": "string"
-                    },
-                    "machineNumber": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string",
-                        "enum": [
-                            "IN_STOCK",
-                            "SOLD",
-                            "IN_TRANSIT",
-                            "TEST_DRIVE"
-                        ]
-                    },
-                    "vehicleCondition": {
-                        "type": "string"
-                    },
-                    "vehicleTypeDetailId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "agencyId": {
-                        "type": "integer",
-                        "format": "int32"
-                    }
-                }
-            },
-            "ApiResponseVehicleResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "success": {
-                        "type": "boolean"
-                    },
-                    "message": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "$ref": "#/components/schemas/VehicleResponseDTO"
                     }
                 }
             },
@@ -4917,103 +5132,6 @@
                     }
                 }
             },
-            "PaymentUpdateSummaryDTO": {
-                "type": "object",
-                "properties": {
-                    "amount": {
-                        "type": "number"
-                    },
-                    "dueDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "paymentDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "paymentStatus": {
-                        "type": "string",
-                        "enum": [
-                            "PAID",
-                            "UNPAID"
-                        ]
-                    },
-                    "penaltyAmount": {
-                        "type": "number"
-                    },
-                    "status": {
-                        "type": "string",
-                        "enum": [
-                            "PAID",
-                            "UNPAID"
-                        ]
-                    },
-                    "paymentForm": {
-                        "type": "string"
-                    },
-                    "vnpayCode": {
-                        "type": "string"
-                    }
-                }
-            },
-            "ApiResponsePaymentResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "success": {
-                        "type": "boolean"
-                    },
-                    "message": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "$ref": "#/components/schemas/PaymentResponseDTO"
-                    }
-                }
-            },
-            "PaymentResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "paymentId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "paymentMethod": {
-                        "type": "string",
-                        "enum": [
-                            "CASH",
-                            "VNPAY"
-                        ]
-                    },
-                    "amount": {
-                        "type": "number"
-                    },
-                    "numberCycle": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "dueDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "paymentDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "penaltyAmount": {
-                        "type": "number"
-                    },
-                    "status": {
-                        "type": "string",
-                        "enum": [
-                            "PAID",
-                            "UNPAID"
-                        ]
-                    },
-                    "vnpayCode": {
-                        "type": "string"
-                    }
-                }
-            },
             "ImportRequestDetailRequestDTO": {
                 "type": "object",
                 "properties": {
@@ -5185,16 +5303,6 @@
                     "agencyId": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "position": {
-                        "type": "string",
-                        "enum": [
-                            "ROLE_ADMIN",
-                            "ROLE_DEALER_STAFF",
-                            "ROLE_DEALER_MANAGER",
-                            "ROLE_EVM_STAFF"
-                        ],
-                        "writeOnly": true
                     }
                 }
             },
@@ -5259,6 +5367,60 @@
                     "email",
                     "phoneNumber"
                 ]
+            },
+            "CategoryRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "categoryName": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "ACTIVE",
+                            "INACTIVE"
+                        ]
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ApiResponseCategoryResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/CategoryResponseDTO"
+                    }
+                }
+            },
+            "CategoryResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "categoryId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "categoryName": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "ACTIVE",
+                            "INACTIVE"
+                        ]
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
             },
             "AgencyWholesalePriceRequestDTO": {
                 "type": "object",
@@ -5358,6 +5520,13 @@
                     "email": {
                         "type": "string"
                     },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "DEALER",
+                            "MANUFACTURER"
+                        ]
+                    },
                     "status": {
                         "type": "string",
                         "enum": [
@@ -5378,6 +5547,355 @@
                     },
                     "data": {
                         "$ref": "#/components/schemas/AgencyResponseDTO"
+                    }
+                }
+            },
+            "WarehouseReceiptRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "warehouseReceiptDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                    "totalAmount": {
+                        "type": "number"
+                    },
+                    "note": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "PROCESSING",
+                            "RECEIVED",
+                            "CANCELLED",
+                            "PENDING_APPROVAL"
+                        ]
+                    },
+                    "employeeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "agencyId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "vehicleIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                }
+            },
+            "ApiResponseWarehouseReceiptResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/WarehouseReceiptResponseDTO"
+                    }
+                }
+            },
+            "EmployeeResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "employeeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "employeeName": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": [
+                            "MALE",
+                            "FEMALE"
+                        ]
+                    },
+                    "birthDate": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "ROLE_ADMIN",
+                            "ROLE_DEALER_STAFF",
+                            "ROLE_DEALER_MANAGER",
+                            "ROLE_EVM_STAFF"
+                        ]
+                    },
+                    "agencyId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "agencyName": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "WarehouseReceiptResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "warehouseReceiptId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "warehouseReceiptDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                    "totalAmount": {
+                        "type": "number"
+                    },
+                    "note": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "PROCESSING",
+                            "RECEIVED",
+                            "CANCELLED",
+                            "PENDING_APPROVAL"
+                        ]
+                    },
+                    "employee": {
+                        "$ref": "#/components/schemas/EmployeeResponseDTO"
+                    },
+                    "agency": {
+                        "$ref": "#/components/schemas/AgencyResponseDTO"
+                    },
+                    "vehicles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VehicleResponseDTO"
+                        }
+                    }
+                }
+            },
+            "WarehouseReleaseNoteRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "releaseDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                    "totalAmount": {
+                        "type": "number"
+                    },
+                    "note": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "PENDING_APPROVAL",
+                            "APPROVED",
+                            "RELEASED",
+                            "DISPATCHED",
+                            "CANCELLED"
+                        ]
+                    },
+                    "employeeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "agencyId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "vehicleIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "uniqueItems": true
+                    }
+                }
+            },
+            "ApiResponseWarehouseReleaseNoteResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/WarehouseReleaseNoteResponseDTO"
+                    }
+                }
+            },
+            "WarehouseReleaseNoteResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "warehouseReleaseNoteId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "warehouseReleaseNoteDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                    "totalAmount": {
+                        "type": "number"
+                    },
+                    "note": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "PENDING_APPROVAL",
+                            "APPROVED",
+                            "RELEASED",
+                            "DISPATCHED",
+                            "CANCELLED"
+                        ]
+                    },
+                    "employee": {
+                        "$ref": "#/components/schemas/EmployeeResponseDTO"
+                    },
+                    "agency": {
+                        "$ref": "#/components/schemas/AgencyResponseDTO"
+                    },
+                    "vehicles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VehicleResponseDTO"
+                        }
+                    }
+                }
+            },
+            "VehicleDeliveryRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "employeeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "orderId": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ApiResponseVehicleDeliveryResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/VehicleDeliveryResponseDTO"
+                    }
+                }
+            },
+            "VehicleDeliveryResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "vehicleDeliveryId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "expectedDeliveryDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deliveryDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PREPARING",
+                            "DELIVERING",
+                            "DELIVERED",
+                            "RESCHEDULED"
+                        ]
+                    },
+                    "employeeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "employeeName": {
+                        "type": "string"
+                    },
+                    "employeePhoneNumber": {
+                        "type": "string"
+                    },
+                    "orderId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
                     }
                 }
             },
@@ -5558,72 +6076,6 @@
                     }
                 }
             },
-            "PaymentCreateSummaryDTO": {
-                "type": "object",
-                "properties": {
-                    "orderId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "amount": {
-                        "type": "number",
-                        "minimum": 0.0
-                    },
-                    "dueDate": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "paymentMethod": {
-                        "type": "string",
-                        "enum": [
-                            "CASH",
-                            "VNPAY"
-                        ]
-                    },
-                    "paymentForm": {
-                        "type": "string"
-                    },
-                    "numberCycle": {
-                        "type": "integer",
-                        "format": "int32"
-                    }
-                },
-                "required": [
-                    "amount",
-                    "dueDate",
-                    "orderId",
-                    "paymentForm",
-                    "paymentMethod"
-                ]
-            },
-            "ApiResponseVNPAYResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "success": {
-                        "type": "boolean"
-                    },
-                    "message": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "$ref": "#/components/schemas/VNPAYResponseDTO"
-                    }
-                }
-            },
-            "VNPAYResponseDTO": {
-                "type": "object",
-                "properties": {
-                    "paymentUrl": {
-                        "type": "string"
-                    },
-                    "vnpayCode": {
-                        "type": "string"
-                    },
-                    "message": {
-                        "type": "string"
-                    }
-                }
-            },
             "OrderDetailRequestDTO": {
                 "type": "object",
                 "properties": {
@@ -5634,9 +6086,6 @@
                     "quantity": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "price": {
-                        "type": "number"
                     }
                 }
             },
@@ -5819,65 +6268,46 @@
                     }
                 }
             },
-            "VehicleDeliveryResponseDTO": {
+            "PaymentResponseDTO": {
                 "type": "object",
                 "properties": {
-                    "vehicleDeliveryId": {
+                    "paymentId": {
                         "type": "integer",
                         "format": "int32"
                     },
-                    "expectedDeliveryDate": {
+                    "paymentMethod": {
+                        "type": "string",
+                        "enum": [
+                            "CASH",
+                            "VNPAY"
+                        ]
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "numberCycle": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "dueDate": {
                         "type": "string",
                         "format": "date-time"
                     },
-                    "deliveryDate": {
+                    "paymentDate": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "penaltyAmount": {
+                        "type": "number"
                     },
                     "status": {
                         "type": "string",
                         "enum": [
-                            "PREPARING",
-                            "DELIVERING",
-                            "DELIVERED",
-                            "RESCHEDULED"
+                            "PAID",
+                            "UNPAID"
                         ]
                     },
-                    "employeeId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "employeeName": {
-                        "type": "string"
-                    },
-                    "employeePhoneNumber": {
-                        "type": "string"
-                    },
-                    "address": {
-                        "type": "string"
-                    },
-                    "phoneNumber": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    }
-                }
-            },
-            "VehicleDeliveryRequestDTO": {
-                "type": "object",
-                "properties": {
-                    "employeeId": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "address": {
-                        "type": "string"
-                    },
-                    "phoneNumber": {
-                        "type": "string"
-                    },
-                    "name": {
+                    "vnpayCode": {
                         "type": "string"
                     }
                 }
@@ -6119,6 +6549,37 @@
                     }
                 }
             },
+            "WarehouseReceiptStatusUpdateDTO": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "PROCESSING",
+                            "RECEIVED",
+                            "CANCELLED",
+                            "PENDING_APPROVAL"
+                        ]
+                    }
+                }
+            },
+            "WarehouseReleaseNoteStatusUpdateDTO": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "PENDING_APPROVAL",
+                            "APPROVED",
+                            "RELEASED",
+                            "DISPATCHED",
+                            "CANCELLED"
+                        ]
+                    }
+                }
+            },
             "ApiResponseTestDriveAppointmentSummaryDTO": {
                 "type": "object",
                 "properties": {
@@ -6186,7 +6647,7 @@
                     }
                 }
             },
-            "ApiResponseListWarehouseImportReceiptSummaryDTO": {
+            "ApiResponsePaymentResponseDTO": {
                 "type": "object",
                 "properties": {
                     "success": {
@@ -6196,14 +6657,111 @@
                         "type": "string"
                     },
                     "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/WarehouseImportReceiptSummaryDTO"
-                        }
+                        "$ref": "#/components/schemas/PaymentResponseDTO"
                     }
                 }
             },
-            "WarehouseImportReceiptSummaryDTO": {
+            "ApiResponsePageWarehouseReceiptSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PageWarehouseReceiptSummaryDTO"
+                    }
+                }
+            },
+            "PageWarehouseReceiptSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WarehouseReceiptSummaryDTO"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PageableObject": {
+                "type": "object",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "paged": {
+                        "type": "boolean"
+                    },
+                    "unpaged": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SortObject": {
+                "type": "object",
+                "properties": {
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "sorted": {
+                        "type": "boolean"
+                    },
+                    "unsorted": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "WarehouseReceiptSummaryDTO": {
                 "type": "object",
                 "properties": {
                     "warehouseReceiptId": {
@@ -6224,11 +6782,18 @@
                         "type": "string"
                     },
                     "status": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "PROCESSING",
+                            "RECEIVED",
+                            "CANCELLED",
+                            "PENDING_APPROVAL"
+                        ]
                     }
                 }
             },
-            "ApiResponseListWarehouseExportReceiptSummaryDTO": {
+            "ApiResponsePageWarehouseReleaseNoteSummaryDTO": {
                 "type": "object",
                 "properties": {
                     "success": {
@@ -6238,21 +6803,64 @@
                         "type": "string"
                     },
                     "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/WarehouseExportReceiptSummaryDTO"
-                        }
+                        "$ref": "#/components/schemas/PageWarehouseReleaseNoteSummaryDTO"
                     }
                 }
             },
-            "WarehouseExportReceiptSummaryDTO": {
+            "PageWarehouseReleaseNoteSummaryDTO": {
                 "type": "object",
                 "properties": {
-                    "warehouseReceiptId": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
                         "type": "integer",
                         "format": "int32"
                     },
-                    "warehouseReceiptDate": {
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WarehouseReleaseNoteSummaryDTO"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "WarehouseReleaseNoteSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "warehouseReleaseNoteId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "warehouseReleaseNoteDate": {
                         "type": "string",
                         "format": "date-time"
                     },
@@ -6266,11 +6874,19 @@
                         "type": "string"
                     },
                     "status": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "PENDING_APPROVAL",
+                            "APPROVED",
+                            "RELEASED",
+                            "DISPATCHED",
+                            "CANCELLED"
+                        ]
                     }
                 }
             },
-            "ApiResponseListVehicleSummaryDTO": {
+            "ApiResponsePageVehicleSummaryDTO": {
                 "type": "object",
                 "properties": {
                     "success": {
@@ -6280,10 +6896,53 @@
                         "type": "string"
                     },
                     "data": {
+                        "$ref": "#/components/schemas/PageVehicleSummaryDTO"
+                    }
+                }
+            },
+            "PageVehicleSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/VehicleSummaryDTO"
                         }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
                     }
                 }
             },
@@ -6307,6 +6966,10 @@
                     },
                     "vehicleCondition": {
                         "type": "string"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 }
             },
@@ -6327,19 +6990,13 @@
             "PageVehicleTypeSummaryDTO": {
                 "type": "object",
                 "properties": {
-                    "totalPages": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "totalElements": {
                         "type": "integer",
                         "format": "int64"
                     },
-                    "first": {
-                        "type": "boolean"
-                    },
-                    "last": {
-                        "type": "boolean"
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "size": {
                         "type": "integer",
@@ -6365,47 +7022,13 @@
                     "pageable": {
                         "$ref": "#/components/schemas/PageableObject"
                     },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
                     "empty": {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "PageableObject": {
-                "type": "object",
-                "properties": {
-                    "offset": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "sort": {
-                        "$ref": "#/components/schemas/SortObject"
-                    },
-                    "unpaged": {
-                        "type": "boolean"
-                    },
-                    "paged": {
-                        "type": "boolean"
-                    },
-                    "pageNumber": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "pageSize": {
-                        "type": "integer",
-                        "format": "int32"
-                    }
-                }
-            },
-            "SortObject": {
-                "type": "object",
-                "properties": {
-                    "empty": {
-                        "type": "boolean"
-                    },
-                    "unsorted": {
-                        "type": "boolean"
-                    },
-                    "sorted": {
                         "type": "boolean"
                     }
                 }
@@ -6439,19 +7062,13 @@
             "PageVehicleTypeDetailSummaryDTO": {
                 "type": "object",
                 "properties": {
-                    "totalPages": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "totalElements": {
                         "type": "integer",
                         "format": "int64"
                     },
-                    "first": {
-                        "type": "boolean"
-                    },
-                    "last": {
-                        "type": "boolean"
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "size": {
                         "type": "integer",
@@ -6476,6 +7093,12 @@
                     },
                     "pageable": {
                         "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
                     },
                     "empty": {
                         "type": "boolean"
@@ -6588,6 +7211,195 @@
                     "manufactureYear": {
                         "type": "integer",
                         "format": "int32"
+                    }
+                }
+            },
+            "ApiResponseEmployeeSalesDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/EmployeeSalesDTO"
+                    }
+                }
+            },
+            "EmployeeSalesDTO": {
+                "type": "object",
+                "properties": {
+                    "employeeId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "employeeName": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "totalOrders": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalSales": {
+                        "type": "number"
+                    },
+                    "year": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "month": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ApiResponseListEmployeeSalesDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EmployeeSalesDTO"
+                        }
+                    }
+                }
+            },
+            "AgencySalesDTO": {
+                "type": "object",
+                "properties": {
+                    "agencyId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "agencyName": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "salesAmount": {
+                        "type": "number"
+                    },
+                    "year": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "month": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ApiResponseListAgencySalesDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AgencySalesDTO"
+                        }
+                    }
+                }
+            },
+            "ApiResponseAgencySalesDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/AgencySalesDTO"
+                    }
+                }
+            },
+            "ApiResponseListInventorySummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/InventorySummaryDTO"
+                        }
+                    }
+                }
+            },
+            "InventorySummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "vehicleTypeDetailId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "vehicleTypeName": {
+                        "type": "string"
+                    },
+                    "vehicleTypeDetailName": {
+                        "type": "string"
+                    },
+                    "totalQuantity": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "version": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "features": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ApiResponseListVehicleSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VehicleSummaryDTO"
+                        }
                     }
                 }
             },
@@ -6821,10 +7633,9 @@
                         "type": "string",
                         "enum": [
                             "PENDING",
-                            "PENDING_DELIVERY",
-                            "DELIVERED",
                             "PAID",
-                            "INSTALLMENT"
+                            "INSTALLMENT",
+                            "CANCEL"
                         ]
                     },
                     "customerName": {
@@ -6928,19 +7739,13 @@
             "PageFeedBackSummaryDTO": {
                 "type": "object",
                 "properties": {
-                    "totalPages": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "totalElements": {
                         "type": "integer",
                         "format": "int64"
                     },
-                    "first": {
-                        "type": "boolean"
-                    },
-                    "last": {
-                        "type": "boolean"
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "size": {
                         "type": "integer",
@@ -6965,6 +7770,12 @@
                     },
                     "pageable": {
                         "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
                     },
                     "empty": {
                         "type": "boolean"
@@ -7003,19 +7814,13 @@
             "PageEmployeeResponseDTO": {
                 "type": "object",
                 "properties": {
-                    "totalPages": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "totalElements": {
                         "type": "integer",
                         "format": "int64"
                     },
-                    "first": {
-                        "type": "boolean"
-                    },
-                    "last": {
-                        "type": "boolean"
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "size": {
                         "type": "integer",
@@ -7040,6 +7845,12 @@
                     },
                     "pageable": {
                         "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
                     },
                     "empty": {
                         "type": "boolean"
@@ -7126,19 +7937,13 @@
             "PageCustomerResponseDTO": {
                 "type": "object",
                 "properties": {
-                    "totalPages": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "totalElements": {
                         "type": "integer",
                         "format": "int64"
                     },
-                    "first": {
-                        "type": "boolean"
-                    },
-                    "last": {
-                        "type": "boolean"
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "size": {
                         "type": "integer",
@@ -7164,6 +7969,12 @@
                     "pageable": {
                         "$ref": "#/components/schemas/PageableObject"
                     },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
                     "empty": {
                         "type": "boolean"
                     }
@@ -7180,6 +7991,23 @@
                     },
                     "data": {
                         "$ref": "#/components/schemas/CustomerResponseDTO"
+                    }
+                }
+            },
+            "ApiResponseListCategoryResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CategoryResponseDTO"
+                        }
                     }
                 }
             },

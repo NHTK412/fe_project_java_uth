@@ -12,6 +12,8 @@ import {
   ChevronRight,
   MessageSquare,
   Truck,
+  Percent,
+  Warehouse,
 } from "lucide-react";
 import LOGO from "../../assets/logo.png";
 
@@ -58,40 +60,58 @@ const Sidebar = () => {
         path: "/admin/vehicles",
       },
       {
-        id:"order-of-agency",
-        label:"Quản lý đơn nhập xe",
-        icon: Car,
-        path: "admin/order-of-agency",
+        id: "order-of-agency",
+        label: "Đơn đặt hàng từ đại lý",
+        icon: ShoppingCart,
+        path: "/admin/order-of-agency",
       },
       {
-        id:"management-inventory",
-        label:"Quản lý xe tồn kho",
+        id: "agency-order",
+        label: "Tạo đơn hàng cho đại lý",
+        icon: ShoppingCart,
+        path: "/admin/agency-order",
+      },
+      {
+        id: "policy-management",
+        label: "Quản lý chính sách chiết khấu",
+        icon: Percent,
+        path: "/admin/policy-management",
+      },
+      {
+        id: "management-inventory",
+        label: "Quản lý tồn kho",
         icon: Car,
-        path:"admin/management-inventory"
+        path: "/admin/management-inventory"
+      },
+      {
+        id: "total-inventory",
+        label: "Quản lý tồn kho tổng",
+        icon: Warehouse,
+        path: "/admin/total-inventory"
       },
       {
         id: "agency-management",
         label: "Quản lý đại lý",
         icon: Users,
-        path:"/admin/agencies",
+        path: "/admin/agencies",
       },
       {
-        id:"promotion",
-        label:"Quản lý khuyến mãi",
+        id: "promotion",
+        label: "Quản lý khuyến mãi",
         icon: Car,
-        path:"/admin/promotion",
+        path: "/admin/promotion",
       },
       {
-        id:"policy",
-        label:"Quản lý chiết khấu",
-        icon: Car,
-        path:"/admin/policy",
+        id: "policy-management",
+        label: "Quản lý chính sách chiết khấu",
+        icon: Percent,
+        path: "/admin/policy-management",
       },
       {
-        id:"wholesale",
-        label:"Quản lý giá sỉ",
+        id: "wholesale",
+        label: "Quản lý giá sỉ",
         icon: ShoppingCart,
-        path:"/admin/wholesale",
+        path: "/admin/wholesale",
       },
     ],
     []

@@ -4,8 +4,7 @@ import { Eye, Edit, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import axios from "axios";
 import { showError } from "../../shared/toast";
 
-const VehicleTypeDetailTable = ({ onView, onEdit, onDelete }) => {
-  const [typeId, setTypeId] = useState(1);
+const VehicleTypeDetailTable = ({ vehicleTypeId, onView, onEdit, onDelete }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
@@ -18,30 +17,28 @@ const VehicleTypeDetailTable = ({ onView, onEdit, onDelete }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null); // ảnh popup
+  const [previewImage, setPreviewImage] = useState(null);
 
-  const fetchData = async (page = 0, size = 10, id = typeId) => {
-    if (!id || id <= 0) {
-      showError("Type ID không hợp lệ");
-      return;
-    }
-
+  const fetchData = async (page = 0, size = 10) => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(
-        `http://localhost:8080/api/vehicle/type/detail?page=${page}+1&size=${size}&vehicleTypeId=${id}`,
-        { headers: { Authorization: `Bearer ${token}`, Accept: "*/*" } }
-      );
+      const url = vehicleTypeId
+        ? `http://localhost:8080/api/vehicle/type/detail?page=${page + 1}&size=${size}&vehicleTypeId=${vehicleTypeId}`
+        : `http://localhost:8080/api/vehicle/type/detail?page=${page + 1}&size=${size}`;
 
-      if (res.data.success) {
+      const res = await axios.get(url, {
+        headers: { Authorization: `Bearer ${token}`, Accept: "*/*" },
+      });
+
+      if (res.data.success && res.data.data) {
         const respData = res.data.data;
         setData(respData.content || []);
         setPagination({
-          page: respData.pageable.pageNumber,
-          size: respData.pageable.pageSize,
-          totalPages: respData.totalPages,
-          totalElements: respData.totalElements,
+          page: respData.pageable?.pageNumber || 0,
+          size: respData.pageable?.pageSize || size,
+          totalPages: respData.totalPages || 0,
+          totalElements: respData.totalElements || 0,
         });
         setSelectedRows([]);
       } else {
@@ -55,8 +52,8 @@ const VehicleTypeDetailTable = ({ onView, onEdit, onDelete }) => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(0, 10);
+  }, [vehicleTypeId]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -79,9 +76,9 @@ const VehicleTypeDetailTable = ({ onView, onEdit, onDelete }) => {
     }
     setDeleting(true);
     try {
-      if (onDelete) await onDelete(deleteTarget); // FE gọi API
+      if (onDelete) await onDelete(deleteTarget);
       setDeleteTarget(null);
-      fetchData(pagination.page, pagination.size, typeId); // refresh
+      fetchData(pagination.page, pagination.size);
     } finally {
       setDeleting(false);
     }
@@ -89,10 +86,8 @@ const VehicleTypeDetailTable = ({ onView, onEdit, onDelete }) => {
 
   const handlePageChange = (page) => {
     if (page < 0 || page >= pagination.totalPages) return;
-    fetchData(page, pagination.size, typeId);
+    fetchData(page, pagination.size);
   };
-
-  const handleSearch = () => fetchData(0, pagination.size, typeId);
 
   if (loading) {
     return (
@@ -105,26 +100,6 @@ const VehicleTypeDetailTable = ({ onView, onEdit, onDelete }) => {
 
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden relative">
-      {/* Input typeId */}
-      <div className="flex items-center gap-2 p-4">
-        <input
-          type="number"
-          min={1}
-          value={typeId}
-          onChange={(e) => setTypeId(Number(e.target.value))}
-          className="border px-2 py-1 rounded w-24"
-        />
-        <button
-          onClick={handleSearch}
-          className="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Tìm
-        </button>
-      </div>
-      {/* Mô tả nhỏ dưới ô input */}
-      <p className="px-4 -mt-2 mb-2 text-sm text-gray-500">
-        Nhập <strong>ID loại xe</strong> để tìm danh sách chi tiết loại xe.
-      </p>
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full">

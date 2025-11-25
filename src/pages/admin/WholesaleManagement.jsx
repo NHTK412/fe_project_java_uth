@@ -35,6 +35,7 @@ import {
 } from "../../services/api/agencyWholesalePriceApi";
 import { fetchAgencies } from "../../services/api/agencyApi";
 import { showSuccess, showError } from "../../components/shared/toast";
+import VehicleSelectorModal from "../../components/shared/VehicleSelectorModal";
 
 function WholesaleManagement() {
   const [wholesales, setWholesales] = useState([]);
@@ -46,6 +47,8 @@ function WholesaleManagement() {
   const [selectedWholesale, setSelectedWholesale] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [showVehicleSelector, setShowVehicleSelector] = useState(false);
+  const [selectedVehicleInfo, setSelectedVehicleInfo] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -58,6 +61,9 @@ function WholesaleManagement() {
     status: "NOT_ACTIVE",
     agencyId: "",
     vehicleTypeDetailId: "",
+    vehicleTypeName: "",
+    version: "",
+    color: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -109,6 +115,9 @@ function WholesaleManagement() {
           status: data.status || "NOT_ACTIVE",
           agencyId: data.agency?.agencyId || "",
           vehicleTypeDetailId: data.vehicleTypeDetail?.vehicleTypeDetailId || "",
+          vehicleTypeName: data.vehicleTypeDetail?.vehicleType?.vehicleTypeName || "",
+          version: data.vehicleTypeDetail?.version || "",
+          color: data.vehicleTypeDetail?.color || "",
         });
         setShowModal(true);
       } else {
@@ -136,13 +145,13 @@ function WholesaleManagement() {
     if (!formData.vehicleTypeDetailId) {
       newErrors.vehicleTypeDetailId = "Vui lòng nhập ID chi tiết xe";
     }
-    
+
     if (formData.startDate && formData.endDate) {
       if (new Date(formData.startDate) >= new Date(formData.endDate)) {
         newErrors.endDate = "Ngày kết thúc phải sau ngày bắt đầu";
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -232,6 +241,18 @@ function WholesaleManagement() {
     }
   };
 
+  const handleVehicleSelect = (vehicleInfo) => {
+    setSelectedVehicleInfo(vehicleInfo);
+    setFormData({
+      ...formData,
+      vehicleTypeDetailId: vehicleInfo.vehicleTypeDetailId,
+      vehicleTypeName: vehicleInfo.vehicleTypeName,
+      version: vehicleInfo.version,
+      color: vehicleInfo.color,
+    });
+    setShowVehicleSelector(false);
+  };
+
   const openCreateModal = () => {
     setModalMode("create");
     resetForm();
@@ -262,9 +283,13 @@ function WholesaleManagement() {
       status: "NOT_ACTIVE",
       agencyId: "",
       vehicleTypeDetailId: "",
+      vehicleTypeName: "",
+      version: "",
+      color: "",
     });
     setErrors({});
     setSelectedWholesale(null);
+    setSelectedVehicleInfo(null);
   };
 
   const filteredData = wholesales.filter((w) => {
@@ -291,18 +316,18 @@ function WholesaleManagement() {
 
   const getStatusBadge = (status) => {
     const statusMap = {
-      NOT_ACTIVE: { 
-        label: "Chưa Hoạt Động", 
+      NOT_ACTIVE: {
+        label: "Chưa Hoạt Động",
         className: "bg-gray-100 text-gray-700 border border-gray-300",
         icon: AlertCircle
       },
-      ACTIVE: { 
-        label: "Đang Hoạt Động", 
+      ACTIVE: {
+        label: "Đang Hoạt Động",
         className: "bg-green-100 text-green-700 border border-green-300",
         icon: CheckCircle2
       },
-      INACTIVE: { 
-        label: "Dừng Hoạt Động", 
+      INACTIVE: {
+        label: "Dừng Hoạt Động",
         className: "bg-red-100 text-red-700 border border-red-300",
         icon: XCircle
       },
@@ -323,7 +348,7 @@ function WholesaleManagement() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-3">
-              <DollarSign className="w-8 h-8 text-blue-600" /> 
+              <DollarSign className="w-8 h-8 text-blue-600" />
               Quản lý Giá Sỉ
             </h1>
             <p className="text-gray-600 mt-2 flex items-center gap-2">
@@ -621,9 +646,8 @@ function WholesaleManagement() {
                     setFormData({ ...formData, agencyId: e.target.value })
                   }
                   disabled={modalMode === "view"}
-                  className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${
-                    errors.agencyId ? "border-red-500" : "border-gray-200"
-                  }`}
+                  className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${errors.agencyId ? "border-red-500" : "border-gray-200"
+                    }`}
                 >
                   <option value="">-- Chọn đại lý --</option>
                   {agencies.map((agency) => (
@@ -644,28 +668,38 @@ function WholesaleManagement() {
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
                   <Car className="w-4 h-4 text-blue-500" />
-                  ID Chi tiết xe <span className="text-red-500">*</span>
+                  Chi tiết xe <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="number"
-                  value={formData.vehicleTypeDetailId}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      vehicleTypeDetailId: e.target.value,
-                    })
-                  }
-                  disabled={modalMode === "view"}
-                  className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${
-                    errors.vehicleTypeDetailId ? "border-red-500" : "border-gray-200"
-                  }`}
-                  placeholder="Nhập ID chi tiết xe"
-                />
-                {errors.vehicleTypeDetailId && (
-                  <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                    <AlertCircle className="w-4 h-4" />
-                    {errors.vehicleTypeDetailId}
-                  </p>
+                {modalMode === "view" ? (
+                  <div className="w-full border-2 rounded-xl px-4 py-3 bg-gray-100 text-gray-600">
+                    {formData.vehicleTypeName && formData.version && formData.color
+                      ? `${formData.vehicleTypeName} - ${formData.version} - ${formData.color}`
+                      : formData.vehicleTypeDetailId
+                        ? `ID: ${formData.vehicleTypeDetailId}`
+                        : "Chưa chọn"}
+                  </div>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => setShowVehicleSelector(true)}
+                      className={`w-full border-2 rounded-xl px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${errors.vehicleTypeDetailId ? "border-red-500" : "border-gray-200"
+                        } ${formData.vehicleTypeDetailId
+                          ? "bg-blue-50 text-blue-900 font-medium"
+                          : "bg-white text-gray-500"
+                        }`}
+                    >
+                      {formData.vehicleTypeName && formData.version && formData.color
+                        ? `${formData.vehicleTypeName} - ${formData.version} - ${formData.color}`
+                        : "Nhấn để chọn xe"}
+                    </button>
+                    {errors.vehicleTypeDetailId && (
+                      <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-4 h-4" />
+                        {errors.vehicleTypeDetailId}
+                      </p>
+                    )}
+                  </>
                 )}
               </div>
 
@@ -683,9 +717,8 @@ function WholesaleManagement() {
                       setFormData({ ...formData, wholesalePrice: e.target.value })
                     }
                     disabled={modalMode === "view"}
-                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${
-                      errors.wholesalePrice ? "border-red-500" : "border-gray-200"
-                    }`}
+                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${errors.wholesalePrice ? "border-red-500" : "border-gray-200"
+                      }`}
                     placeholder="Nhập giá sỉ"
                     min="0"
                   />
@@ -710,9 +743,8 @@ function WholesaleManagement() {
                       setFormData({ ...formData, minimumQuantity: e.target.value })
                     }
                     disabled={modalMode === "view"}
-                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${
-                      errors.minimumQuantity ? "border-red-500" : "border-gray-200"
-                    }`}
+                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${errors.minimumQuantity ? "border-red-500" : "border-gray-200"
+                      }`}
                     placeholder="Nhập số lượng tối thiểu"
                     min="1"
                   />
@@ -739,9 +771,8 @@ function WholesaleManagement() {
                       setFormData({ ...formData, startDate: e.target.value })
                     }
                     disabled={modalMode === "view"}
-                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${
-                      errors.startDate ? "border-red-500" : "border-gray-200"
-                    }`}
+                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${errors.startDate ? "border-red-500" : "border-gray-200"
+                      }`}
                   />
                   {errors.startDate && (
                     <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
@@ -764,9 +795,8 @@ function WholesaleManagement() {
                       setFormData({ ...formData, endDate: e.target.value })
                     }
                     disabled={modalMode === "view"}
-                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${
-                      errors.endDate ? "border-red-500" : "border-gray-200"
-                    }`}
+                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-600 transition-all ${errors.endDate ? "border-red-500" : "border-gray-200"
+                      }`}
                   />
                   {errors.endDate && (
                     <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
@@ -804,7 +834,7 @@ function WholesaleManagement() {
                     <Info className="w-5 h-5" />
                     Thông tin chi tiết
                   </div>
-                  
+
                   <div className="space-y-3">
                     <p className="text-sm text-gray-700 flex items-center gap-2">
                       <Hash className="w-4 h-4 text-blue-500" />
@@ -905,8 +935,8 @@ function WholesaleManagement() {
                     {loading
                       ? "Đang xử lý..."
                       : modalMode === "create"
-                      ? "Thêm mới"
-                      : "Cập nhật"}
+                        ? "Thêm mới"
+                        : "Cập nhật"}
                   </button>
                 )}
               </div>
@@ -963,6 +993,13 @@ function WholesaleManagement() {
           </div>
         </div>
       )}
+
+      {/* Vehicle Selector Modal */}
+      <VehicleSelectorModal
+        isOpen={showVehicleSelector}
+        onClose={() => setShowVehicleSelector(false)}
+        onSelect={handleVehicleSelect}
+      />
     </div>
   );
 }

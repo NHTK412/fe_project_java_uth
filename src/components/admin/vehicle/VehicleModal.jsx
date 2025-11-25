@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { showSuccess, showError } from "../../shared/toast";
 import { vehicleApi } from "../../../services/api/admin/vehicleApi";
+import { vehicleTypeDetailApi } from "../../../services/api/admin/vehicleTypeDetailApi";
+import { vehicleTypeApi } from "../../../services/api/admin/vehicleTypeApi";
+import { fetchAgenciesActive } from "../../../services/api/agencyApi";
 
 export default function VehicleModal({
   isOpen,
@@ -19,6 +22,41 @@ export default function VehicleModal({
   };
 
   const [formData, setFormData] = useState(emptyForm);
+  const [agencies, setAgencies] = useState([]);
+  const [vehicleTypes, setVehicleTypes] = useState([]);
+  const [selectedVehicleTypeId, setSelectedVehicleTypeId] = useState("");
+  const [vehicleTypeDetails, setVehicleTypeDetails] = useState([]);
+
+  // Load agencies và vehicle types khi modal mở
+  useEffect(() => {
+    if (!isOpen) return;
+
+    fetchAgenciesActive().then((response) => {
+      if (response.success && response.data) {
+        setAgencies(response.data);
+      }
+    });
+
+    vehicleTypeApi.fetchAllVehicleTypes().then((response) => {
+      if (response.success && response.data) {
+        setVehicleTypes(response.data);
+      }
+    });
+  }, [isOpen]);
+
+  // Load vehicle type details khi chọn vehicle type
+  useEffect(() => {
+    if (!selectedVehicleTypeId) {
+      setVehicleTypeDetails([]);
+      return;
+    }
+
+    vehicleTypeDetailApi.fetchAllVehicleTypeDetails(selectedVehicleTypeId).then((response) => {
+      if (response.success && response.data) {
+        setVehicleTypeDetails(response.data);
+      }
+    });
+  }, [selectedVehicleTypeId]);
 
   // Load dữ liệu khi modal mở
   useEffect(() => {
@@ -35,6 +73,7 @@ export default function VehicleModal({
       });
     } else {
       setFormData(emptyForm);
+      setSelectedVehicleTypeId("");
     }
   }, [isOpen, mode, initialData]);
 
@@ -140,9 +179,27 @@ export default function VehicleModal({
           </div>
 
           <div>
+            <label className="font-semibold">Loại xe</label>
+            <select
+              className="w-full border rounded px-3 py-2"
+              value={selectedVehicleTypeId}
+              onChange={(e) => {
+                setSelectedVehicleTypeId(e.target.value);
+                setFormData({ ...formData, vehicleTypeDetailId: 0 });
+              }}
+            >
+              <option value="">Chọn loại xe</option>
+              {vehicleTypes.map((type) => (
+                <option key={type.vehicleTypeId} value={type.vehicleTypeId}>
+                  {type.vehicleTypeName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
             <label className="font-semibold">Chi tiết loại xe</label>
-            <input
-              type="number"
+            <select
               className="w-full border rounded px-3 py-2"
               value={formData.vehicleTypeDetailId}
               onChange={(e) =>
@@ -151,13 +208,22 @@ export default function VehicleModal({
                   vehicleTypeDetailId: Number(e.target.value),
                 })
               }
-            />
+              disabled={!selectedVehicleTypeId}
+            >
+              <option value="0">
+                {selectedVehicleTypeId ? "Chọn chi tiết loại xe" : "Vui lòng chọn loại xe trước"}
+              </option>
+              {vehicleTypeDetails.map((detail) => (
+                <option key={detail.vehicleTypeDetailId} value={detail.vehicleTypeDetailId}>
+                  {detail.version} - {detail.color}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
             <label className="font-semibold">Đại lý</label>
-            <input
-              type="number"
+            <select
               className="w-full border rounded px-3 py-2"
               value={formData.agencyId}
               onChange={(e) =>
@@ -166,7 +232,14 @@ export default function VehicleModal({
                   agencyId: Number(e.target.value),
                 })
               }
-            />
+            >
+              <option value="0">Chọn đại lý</option>
+              {agencies.map((agency) => (
+                <option key={agency.agencyId} value={agency.agencyId}>
+                  {agency.agencyName}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 

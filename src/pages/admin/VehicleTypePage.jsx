@@ -64,7 +64,13 @@ export default function VehicleTypePage() {
           </div>
         </div>
 
-        <div className="mt-6 flex justify-end">
+        <div className="mt-6 flex justify-end gap-3">
+          <button
+            onClick={() => navigate(`/admin/vehicle-type/${vehicleTypeId}/details`)}
+            className="px-5 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all"
+          >
+            Xem chi tiết
+          </button>
           <button
             onClick={() => navigate(-1)}
             className="px-5 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all"

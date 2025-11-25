@@ -36,7 +36,6 @@ import PromotionsManager from "../pages/dealer-manager/PromotionsManager";
 import TestDriveSchedule from "../pages/dealer-staff/TestDriveSchedule";
 import QuoteManagement from "../pages/dealer-staff/QuoteManagement";
 import VehicleInfo from "../pages/dealer-staff/VehicleInfo";
-import InventoryManagement from "../pages/dealer-staff/InventoryManagement";
 import EvmInventory from "../pages/evm-staff/EvmInventory";
 import DealerManagement from "../pages/evm-staff/DealerManagement";
 import EvmPromotions from "../pages/evm-staff/EvmPromotions";
@@ -51,7 +50,14 @@ import VehicleManagement from "../pages/admin/VehicleManagement";
 import VehicleDetailPage from "../pages/admin/VehicleDetailPage";
 import VehicleTypePage from "../pages/admin/VehicleTypePage";
 import VehicleTypeDetailPage from "../pages/admin/VehicleTypeDetailPage";
-import OrderOfAgency from "../pages/evm-staff/OrderOfAgency";
+import VehicleTypeDetailListPage from "../pages/admin/VehicleTypeDetailListPage";
+import ImportRequestListPage from "../pages/shared/ImportRequestListPage";
+import ImportRequestDetailPage from "../pages/shared/ImportRequestDetailPage";
+import SharedInventoryManagement from "../pages/shared/SharedInventoryManagement";
+import AgencyOrderListPage from "../pages/shared/AgencyOrderListPage";
+import PolicyManagement from "../pages/shared/PolicyManagement";
+import TotalInventoryManagement from "../pages/shared/TotalInventoryManagement";
+import QuoteManagementPage from "../pages/shared/QuoteManagementPage";
 import Policy from "../pages/evm-staff/Policy"
 // Import các pages evm staff
 import WarehouseReceiptManagement from "../pages/evm-staff/WarehouseReceiptManagement";
@@ -62,98 +68,126 @@ import DashboardEVM from "../pages/evm-staff/DashboardEVM";
 import DashboardDM from "../pages/dealer-manager/DashboardDM";
 import AgencyOrderManagement from "../pages/dealer-manager/AgencyOrderManagement";
 import EmployeeOrderManagement from "../pages/dealer-manager/EmployeeOrderManagement";
+import AgencyOrderList from "../pages/shared/AgencyOrderList";
+import CustomerManagement from "../pages/shared/CustomerManagement";
+import VehicleTypeInquiry from "../pages/shared/VehicleTypeInquiry";
+import VehicleTypeDetailInquiry from "../pages/shared/VehicleTypeDetailInquiry";
+import TestDriveAppointmentManagement from "../pages/shared/TestDriveAppointmentManagement";
+import PaymentManagement from "../pages/shared/PaymentManagement";
 
 // Import Agency page
 import AgencyManagement from "../pages/AgencyManagement";
 import { Import } from "lucide-react";
 
 const routes = [
-  { path: "/login", element: <Login /> }, 
+  { path: "/login", element: <Login /> },
   {
     path: "/Evm-Staff",
     element: (
       <ProtectedRoute element={<EvmLayout />} allowedUsers={["ROLE_EVM_STAFF"]} />
     ),
     children: [
-      { index: true, element:<DashboardEVM />},
-      { path: "order-of-agency", element: <OrderOfAgency />},
-      { path: "management-inventory", element:<InventoryManagement />},
-      { path: "agencies", element: <AgencyManagement /> }, 
-      { path: "promotion", element:<PromotionsManager />},
-      { path: "policy", element:<Policy />},
-      { path: "wholesale", element:<WholesalePriceManagement />},
+      { index: true, element: <DashboardEVM /> },
+      { path: "order-of-agency", element: <ImportRequestListPage /> },
+      { path: "agency-order", element: <AgencyOrderListPage /> },
+      { path: "policy-management", element: <PolicyManagement /> },
+      { path: "management-inventory", element: <SharedInventoryManagement /> },
+      { path: "agencies", element: <AgencyManagement /> },
+      { path: "promotion", element: <PromotionsManager /> },
+      { path: "policy", element: <Policy /> },
+      { path: "wholesale", element: <WholesalePriceManagement /> },
       { path: "settings", element: <Settings /> },
-      { path: "*", element: <EvmLayout />},
+      { path: "*", element: <EvmLayout /> },
     ],
   },
-  {path: "/admin",
+  {
+    path: "/admin",
     element: (
       <ProtectedRoute element={<AdminLayout />} allowedUsers={["ROLE_ADMIN"]} />
     ),
     children: [
       { index: true, element: <Dashboard /> },
-      { path: "inventory", element: <Inventory />,},
-      { path: "revenue", element: <Revenue />,},
+      { path: "inventory", element: <Inventory />, },
+      { path: "revenue", element: <Revenue />, },
       { path: "users", element: <Users /> },
       { path: "vehicles", element: <VehicleManagement /> },
       { path: "vehicle/:vehicleId", element: <VehicleDetailPage /> },
       { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
+      { path: "vehicle-type/:vehicleTypeId/details", element: <VehicleTypeDetailListPage /> },
       { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
-      { path: "order-of-agency", element: <OrderOfAgency />},
-      { path: "management-inventory", element:<InventoryManagement />},
-      { path: "agencies", element: <AgencyManagement /> }, 
-      { path: "promotion", element:<PromotionsManager />},
-      { path: "policy", element:<Policy />},
-      { path: "wholesale", element:<WholesalePriceManagement />},
+      { path: "order-of-agency", element: <ImportRequestListPage /> },
+      { path: "agency-order", element: <AgencyOrderListPage /> },
+      { path: "policy-management", element: <PolicyManagement /> },
+      { path: "management-inventory", element: <SharedInventoryManagement /> },
+      { path: "total-inventory", element: <TotalInventoryManagement /> },
+      { path: "agencies", element: <AgencyManagement /> },
+      { path: "promotion", element: <PromotionsManager /> },
+      { path: "policy", element: <Policy /> },
+      { path: "wholesale", element: <WholesalePriceManagement /> },
       { path: "settings", element: <Settings /> },
-      {path: "*", element: <AdminLayout />},
+      { path: "*", element: <AdminLayout /> },
     ],
   },
-   {
-  path: "/Dealer-Manager",
-  element: <ProtectedRoute element={<DealerManagerLayout />} allowedUsers={["ROLE_DEALER_MANAGER"]} />,
-  children:[
-    { index: true, element: <DealerManagerLayout /> }, 
-    { path: "feedback", element: <FeedbackManagement />},
-    { path: "inventory", element: <Inventory />,},
-    { path: "revenue", element: <Revenue />,},
-    { path: "import-request", element: <ImportRequestList />}, 
-    { path: "import-request/importRequestId", element:<ImportRequestDetail /> },
-    { path: "promotion", element:<PromotionsManager />},
-    { path: "users", element: <Users /> },
-    { path: "order", element:<OrderList />},
-    { path: "vehicles", element: <VehicleManagement /> },
-    { path: "vehicle/:vehicleId", element: <VehicleDetailPage /> },
-    { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
-    { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
-    { path: "test-drive", element: <TestDriveSchedule /> },
-    { path: "inventory-management", element: <InventoryManagement />},
-    { path: "agency-oder-management", element: <AgencyOrderManagement />},
-    { path: "employee-oder-management", element: <EmployeeOrderManagement />},
-    { path: "*", element: <DealerManagerLayout />},
-  ]
+  {
+    path: "/Dealer-Manager",
+    element: <ProtectedRoute element={<DealerManagerLayout />} allowedUsers={["ROLE_DEALER_MANAGER"]} />,
+    children: [
+      { index: true, element: <DealerManagerLayout /> },
+      { path: "feedback", element: <FeedbackManagement /> },
+      { path: "inventory", element: <Inventory />, },
+      { path: "revenue", element: <Revenue />, },
+      { path: "import-request", element: <ImportRequestList /> },
+      { path: "import-request/importRequestId", element: <ImportRequestDetail /> },
+      { path: "promotion", element: <PromotionsManager /> },
+      { path: "users", element: <Users /> },
+      { path: "order", element: <OrderList /> },
+      { path: "vehicles", element: <VehicleManagement /> },
+      { path: "vehicle/:vehicleId", element: <VehicleDetailPage /> },
+      { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
+      { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
+      { path: "test-drive", element: <TestDriveSchedule /> },
+      { path: "inventory-management", element: <SharedInventoryManagement /> },
+      { path: "total-inventory", element: <TotalInventoryManagement /> },
+      { path: "agency-oder-management", element: <AgencyOrderManagement /> },
+      { path: "employee-oder-management", element: <EmployeeOrderManagement /> },
+      { path: "quote-management", element: <QuoteManagementPage /> },
+      { path: "order-management", element: <AgencyOrderList /> },
+      { path: "customer-management", element: <CustomerManagement /> },
+      { path: "vehicle-inquiry", element: <VehicleTypeInquiry /> },
+      { path: "vehicle-inquiry/:vehicleTypeId", element: <VehicleTypeDetailInquiry /> },
+      { path: "test-drive-appointments", element: <TestDriveAppointmentManagement /> },
+      { path: "payment-management", element: <PaymentManagement /> },
+      { path: "*", element: <DealerManagerLayout /> },
+    ]
 
   },
-  
-    {
-  path: "/Dealer-Staff",
-  element: <ProtectedRoute element={<DealerLayout />} allowedUsers={["ROLE_DEALER_STAFF"]} />,
-  children:[
-    { index: true, element: <DealerDashboard /> },
-    { path: "order", element:<OrderList />},
-    { path: "vehicles", element: <VehicleManagement /> },
-    { path: "vehicle/:vehicleId", element: <VehicleDetailPage /> },
-    { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
-    { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
-    { path: "test-drive", element: <TestDriveSchedule /> },
-    { path: "inventory-management", element: <InventoryManagement />},
-    { path: "agency-oder-management", element: <AgencyOrderManagement />},
-    { path: "employee-oder-management", element: <EmployeeOrderManagement />},
-    { path: "*", element: <DealerLayout />},
-  ]
+
+  {
+    path: "/Dealer-Staff",
+    element: <ProtectedRoute element={<DealerLayout />} allowedUsers={["ROLE_DEALER_STAFF"]} />,
+    children: [
+      { index: true, element: <DealerDashboard /> },
+      { path: "order", element: <OrderList /> },
+      { path: "vehicles", element: <VehicleManagement /> },
+      { path: "vehicle/:vehicleId", element: <VehicleDetailPage /> },
+      { path: "vehicle-type/:vehicleTypeId", element: <VehicleTypePage /> },
+      { path: "vehicle/type/detail/:vehicleTypeDetailId", element: <VehicleTypeDetailPage /> },
+      { path: "test-drive", element: <TestDriveSchedule /> },
+      { path: "inventory-management", element: <SharedInventoryManagement /> },
+      { path: "agency-oder-management", element: <AgencyOrderManagement /> },
+      { path: "employee-oder-management", element: <EmployeeOrderManagement /> },
+      { path: "quote-management", element: <QuoteManagementPage /> },
+      { path: "order-management", element: <AgencyOrderList /> },
+      { path: "customer-management", element: <CustomerManagement /> },
+      { path: "vehicle-inquiry", element: <VehicleTypeInquiry /> },
+      { path: "vehicle-inquiry/:vehicleTypeId", element: <VehicleTypeDetailInquiry /> },
+      { path: "test-drive-appointments", element: <TestDriveAppointmentManagement /> },
+      { path: "payment-management", element: <PaymentManagement /> },
+      { path: "*", element: <DealerLayout /> },
+    ]
   },
 
-  
+
   {
     path: "/profile",
     element: (
